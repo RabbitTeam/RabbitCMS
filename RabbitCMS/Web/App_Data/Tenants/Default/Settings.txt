@@ -1,0 +1,7 @@
+﻿Name: Default
+State: Running
+DataProvider: SqlServer
+DataConnectionString: Data Source=.;Initial Catalog=RabbitCMS;Persist Security Info=True;User ID=RabbitCMS;Password=123456;MultipleActiveResultSets=true
+DataTablePrefix: null
+RequestUrlPrefix: null
+RequestUrlHost: null
