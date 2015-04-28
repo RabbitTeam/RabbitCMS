@@ -136,6 +136,7 @@
   <ItemGroup>
     <Content Include="Module.txt" />
     <Content Include="packages.config" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

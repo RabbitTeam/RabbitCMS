@@ -129,6 +129,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="TheAdmin\Content\css\ace-ie.min.css" />
+    <Content Include="TheAdmin\Content\css\ace-part2.min.css" />
+    <Content Include="TheAdmin\Content\css\ace.min.css" />
+    <Content Include="TheAdmin\Content\css\bootstrap.min.css" />
+    <Content Include="TheAdmin\Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="TheAdmin\Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="TheAdmin\Content\fonts\fonts.googleapis.com.css" />
+    <Content Include="TheAdmin\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="TheAdmin\Scripts\ace-elements.min.js" />
+    <Content Include="TheAdmin\Scripts\ace-extra.min.js" />
+    <Content Include="TheAdmin\Scripts\ace.min.js" />
+    <Content Include="TheAdmin\Scripts\bootstrap.min.js" />
+    <Content Include="TheAdmin\Scripts\html5shiv.min.js" />
+    <Content Include="TheAdmin\Scripts\jquery.1.11.1.min.js" />
+    <Content Include="TheAdmin\Scripts\jquery.2.1.1.min.js" />
+    <Content Include="TheAdmin\Scripts\jquery.mobile.custom.min.js" />
+    <Content Include="TheAdmin\Scripts\jquery1x.min.js" />
+    <Content Include="TheAdmin\Scripts\respond.min.js" />
+    <Content Include="TheAdmin\Views\Layout.cshtml" />
+    <Content Include="TheAdmin\Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="TheAdmin\Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="TheAdmin\Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="TheAdmin\Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="TheAdmin\Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="TheAdmin\Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -137,11 +162,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TheAdmin\Theme.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

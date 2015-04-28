@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Rabbit.Web.Mvc.Themes;
+using Rabbit.Web.Mvc.UI.Admin;
+using System;
 using System.Web.Mvc;
 
 namespace Rabbit.Contents.Controllers
 {
+    [Admin]
+    [Themed]
     public class HomeController : Controller
     {
-        public string Index()
+        public ActionResult Index()
         {
-            return DateTime.Now.ToLongDateString();
+            return View();
         }
     }
 }
