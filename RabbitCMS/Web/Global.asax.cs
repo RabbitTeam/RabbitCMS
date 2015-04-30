@@ -9,6 +9,7 @@ using Rabbit.Kernel;
 using Rabbit.Kernel.Caching;
 using Rabbit.Kernel.Caching.Impl;
 using Rabbit.Kernel.Logging;
+using Rabbit.Resources;
 using Rabbit.Web;
 using Rabbit.Web.Environment;
 using Rabbit.Web.Mvc;
@@ -86,6 +87,8 @@ namespace Web
                 if (!string.Equals(automaticMigrationsEnabled, "true", StringComparison.OrdinalIgnoreCase))
                     c.EnableDataMigrators();
             });
+
+            kernelBuilder.UseResources();
 
             var container = kernelBuilder.Build();
 

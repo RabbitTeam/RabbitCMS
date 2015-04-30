@@ -207,6 +207,10 @@
       <Project>{829b5450-fb9f-43d5-be4b-bfd3f3bcb9ad}</Project>
       <Name>Rabbit.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="Modules\Rabbit.Resources\Rabbit.Resources.csproj">
+      <Project>{056c5352-f1a8-4872-b6c0-9beb6e653264}</Project>
+      <Name>Rabbit.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
