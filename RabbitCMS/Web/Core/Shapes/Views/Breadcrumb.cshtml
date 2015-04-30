@@ -1,34 +1,46 @@
 ﻿@using System.Linq;
-@using Rabbit.Web.UI.Navigation
 @{
-    //获取面包屑导航集合。
-    IEnumerable<MenuItem> menus = Model.GetMenus(Request, Request.RequestContext.RouteData.Values);
-    MenuItem currentMenuItem = null;
-    //面包屑导航集合包含菜单元素
-    if (menus != null && menus.Any())
+    var navigationLevel = HttpContext.Current.Items["NavigationLevel"] as List<Tuple<object, object>>;
+    var lastItem = navigationLevel == null ? null : navigationLevel.LastOrDefault();
+    if (lastItem != null)
     {
-        //得到当前页面的菜单项。
-        currentMenuItem = menus.LastOrDefault();
-        //从面包屑导航集合中移除当前页面的菜单项。
-        menus = menus.Take(menus.Count() - 1).ToArray();
+        navigationLevel = navigationLevel.Take(navigationLevel.Count - 1).ToList();
     }
 }
-@if (menus != null && menus.Any())
-{
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed');
+        } catch (e) { }
+    </script>
+
     <ul class="breadcrumb">
         <li>
-            <i class="icon-home home-icon"></i>
-            <a href="@Url.Action("Index", "AdminHome", new { area = "ChunSun.Mobile.Contents" })">首页</a>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="~/Admin">首页</a>
         </li>
-        @foreach (var item in menus)
+        @if (navigationLevel != null)
         {
-            <li>
-                <a href="@item.Href">@item.Text</a>
-            </li>
+            foreach (var item in navigationLevel)
+            {
+                <li>
+                    <a href="@item.Item2">@item.Item1</a>
+                </li>
+            }
+            if (lastItem != null)
+            {
+                <li class="active">
+                    @lastItem.Item1
+                </li>
+            }
         }
-        @if (currentMenuItem != null)
-        {
-            <li class="active" href="@currentMenuItem.Href">@currentMenuItem.Text</li>
-        }
-    </ul>
-}
+    </ul><!-- /.breadcrumb -->
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
+</div>

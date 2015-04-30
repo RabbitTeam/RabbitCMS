@@ -137,6 +137,7 @@
     <Content Include="TheAdmin\Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="TheAdmin\Content\fonts\fonts.googleapis.com.css" />
     <Content Include="TheAdmin\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="TheAdmin\Content\Images\user.png" />
     <Content Include="TheAdmin\Scripts\ace-elements.min.js" />
     <Content Include="TheAdmin\Scripts\ace-extra.min.js" />
     <Content Include="TheAdmin\Scripts\ace.min.js" />
