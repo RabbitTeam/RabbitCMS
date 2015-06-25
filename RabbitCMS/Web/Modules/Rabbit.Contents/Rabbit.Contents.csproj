@@ -55,8 +55,9 @@
       <Private>True</Private>
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Rabbit.Components.Data">
       <HintPath>..\..\..\packages\Rabbit.Components.Data.1.2.2.3\lib\net40\Rabbit.Components.Data.dll</HintPath>
@@ -76,9 +77,9 @@
       <HintPath>..\..\..\packages\Rabbit.Web.1.0.1.4\lib\net40\Rabbit.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rabbit.Web.Mvc">
-      <HintPath>..\..\..\packages\Rabbit.Web.Mvc.1.0.1.4\lib\net40\Rabbit.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Rabbit.Web.Mvc, Version=1.0.1.6, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Rabbit.Web.Mvc.1.0.1.7\lib\net40\Rabbit.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll</HintPath>
