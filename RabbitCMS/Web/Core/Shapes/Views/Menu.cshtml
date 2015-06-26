@@ -1,6 +1,8 @@
 ﻿@{
     //模型是Model.Menu来自布局（Layout.Menu）
     var tag = Tag(Model, "ul");
+    var tagBuilder = (TagBuilder)tag;
+    tagBuilder.AddCssClass("sidebar-menu");
 }
 @tag.StartElement
 @* 显示菜单项形状模板 *@

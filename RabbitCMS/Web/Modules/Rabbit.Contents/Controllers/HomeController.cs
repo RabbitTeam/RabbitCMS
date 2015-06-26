@@ -1,6 +1,5 @@
 ﻿using Rabbit.Web.Mvc.Themes;
 using Rabbit.Web.Mvc.UI.Admin;
-using System;
 using System.Web.Mvc;
 
 namespace Rabbit.Contents.Controllers
@@ -10,6 +9,11 @@ namespace Rabbit.Contents.Controllers
     public class HomeController : Controller
     {
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Index2()
         {
             return View();
         }

@@ -1,70 +1,38 @@
 ﻿@using Rabbit.Web.Mvc.DisplayManagement.Shapes
 @{
     var items = ((IEnumerable<dynamic>)Enumerable.Cast<dynamic>(Model)).ToArray();
-    Action<Tuple<object, object>> appendNavigationLevel = item =>
-    {
-        var navigationLevel = HttpContext.Current.Items["NavigationLevel"] as List<Tuple<object, object>> ?? new List<Tuple<object, object>>();
-        navigationLevel.Add(item);
-        HttpContext.Current.Items["NavigationLevel"] = navigationLevel;
-    };
 }
-@{
-    if (Model.LocalNavigation)
-    {
-        var isChildren = HasText(Model.Parent.Text);
-        var hasChildren = items.Any(i => i.LocalNavigation);
-        var isSelected = items.Any(i => i.Selected);
-        RabbitTagBuilder tag = Tag(Model, "li");
+@if (Model.LocalNavigation)
+{
+    var hasChildren = items.Any(i => i.LocalNavigation);
+    var isSelected = items.Any(i => i.Selected);
+    RabbitTagBuilder tag = Tag(Model, "li");
 
-        if (isSelected || Model.Selected)
+    if (hasChildren)
+    {
+        if (isSelected)
         {
-            if (!isChildren)
-            {
-                tag.AddCssClass("open");
-            }
             tag.AddCssClass("active");
         }
+        tag.AddCssClass("treeview");
+        @tag.StartElement
+        <a href="@Model.Href">
+            <i class='@Model.Icon'></i> <span>@Model.Text</span>
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            @DisplayChildren(Model)
+        </ul>
+        @tag.EndElement
+    }
+    else
+    {
         if (Model.Selected)
         {
-            appendNavigationLevel(new Tuple<object, object>(Model.Text, Model.Href));
+            tag.AddCssClass("active");
         }
         @tag.StartElement
-        if (hasChildren)
-        {
-            <a href="@Model.Href" class="dropdown-toggle">
-                @if (isChildren)
-                {
-                    <i class="menu-icon fa fa-caret-right"></i>
-                }
-                else
-                {
-                    <i class="@Model.Icon"></i>
-                }
-                <span class="menu-text">@Model.Text</span>
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-        }
-        else
-        {
-            <a href="@Model.Href">
-                @if (isChildren)
-                {
-                    <i class="menu-icon fa fa-caret-right"></i>
-                }
-                else
-                {
-                    <i class="@Model.Icon"></i>
-                }
-                <span class="menu-text">@Model.Text</span>
-            </a>
-        }
-        <b class="arrow"></b>
-        if (hasChildren)
-        {
-            <ul class="submenu">
-                @DisplayChildren(Model)
-            </ul>
-        }
+        <a href="@Model.Href"><i class='@Model.Icon'></i> <span>@Model.Text</span></a>
         @tag.EndElement
     }
 }

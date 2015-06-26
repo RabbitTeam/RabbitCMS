@@ -99,10 +99,6 @@ namespace Rabbit.Core.Shapes
                 {
                     var menu = displaying.Shape;
                     string menuName = menu.MenuName;
-                    /*menu.Classes.Add("menu-" + menuName.HtmlClassify());
-                    menu.Classes.Add("menu");*/
-                    menu.Classes.Add("nav");
-                    menu.Classes.Add("nav-list");
                     menu.Metadata.Alternates.Add("Menu__" + EncodeAlternateElement(menuName));
                 });
 
