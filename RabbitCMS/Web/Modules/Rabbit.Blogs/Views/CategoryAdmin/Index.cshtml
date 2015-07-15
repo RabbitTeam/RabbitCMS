@@ -43,8 +43,11 @@
                     return f.valid();
                 },
                 success: function (data) {
+                    var id = cId.val();
                     if (data.success) {
                         table.load();
+                        if (id == null || id.length == 0)
+                            container.fadeOut();
                     } else {
                         dialog.find("span").text("保存失败，" + data.message);
                         dialog.show();
