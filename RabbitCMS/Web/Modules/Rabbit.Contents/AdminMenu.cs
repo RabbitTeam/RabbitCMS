@@ -1,4 +1,4 @@
-﻿using Rabbit.Kernel.Localization;
+﻿/*using Rabbit.Kernel.Localization;
 using Rabbit.Web.UI.Navigation;
 
 namespace Rabbit.Contents
@@ -77,4 +77,4 @@ namespace Rabbit.Contents
 
         #endregion Implementation of INavigationProvider
     }
-}
+}*/

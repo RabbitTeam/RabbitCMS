@@ -58,6 +58,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Rabbit.Components.Data, Version=1.2.2.4, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rabbit.Components.Data.1.2.2.4-beta1\lib\net40\Rabbit.Components.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Rabbit.Kernel">
       <HintPath>..\..\..\packages\Rabbit.Kernel.1.0.1.7\lib\net40\Rabbit.Kernel.dll</HintPath>
     </Reference>
@@ -148,6 +152,13 @@
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.form.min.js" />
+    <Content Include="Scripts\jquery.form.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -158,6 +169,11 @@
   <ItemGroup>
     <Content Include="Module.txt" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jQuery\jquery.1.11.1.min.js" />
     <Content Include="Scripts\jQuery\jquery.2.1.1.min.js" />
     <Content Include="Web.config" />

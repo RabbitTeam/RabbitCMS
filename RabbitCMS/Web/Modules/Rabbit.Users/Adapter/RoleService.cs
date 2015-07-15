@@ -1,27 +1,10 @@
-﻿using Rabbit.Components.Security.Permissions;
-using Rabbit.Components.Security.Web;
+﻿using Rabbit.Components.Security.Web;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Rabbit.Contents.Adapter
+namespace Rabbit.Users.Adapter
 {
     internal sealed class RoleService : IRoleService
     {
-        #region Field
-
-        private readonly IEnumerable<IPermissionProvider> _providers;
-
-        #endregion Field
-
-        #region Constructor
-
-        public RoleService(IEnumerable<IPermissionProvider> providers)
-        {
-            _providers = providers;
-        }
-
-        #endregion Constructor
-
         #region Implementation of IRoleService
 
         /// <summary>
@@ -33,7 +16,7 @@ namespace Rabbit.Contents.Adapter
         /// </returns>
         public IEnumerable<string> GetPermissionsForRoleByName(string name)
         {
-            return _providers.SelectMany(i => i.GetPermissions().Select(z => z.Name));
+            return name == "Authenticated" ? new[] { StandardPermissions.Owner.Name } : new[] { StandardPermissions.AccessFrontEnd.Name };
         }
 
         #endregion Implementation of IRoleService

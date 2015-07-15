@@ -29,6 +29,8 @@ namespace Rabbit.Resources
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(GetScriptPath("jQuery/jquery.1.11.1.min.js")));
             bundles.Add(new ScriptBundle("~/bundles/jquery2").Include(GetScriptPath("jQuery/jquery.2.1.1.min.js")));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryvalidate").Include(GetScriptPath("jquery.validate.min.js"), GetScriptPath("jquery.validate.unobtrusive.min.js")));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryform").Include(GetScriptPath("jquery.form.min.js")));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(GetScriptPath("Bootstrap/bootstrap.min.js")));
             bundles.Add(new StyleBundle("~/content/bootstrap").Include(GetContentPath("Bootstrap/bootstrap.min.css")));
             bundles.Add(new StyleBundle("~/content/font-awesome").Include(GetContentPath("font-awesome/css/font-awesome.min.css")));

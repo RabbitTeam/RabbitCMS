@@ -1,0 +1,7 @@
+﻿Name: SafeMode
+Author: MaJian
+Description: Rabbit安全模式主题。
+Version: 1.0.0.0
+KernelVersion: 1.0.0.0
+Tags: hidden
+Website: 

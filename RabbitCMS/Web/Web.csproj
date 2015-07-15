@@ -90,16 +90,17 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Rabbit.Components.Data">
-      <HintPath>..\packages\Rabbit.Components.Data.1.2.2.3\lib\net40\Rabbit.Components.Data.dll</HintPath>
+    <Reference Include="Rabbit.Components.Data, Version=1.2.2.4, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rabbit.Components.Data.1.2.2.4-beta1\lib\net40\Rabbit.Components.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Rabbit.Components.Data.EntityFramework, Version=1.1.4.6, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rabbit.Components.Data.EntityFramework.1.1.4.6\lib\net45\Rabbit.Components.Data.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Rabbit.Components.Data.Migrators, Version=1.0.0.6, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rabbit.Components.Data.Migrators.1.0.0.6\lib\net40\Rabbit.Components.Data.Migrators.dll</HintPath>
+    <Reference Include="Rabbit.Components.Data.Migrators, Version=1.0.0.7, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rabbit.Components.Data.Migrators.1.0.0.7-beta\lib\net40\Rabbit.Components.Data.Migrators.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Rabbit.Components.Data.Mvc">
       <HintPath>..\packages\Rabbit.Components.Data.Mvc.1.0.1.1\lib\net40\Rabbit.Components.Data.Mvc.dll</HintPath>

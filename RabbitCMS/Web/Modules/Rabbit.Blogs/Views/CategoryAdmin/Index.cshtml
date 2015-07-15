@@ -1,0 +1,237 @@
+﻿@using System.Web.Optimization
+@model Rabbit.Blogs.ViewModels.CategoryEditViewModel
+@helper PageStyles()
+{
+    <style type="text/css">
+        .table th, td {
+            text-align: center;
+        }
+
+        .field-validation-error {
+            color: #dd4b39;
+        }
+    </style>
+    <link href="~/Themes/TheAdmin/lib/iCheck/all.css" rel="stylesheet" />
+}
+@helper PageScripts()
+{
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform")
+    <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
+    <script src="~/Modules/Rabbit.Blogs/Scripts/table.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+        var dialog = $(".alert-danger").dialog();
+
+        var editor = (function () {
+            var container = $(".box-success");
+
+            var cId = container.find("#Id");
+            var cTitle = container.find("#Title");
+            var cDescription = container.find("#Description");
+            var cVisible = container.find("#Visible:checkbox");
+
+            var form = container.find("form");
+
+            form.ajaxForm({
+                beforeSubmit: function (array, f) {
+                    return f.valid();
+                },
+                success: function (data) {
+                    if (data.success) {
+                        table.load();
+                    } else {
+                        dialog.find("span").text("保存失败，" + data.message);
+                        dialog.show();
+                    }
+                },
+                error: function () {
+                    dialog.find("span").text("保存失败，请联系管理员！");
+                    dialog.show();
+                }
+            });
+
+            container.find("button:last").click(function () {
+                container.fadeOut();
+            });
+
+            return {
+                init: function (model) {
+                    cId.val(model.Id || "");
+                    cTitle.val(model.Title);
+                    cDescription.val(model.Description);
+                    cVisible.iCheck(model.Visible ? "check" : "uncheck");
+                    var isAdd = model.Id == null || model.Id.length == 0;
+                    container.find(".box-title").html((isAdd ? "添加" : "编辑") + "分类");
+
+                    container.fadeIn();
+                }
+            };
+        })();
+        $("#btnAdd").click(function () {
+            editor.init({ Visible: true });
+        });
+
+        //table
+        var table = (function () {
+            return $(".box").table({
+                dataSource: '@Url.Action("DataSource")',
+                newTr: function (item, controller) {
+                    var managerTd = '<div class="btn-group"><button type="button" class="btn btn-primary btn-sm">编辑</button><button type="button" class="btn btn-danger btn-sm">删除</button></div>';
+
+                    var postManagerUrlFormat = '@Url.Action("Index","PostAdmin",new{Category="1id1"})';
+                    var tr = $("<tr />")
+                        .data({ id: item.Id, model: item })
+                        .append($("<td />").append($("<a href='" + postManagerUrlFormat.replace(/1id1/, item.Id) + "'></a>").append(item.Title + "(" + item.PostCount + ")")))
+                        .append($("<td />").append(item.Visible ? '<span class="label label-success">显示</span>' : '<span class="label label-warning">隐藏</span>'))
+                        .append($("<td />").append(managerTd));
+
+                    tr.find(".btn-primary").click(function () {
+                        var btn = $(this);
+                        var tr = btn.parents("tr:first");
+                        editor.init(tr.data("model"));
+                    });
+
+                    tr.find(".btn-danger").click(function () {
+                        var btn = $(this);
+                        var tr = btn.parents("tr:first");
+                        var id = tr.data("id");
+                        $.ajax({
+                            url: '@Url.Action("Delete")',
+                            type: 'post',
+                            data: { id: id },
+                            success: function () {
+                                btn.parents("tr:first").fadeOut(function () {
+                                    $(this).remove();
+                                    if (controller.find("tbody tr").length == 0) {
+                                        controller.load();
+                                    }
+                                });
+                            },
+                            error: function () {
+                                dialog.find("span").text("删除失败，请联系管理员！");
+                                dialog.show();
+                            }
+                        });
+                    });
+
+                    return tr;
+                }
+            });
+        })();
+    </script>
+}
+@{
+    Layout.Styles = PageStyles();
+    Layout.Scripts = PageScripts();
+}
+<div class="alert alert-danger alert-dismissable" style="display: none">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-ban"></i> <span>删除失败，请联系管理员!</span></h4>
+</div>
+<button class="btn btn-primary" style="margin-bottom: 5px;width: 100px" id="btnAdd">
+    <i class="fa fa-plus"></i>
+    添加
+</button>
+<div class="box box-info">
+    <div class="box-header">
+        <h3 class="box-title">分类</h3>
+        <div class="box-tools">
+            <div class="input-group" style="width: 150px;">
+                <input type="text" name="table_search" id="table_search" class="form-control input-sm pull-right" placeholder="标题">
+                <div class="input-group-btn">
+                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>.NET BUG(1)</td>
+                    <td>
+                        <span class="label label-success">显示</span>
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm">编辑</button>
+                            <button type="button" class="btn btn-danger btn-sm">删除</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!-- /.box-body -->
+    <div class="overlay" style="display: none">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="box-footer clearfix">
+        <ul class="pagination pagination-sm no-margin pull-right">
+            <li><a href="#"><</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">></a></li>
+        </ul>
+    </div>
+</div>
+<div class="box box-success" style="display:none">
+    <div class="box-header with-border">
+        <h3 class="box-title">编辑分类</h3>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    <form class="form-horizontal" method="POST" action="@Url.Action("AddOrEdit")">
+        @Html.HiddenFor(model => model.Id)
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Title)</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Description)</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.Description, 4, 40, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Visible)</label>
+                <div class="col-sm-10">
+                    <div class="checkbox icheck">
+                        <label>
+                            @Html.CheckBoxFor(model => model.Visible)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer" style="text-align: center">
+            <button type="submit" class="btn btn-info">确定</button>
+            <button type="button" class="btn btn-default">取消</button>
+        </div><!-- /.box-footer -->
+    </form>
+</div>

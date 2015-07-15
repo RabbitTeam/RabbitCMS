@@ -1,0 +1,71 @@
+﻿@model Rabbit.Users.ViewModels.SignInViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="~/Themes/TheAdmin/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Themes/TheAdmin/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Themes/TheAdmin/dist/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Themes/TheAdmin/dist/css/skins/skin-blue-light.min.css" rel="stylesheet" />
+    <link href="~/Themes/TheAdmin/lib/iCheck/all.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <script src="~/Themes/TheAdmin/Scripts/html5shiv.min.js"></script>
+        <script src="~/Themes/TheAdmin/Scripts/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .validation-summary-errors {
+            color: #dd4b39;
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Rabbit</b>CMS</a>
+        </div><!-- /.login-logo -->
+        <div class="login-box-body">
+            @Html.ValidationSummary(false)
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ReturnUrl)
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(model => model.Account, new { placeholder = "账号", @class = "form-control" })
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(model => model.Password, new { placeholder = "密码", @class = "form-control" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Remember) 记住我
+                            </label>
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+                    </div><!-- /.col -->
+                </div>
+            }
+        </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+    <script src="~/Themes/TheAdmin/lib/jquery/jquery.min.js"></script>
+    <script src="~/Themes/TheAdmin/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+    </script>
+</body>
+</html>
