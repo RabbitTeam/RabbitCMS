@@ -23,6 +23,11 @@ namespace Rabbit.Blogs.ViewModels
 
     public class PostEditViewModel
     {
+        public PostEditViewModel()
+        {
+            Seo = new SeoModel();
+        }
+
         public string Id { get; set; }
 
         /// <summary>
@@ -81,6 +86,8 @@ namespace Rabbit.Blogs.ViewModels
 
         public string Categorys { get; set; }
 
+        public SeoModel Seo { get; set; }
+
         public static explicit operator PostEditViewModel(PostRecord record)
         {
             return new PostEditViewModel
@@ -96,7 +103,8 @@ namespace Rabbit.Blogs.ViewModels
                 IsPublish = record.Status == PostStatus.Publish,
                 Summary = record.Summary,
                 Tags = record.Tags,
-                Title = record.Title
+                Title = record.Title,
+                Seo = record.Seo
             };
         }
     }

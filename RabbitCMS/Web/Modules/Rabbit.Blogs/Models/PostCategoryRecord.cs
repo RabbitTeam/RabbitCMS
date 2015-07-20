@@ -48,6 +48,11 @@ namespace Rabbit.Blogs.Models
         /// </summary>
         public virtual ICollection<PostRecord> Posts { get; set; }
 
+        /// <summary>
+        /// Seo信息。
+        /// </summary>
+        public SeoModel Seo { get; set; }
+
         #region Public Method
 
         /// <summary>
@@ -74,7 +79,8 @@ namespace Rabbit.Blogs.Models
                 Title = title,
                 Description = description,
                 Posts = new List<PostRecord>(),
-                CreateTime = DateTime.Now
+                CreateTime = DateTime.Now,
+                Seo = new SeoModel()
             }.SetVisible(visible);
         }
 

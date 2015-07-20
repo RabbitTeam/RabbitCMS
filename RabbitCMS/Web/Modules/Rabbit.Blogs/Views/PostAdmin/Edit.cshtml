@@ -111,21 +111,58 @@
                 </script>
                 <span class="field-validation-error" data-valmsg-for="Content" data-valmsg-replace="true" style="display: none"><span for="Content" generated="true" class="">内容 字段是必需的。</span></span>
             </div>
-            <div class="box-group" id="accordion">
-                <div class="panel box box-primary">
-                    <div class="box-header with-border">
-                        <h4 class="box-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">
-                                文章分类
-                            </a>
-                        </h4>
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title" data-widget="collapse" style="cursor: pointer">SEO</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse" title="折叠"><i class="fa fa-minus"></i></button>
                     </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true">
-                        <div class="box-body">
+                </div>
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Keywords)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Seo.Keywords, new {@class = "form-control", placeholder = "页面关键词用','号分隔。" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.Seo.Keywords)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Description)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(model => model.Seo.Description,3,40, new { @class = "form-control", placeholder = "页面描述" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.Seo.Description)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title" data-widget="collapse" style="cursor: pointer">文章分类</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse" title="折叠"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                        @{
+                            var categoryList = Model.Categorys == null ? null : Model.Categorys.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                        }
+                        @if (categoryList == null)
+                        {
+                            <div style="color: grey; text-align: center">暂无分类！</div>
+                        }
+                        else
+                        {
                             <ul class="categoryList">
-                                @{
-                                    var categoryList = Model.Categorys == null ? new string[0] : Model.Categorys.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                                }
                                 @foreach (var category in WorkContext.Resolve<ICategoryService>().GetList())
                                 {
                                     var tagBuilder = new TagBuilder("input");
@@ -141,96 +178,92 @@
                                     </li>
                                 }
                             </ul>
-                        </div>
+                        }
+                </div><!-- /.box-body -->
+            </div>
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title" data-widget="collapse" style="cursor: pointer">高级选项</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse" title="折叠"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="panel box box-success">
-                    <div class="box-header with-border">
-                        <h4 class="box-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
-                                高级选项
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                        <div class="box-body">
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">设置</label>
-                                    <div class="col-sm-10">
-                                        <ul class="categoryList">
-                                            <li>
-                                                @Html.CheckBoxFor(model => model.AllowComment) 允许评论
-                                            </li>
-                                            <li>
-                                                @Html.CheckBoxFor(model => model.ShowInIndex) 显示在博客首页
-                                            </li>
-                                            <li>
-                                                @Html.CheckBoxFor(model => model.IsPublish) 发布
-                                            </li>
-                                        </ul>
-                                    </div>
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">设置</label>
+                            <div class="col-sm-10">
+                                <ul class="categoryList">
+                                    <li>
+                                        @Html.CheckBoxFor(model => model.AllowComment) 允许评论
+                                    </li>
+                                    <li>
+                                        @Html.CheckBoxFor(model => model.ShowInIndex) 显示在博客首页
+                                    </li>
+                                    <li>
+                                        @Html.CheckBoxFor(model => model.IsPublish) 发布
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Summary)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(model => model.Summary, 3, 40, new { @class = "form-control" })
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Summary)</label>
-                                    <div class="col-sm-10">
-                                        <div class="col-sm-8">
-                                            @Html.TextAreaFor(model => model.Summary, 3, 40, new { @class = "form-control" })
-                                        </div>
-                                        <div class="col-sm-2">
-                                            @Html.ValidationMessageFor(model => model.Summary)
-                                        </div>
-                                    </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.Summary)
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.OppositionCount)</label>
-                                    <div class="col-sm-10">
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(model => model.OppositionCount, new { @class = "form-control" })
-                                        </div>
-                                        <div class="col-sm-2">
-                                            @Html.ValidationMessageFor(model => model.OppositionCount)
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.OppositionCount)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.OppositionCount, new { @class = "form-control" })
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.ReadingCount)</label>
-                                    <div class="col-sm-10">
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(model => model.ReadingCount, new { @class = "form-control" })
-                                        </div>
-                                        <div class="col-sm-2">
-                                            @Html.ValidationMessageFor(model => model.ReadingCount)
-                                        </div>
-                                    </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.OppositionCount)
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.RecommendationCount)</label>
-                                    <div class="col-sm-10">
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(model => model.RecommendationCount, new { @class = "form-control" })
-                                        </div>
-                                        <div class="col-sm-2">
-                                            @Html.ValidationMessageFor(model => model.RecommendationCount)
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.ReadingCount)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReadingCount, new { @class = "form-control" })
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Tags)</label>
-                                    <div class="col-sm-10">
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(model => model.Tags, new { @class = "form-control" })
-                                            （多个关键字之间用“,”分隔）
-                                        </div>
-                                        <div class="col-sm-2">
-                                            @Html.ValidationMessageFor(model => model.Tags)
-                                        </div>
-                                    </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.ReadingCount)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.RecommendationCount)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.RecommendationCount, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.RecommendationCount)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Tags)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Tags, new { @class = "form-control" })
+                                    （多个关键字之间用“,”分隔）
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.Tags)
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><!-- /.box-body -->
             </div>
         </div><!-- /.box-body -->
         <div class="box-footer" style="text-align: center">

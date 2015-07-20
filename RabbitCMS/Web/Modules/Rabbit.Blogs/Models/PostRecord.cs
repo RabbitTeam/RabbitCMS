@@ -100,6 +100,11 @@ namespace Rabbit.Blogs.Models
         [Range(0, int.MaxValue)]
         public int ReadingCount { get; set; }
 
+        /// <summary>
+        /// Seo信息。
+        /// </summary>
+        public SeoModel Seo { get; set; }
+
         #region Public Method
 
         public static PostRecord Create(UserRecord user)
@@ -112,7 +117,8 @@ namespace Rabbit.Blogs.Models
                 CreateTime = DateTime.Now,
                 Id = Guid.NewGuid().ToString("N"),
                 ShowInIndex = true,
-                User = user
+                User = user,
+                Seo = new SeoModel()
             };
         }
 

@@ -29,7 +29,7 @@
                     var tr = $("<tr />")
                         .data({ id: item.Id, model: item })
                         .append(titleTd)
-                        .append($("<td />").append(item.Status))
+                        .append($("<td />").append(item.Status == 1 ? '<span class="label label-success">已发布</span>' : '<span class="label label-warning">未发布</span>'))
                         .append($("<td />").append(item.CommentCount))
                         .append($("<td />").append(item.ReadingCount))
                         .append($("<td />").append(managerTd));

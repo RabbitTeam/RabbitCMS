@@ -109,6 +109,7 @@ namespace Rabbit.Blogs.Controllers
             record.Tags = model.Tags;
             record.Title = model.Title;
             record.AllowComment = model.AllowComment;
+            record.Seo = model.Seo;
             var newCategorys = model.Categorys == null ? null :
                 _categoryService.GetList(model.Categorys.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 

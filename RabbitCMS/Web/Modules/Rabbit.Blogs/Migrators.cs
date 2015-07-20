@@ -19,7 +19,9 @@ namespace Rabbit.Blogs
                 .WithColumn("Title").AsString(50)
                 .WithColumn("Description").AsString(500).Nullable()
                 .WithColumn("Visible").AsBoolean()
-                .WithColumn("CreateTime").AsDateTime();
+                .WithColumn("CreateTime").AsDateTime()
+                .WithColumn("Seo_Keywords").AsString(255).Nullable()
+                .WithColumn("Seo_Description").AsString(255).Nullable();
 
             Create
                 .Table(TableName<PostRecord>())
@@ -35,7 +37,9 @@ namespace Rabbit.Blogs
                 .WithColumn("RecommendationCount").AsInt32()
                 .WithColumn("OppositionCount").AsInt32()
                 .WithColumn("ReadingCount").AsInt32()
-                .WithColumn("CreateTime").AsDateTime();
+                .WithColumn("CreateTime").AsDateTime()
+                .WithColumn("Seo_Keywords").AsString(255).Nullable()
+                .WithColumn("Seo_Description").AsString(255).Nullable();
 
             Create.Table("PostCategoryRecordPostRecords")
                 .WithColumn("PostCategoryRecord_Id").AsAnsiString(32).PrimaryKey().ForeignKey(TableName<PostCategoryRecord>(), "Id").OnDelete(Rule.Cascade)

@@ -36,12 +36,14 @@ namespace Rabbit.Blogs.Controllers
                 Id = i.Id,
                 PostCount = i.Posts.Count(),
                 Title = i.Title,
-                Visible = i.Visible
+                Visible = i.Visible,
+                Seo = i.Seo
             }).ToArray();
 
             return Json(new { pageParameter.PageCount, list = model });
         }
 
+        [HttpPost]
         public ActionResult AddOrEdit(CategoryEditViewModel model)
         {
             if (!ModelState.IsValid)
@@ -57,6 +59,7 @@ namespace Rabbit.Blogs.Controllers
             record.Title = model.Title;
             record.Visible = model.Visible;
             record.Description = model.Description;
+            record.Seo = model.Seo;
 
             if (isAdd)
                 _categoryService.Add(record);

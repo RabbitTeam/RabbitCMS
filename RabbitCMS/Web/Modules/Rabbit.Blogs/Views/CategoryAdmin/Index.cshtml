@@ -35,6 +35,7 @@
             var cTitle = container.find("#Title");
             var cDescription = container.find("#Description");
             var cVisible = container.find("#Visible:checkbox");
+            var cKeywords = container.find("#Seo_Keywords");
 
             var form = container.find("form");
 
@@ -67,8 +68,10 @@
                 init: function (model) {
                     cId.val(model.Id || "");
                     cTitle.val(model.Title);
-                    cDescription.val(model.Description);
+                    cDescription.val(model.Seo.Description);
                     cVisible.iCheck(model.Visible ? "check" : "uncheck");
+                    if (model.Seo != null)
+                        cKeywords.val(model.Seo.Keywords);
                     var isAdd = model.Id == null || model.Id.length == 0;
                     container.find(".box-title").html((isAdd ? "添加" : "编辑") + "分类");
 
@@ -208,6 +211,17 @@
                     </div>
                     <div class="col-sm-2">
                         @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Keywords)</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Seo.Keywords, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(model => model.Seo.Keywords)
                     </div>
                 </div>
             </div>

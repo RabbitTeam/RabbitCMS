@@ -193,6 +193,7 @@
     <Compile Include="Models\PostCategoryRecord.cs" />
     <Compile Include="Models\PostCommentRecord.cs" />
     <Compile Include="Models\PostRecord.cs" />
+    <Compile Include="Models\SeoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Services\CategoryService.cs" />
