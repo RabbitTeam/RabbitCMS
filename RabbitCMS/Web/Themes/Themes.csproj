@@ -44,10 +44,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Autofac">
-      <HintPath>..\..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
-      <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -58,12 +58,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Rabbit.Kernel, Version=1.0.1.7, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Rabbit.Kernel.1.0.1.7\lib\net40\Rabbit.Kernel.dll</HintPath>
+    <Reference Include="Rabbit.Kernel">
+      <HintPath>..\..\packages\Rabbit.Kernel.1.0.1.7\lib\net40\Rabbit.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Rabbit.Web">
-      <HintPath>..\..\..\packages\Rabbit.Web.1.0.1.4\lib\net40\Rabbit.Web.dll</HintPath>
+      <HintPath>..\..\packages\Rabbit.Web.1.0.1.4\lib\net40\Rabbit.Web.dll</HintPath>
     </Reference>
     <Reference Include="Rabbit.Web.Mvc, Version=1.0.1.6, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -1,9 +1,13 @@
 ﻿@using System.Linq;
 @using System.Collections;
 @using System.Web.Routing;
+@using Rabbit.Blogs.Services
 @{
     dynamic postPage=Model.PostPage;
     dynamic posts = (IEnumerable<dynamic>)postPage.Posts;
+    var siteSettings = WorkContext.Resolve<ISiteSettingsService>().Get();
+    Layout.Seo = siteSettings.Seo;
+    Layout.AppendTenantName = false;
 }
 @foreach (var post in posts)
 {
