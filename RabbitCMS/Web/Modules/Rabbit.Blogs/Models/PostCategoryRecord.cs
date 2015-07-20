@@ -58,10 +58,11 @@ namespace Rabbit.Blogs.Models
         /// <summary>
         /// 创建一个分类。
         /// </summary>
+        /// <param name="id">标识。</param>
         /// <returns>文章分类。</returns>
-        public static PostCategoryRecord Create()
+        public static PostCategoryRecord Create(string id = null)
         {
-            return Create(null);
+            return Create(null, null, id: id);
         }
 
         /// <summary>
@@ -70,12 +71,13 @@ namespace Rabbit.Blogs.Models
         /// <param name="title">标题。</param>
         /// <param name="description">说明。</param>
         /// <param name="visible">是否显示。</param>
+        /// <param name="id">标识。</param>
         /// <returns>文章分类。</returns>
-        public static PostCategoryRecord Create(string title, string description = null, bool visible = true)
+        public static PostCategoryRecord Create(string title, string description, bool visible = true, string id = null)
         {
             return new PostCategoryRecord
             {
-                Id = Guid.NewGuid().ToString("N"),
+                Id = id ?? Guid.NewGuid().ToString("N"),
                 Title = title,
                 Description = description,
                 Posts = new List<PostRecord>(),

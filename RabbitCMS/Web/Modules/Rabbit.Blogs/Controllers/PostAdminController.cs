@@ -65,13 +65,14 @@ namespace Rabbit.Blogs.Controllers
 
         public ActionResult Add()
         {
-            return View("Edit", new PostEditViewModel
+            var model = new PostEditViewModel
             {
                 AllowComment = true,
                 ShowInIndex = true,
-                IsPublish = true,
-                Author = User.Identity.Name
-            });
+                IsPublish = true
+            };
+            model.Id = model.Seo.RoutePath = Guid.NewGuid().ToString("N");
+            return View("Edit", model);
         }
 
         public ActionResult Edit(string id)
@@ -111,7 +112,6 @@ namespace Rabbit.Blogs.Controllers
             record.Title = model.Title;
             record.AllowComment = model.AllowComment;
             record.Seo = model.Seo;
-            record.Author = model.Author;
             var newCategorys = model.Categorys == null ? null :
                 _categoryService.GetList(model.Categorys.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 

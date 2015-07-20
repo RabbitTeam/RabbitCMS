@@ -105,12 +105,6 @@ namespace Rabbit.Blogs.Models
         /// </summary>
         public SeoModel Seo { get; set; }
 
-        /// <summary>
-        /// 作者。
-        /// </summary>
-        [StringLength(50)]
-        public string Author { get; set; }
-
         #region Public Method
 
         public static PostRecord Create(UserRecord user)

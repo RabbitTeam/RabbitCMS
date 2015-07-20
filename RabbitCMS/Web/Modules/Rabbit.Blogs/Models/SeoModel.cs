@@ -18,5 +18,11 @@ namespace Rabbit.Blogs.Models
         /// </summary>
         [DisplayName("页面描述"), StringLength(255)]
         public string Description { get; set; }
+
+        /// <summary>
+        /// 友好的路由地址。
+        /// </summary>
+        [DisplayName("路由路径"), Required, StringLength(50)]
+        public string RoutePath { get; set; }
     }
 }

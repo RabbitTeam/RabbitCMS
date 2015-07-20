@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using Newtonsoft.Json
 @model Rabbit.Blogs.ViewModels.CategoryEditViewModel
 @helper PageStyles()
 {
@@ -36,6 +37,7 @@
             var cDescription = container.find("#Description");
             var cVisible = container.find("#Visible:checkbox");
             var cKeywords = container.find("#Seo_Keywords");
+            var cRoutePath = container.find("#Seo_RoutePath");
 
             var form = container.find("form");
 
@@ -45,9 +47,12 @@
                 },
                 success: function (data) {
                     var id = cId.val();
+                    guidController.use(id);
+                    var isAdd = editor.isAdd;
+
                     if (data.success) {
                         table.load();
-                        if (id == null || id.length == 0)
+                        if (isAdd)
                             container.fadeOut();
                     } else {
                         dialog.find("span").text("保存失败，" + data.message);
@@ -65,13 +70,16 @@
             });
 
             return {
+                isAdd:true,
                 init: function (model) {
                     cId.val(model.Id || "");
                     cTitle.val(model.Title);
-                    cDescription.val(model.Seo.Description);
                     cVisible.iCheck(model.Visible ? "check" : "uncheck");
-                    if (model.Seo != null)
+                    if (model.Seo != null) {
                         cKeywords.val(model.Seo.Keywords);
+                        cDescription.val(model.Seo.Description);
+                        cRoutePath.val(model.Seo.RoutePath);
+                    }
                     var isAdd = model.Id == null || model.Id.length == 0;
                     container.find(".box-title").html((isAdd ? "添加" : "编辑") + "分类");
 
@@ -79,8 +87,68 @@
                 }
             };
         })();
+
+        var guidController = (function () {
+            var guids=@Html.Raw(JsonConvert.SerializeObject(Enumerable.Range(0, 10).Select(i => Guid.NewGuid().ToString("N"))));
+            var guidList = [];
+
+            function convertGuidList(array) {
+                var newArray = [];
+                $.each(array, function() {
+                    newArray.push({ value: this, use: false });
+                });
+                return newArray;
+            }
+
+            guidList = convertGuidList(guids);
+
+            function getGuid() {
+                $.ajax({
+                    url: '@Url.Action("GetGuid")',
+                    cache: false,
+                    async: true,
+                    success: function(data) {
+                        guidList = convertGuidList(data);
+                    }
+                });
+                return guidList;
+            }
+
+            return {
+                use:function(value) {
+                    $.each(guidList, function() {
+                        if (this.value == value) {
+                            this.use = true;
+                            return false;
+                        }
+                        return true;
+                    });
+                },
+                getGuid:function() {
+                    var get = function() {
+                        var item = null;
+                        $.each(guidList, function() {
+                            if (this.use == false) {
+                                item = this;
+                                return false;
+                            }
+                            return true;
+                        });
+                        return item;
+                    };
+                    var result = get();
+                    if (result == null) {
+                        guidList = getGuid();
+                        result = get();
+                    }
+                    return result.value;
+                }
+            };
+        })();
+
         $("#btnAdd").click(function () {
-            editor.init({ Visible: true });
+            editor.isAdd = true;
+            editor.init({ Visible: true,Id:guidController.getGuid(),Seo:{RoutePath:guidController.getGuid()} });
         });
 
         //table
@@ -100,6 +168,7 @@
                     tr.find(".btn-primary").click(function () {
                         var btn = $(this);
                         var tr = btn.parents("tr:first");
+                        editor.isAdd = false;
                         editor.init(tr.data("model"));
                     });
 
@@ -211,6 +280,17 @@
                     </div>
                     <div class="col-sm-2">
                         @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.RoutePath)</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Seo.RoutePath, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(model => model.Seo.RoutePath)
                     </div>
                 </div>
             </div>

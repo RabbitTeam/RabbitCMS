@@ -4,6 +4,7 @@ using Rabbit.Blogs.ViewModels;
 using Rabbit.Infrastructures.Data;
 using Rabbit.Infrastructures.Mvc;
 using Rabbit.Web.Mvc.UI.Admin;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -54,7 +55,7 @@ namespace Rabbit.Blogs.Controllers
             var isAdd = record == null;
 
             if (record == null)
-                record = PostCategoryRecord.Create();
+                record = PostCategoryRecord.Create(model.Id);
 
             record.Title = model.Title;
             record.Visible = model.Visible;
@@ -65,6 +66,12 @@ namespace Rabbit.Blogs.Controllers
                 _categoryService.Add(record);
 
             return this.Success();
+        }
+
+        [HttpPost]
+        public JsonResult GetGuid()
+        {
+            return Json(Enumerable.Range(0, 10).Select(i => Guid.NewGuid().ToString("N")).ToArray());
         }
 
         [HttpPost]

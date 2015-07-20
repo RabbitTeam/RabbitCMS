@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -345,6 +346,11 @@
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.eot" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.ttf" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.woff" />
+    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Home\Index.cshtml" />
+    <Content Include="Default_TheThemeMachine\Views\Layout.cshtml" />
+    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Post\Index.cshtml" />
+    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Category\Index.cshtml" />
+    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Author\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -354,12 +360,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TheAdmin\Theme.txt" />
+    <Content Include="Default_TheThemeMachine\Theme.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Rabbit.Blogs\Rabbit.Blogs.csproj">
+      <Project>{895e5030-e5ee-4317-899c-1d23f06d794c}</Project>
+      <Name>Rabbit.Blogs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

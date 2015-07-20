@@ -1,0 +1,84 @@
+﻿@{
+    var tenant = WorkContext.CurrentTenant.TenantName;
+    //    var categoryUrl=Url.Action()
+    var category = ((IEnumerable<dynamic>)Model.Categorys).FirstOrDefault();
+    var routeValues = new RouteValueDictionary(new { area = "Rabbit.Blogs", Model.Seo.RoutePath });
+    if (category != null)
+    {
+        routeValues.Add("CategoryRoutePath", category.Seo.RoutePath);
+    }
+    var postUrl = Url.Action("Index", "Post", routeValues);
+    string[] tagList = Model.Tags == null ? new string[0] : Model.Tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+}
+<article class="article container well">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i> <a title="Go to @(tenant)." href="~/" class="home">@tenant</a>
+        @if (category != null)
+        {
+            @Html.Raw("&gt;")
+            <a title="Go to the @category.Title category archives." href="@Url.Action("Index", "Category", new {area = "Rabbit.Blogs", category.Seo.RoutePath})" class="category">@category.Title</a>
+        }
+        &gt; @Model.Title
+    </div>
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1><a href="@postUrl">@Model.Title</a>
+            </h1>
+        </div>
+        <div class="tag-article container">
+            <span class="label label-zan"><i class="fa fa-tags"></i> @Model.CreateTime.ToString("M-dd")</span>
+            @if (tagList.Any())
+            {
+                <span class="label label-zan">
+                    <i class="fa fa-tags"></i>
+                    @foreach (var tag in tagList)
+                    {
+                        <a href="@Url.Action("Index", "Tag", new {area = "Rabbit.Blogs", tag})" rel="category tag">@tag</a>
+                    }
+                </span>
+            }
+            <span class="label label-zan"><i class="fa fa-user"></i> <a href="@Url.Action("Index", "Author", new {area = "Rabbit.Blogs", author = Model.User.Name})" title="由@(Model.User.Name)发布" rel="author">@Model.User.Name</a></span>
+            <span class="label label-zan"><i class="fa fa-eye"></i> @Model.ReadingCount views</span>
+        </div>
+    </div>
+    <div class="visible-xs">
+        <div class="title-article">
+            <h4><a href="@postUrl">@Model.Title</a></h4>
+        </div>
+        <p>
+            <i class="fa fa-calendar"></i> @Model.CreateTime.ToString("M-dd") <i class="fa fa-eye"></i> @Model.ReadingCount views
+        </p>
+    </div>
+    <div class="centent-article">
+        <figure class="thumbnail hidden-xs"><img width="460" height="279" src="http://wittsay.cc/wp-content/uploads/2015/06/1-130R91T233539-e1434119289395.jpg" class="attachment-full wp-post-image" alt="怎样做好的视频制作者"></figure>
+        @if (!string.IsNullOrEmpty(Model.Summary))
+        {
+            <blockquote>
+                @Html.Raw(Model.Summary)
+            </blockquote>
+        }
+        @Html.Raw(Model.Content)
+        <div class="zan-page bs-example">
+            <ul class="pager">
+                <li class="previous"><a href="http://wittsay.cc/w3cnews/708" rel="prev">上一篇</a></li>
+                <li class="next"></li>
+            </ul>
+        </div>
+        <div class="copyright alert alert-success">
+            <p>
+                版权属于: <a href="~/">@tenant</a>
+            </p>
+            <p>
+                原文地址: <a href="@Request.Url.ToString()">@Request.Url.ToString()</a>
+            </p>
+            <p>
+                转载时必须以链接形式注明原始出处及本声明。
+            </p>
+        </div>
+        <div class="clearfix" id="bdshare">
+            <div class="bdsharebuttonbox pull-right bdshare-button-style1-24" data-bd-bind="1437386755073">
+                <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            </div>
+        </div>
+    </div>
+</article>
