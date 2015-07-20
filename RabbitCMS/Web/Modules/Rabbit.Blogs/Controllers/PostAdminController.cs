@@ -69,7 +69,8 @@ namespace Rabbit.Blogs.Controllers
             {
                 AllowComment = true,
                 ShowInIndex = true,
-                IsPublish = true
+                IsPublish = true,
+                Author = User.Identity.Name
             });
         }
 
@@ -110,6 +111,7 @@ namespace Rabbit.Blogs.Controllers
             record.Title = model.Title;
             record.AllowComment = model.AllowComment;
             record.Seo = model.Seo;
+            record.Author = model.Author;
             var newCategorys = model.Categorys == null ? null :
                 _categoryService.GetList(model.Categorys.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 

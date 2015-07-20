@@ -39,7 +39,8 @@ namespace Rabbit.Blogs
                 .WithColumn("ReadingCount").AsInt32()
                 .WithColumn("CreateTime").AsDateTime()
                 .WithColumn("Seo_Keywords").AsString(255).Nullable()
-                .WithColumn("Seo_Description").AsString(255).Nullable();
+                .WithColumn("Seo_Description").AsString(255).Nullable()
+                .WithColumn("Author").AsString(50).Nullable();
 
             Create.Table("PostCategoryRecordPostRecords")
                 .WithColumn("PostCategoryRecord_Id").AsAnsiString(32).PrimaryKey().ForeignKey(TableName<PostCategoryRecord>(), "Id").OnDelete(Rule.Cascade)

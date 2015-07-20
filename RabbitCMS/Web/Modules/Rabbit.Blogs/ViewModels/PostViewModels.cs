@@ -88,6 +88,12 @@ namespace Rabbit.Blogs.ViewModels
 
         public SeoModel Seo { get; set; }
 
+        /// <summary>
+        /// 作者。
+        /// </summary>
+        [DisplayName("作者"), StringLength(50)]
+        public string Author { get; set; }
+
         public static explicit operator PostEditViewModel(PostRecord record)
         {
             return new PostEditViewModel
@@ -104,7 +110,8 @@ namespace Rabbit.Blogs.ViewModels
                 Summary = record.Summary,
                 Tags = record.Tags,
                 Title = record.Title,
-                Seo = record.Seo
+                Seo = record.Seo,
+                Author = record.Author
             };
         }
     }
