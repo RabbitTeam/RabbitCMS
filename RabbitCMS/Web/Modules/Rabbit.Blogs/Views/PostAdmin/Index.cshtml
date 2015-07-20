@@ -1,1 +1,124 @@
-﻿
+﻿@helper PageStyles()
+{
+    <style type="text/css">
+        .table th, td {
+            text-align: center;
+        }
+    </style>
+}
+@helper PageScripts()
+{
+    <script src="~/Modules/Rabbit.Blogs/Scripts/table.js"></script>
+    <script src="~/Modules/Rabbit.Blogs/Scripts/common.js"></script>
+    <script type="text/javascript">
+        var dialog = $(".alert-danger").dialog();
+
+        //table
+        var table = (function() {
+            return $(".box").table({
+                dataSource: '@Url.Action("DataSource", new {category = ViewBag.Category})',
+                newTr: function (item, controller) {
+                    var managerTd = '<div class="btn-group"><button type="button" class="btn btn-primary btn-sm">编辑</button><button type="button" class="btn btn-danger btn-sm">删除</button></div>';
+
+                    var managerUrlFormat = '@Url.Action("Edit","PostAdmin",new{Id="1id1"})';
+
+                    var titleTd = $("<td />");
+                    titleTd.append($("<a href='" + managerUrlFormat.replace(/1id1/, item.Id) + "'></a>").append(item.Title));
+                    titleTd.append(" (" + $.formaterJSONDate(item.CreateTime, "yyyy-MM-dd HH:mm:ss") + ")");
+
+                    var tr = $("<tr />")
+                        .data({ id: item.Id, model: item })
+                        .append(titleTd)
+                        .append($("<td />").append(item.Status))
+                        .append($("<td />").append(item.CommentCount))
+                        .append($("<td />").append(item.ReadingCount))
+                        .append($("<td />").append(managerTd));
+
+                    tr.find(".btn-primary").click(function () {
+                        var btn = $(this);
+                        var tr = btn.parents("tr:first");
+                        location.href = managerUrlFormat.replace(/1id1/, tr.data("id"));
+                        //                        tr.data("id")
+                    });
+
+                    tr.find(".btn-danger").click(function () {
+                        var btn = $(this);
+                        var tr = btn.parents("tr:first");
+                        var id = tr.data("id");
+                        $.ajax({
+                            url: '@Url.Action("Delete")',
+                            type: 'post',
+                            data: { id: id },
+                            success: function () {
+                                btn.parents("tr:first").fadeOut(function () {
+                                    $(this).remove();
+                                    if (controller.find("tbody tr").length == 0) {
+                                        controller.load();
+                                    }
+                                });
+                            },
+                            error: function () {
+                                dialog.find("span").text("删除失败，请联系管理员！");
+                                dialog.show();
+                            }
+                        });
+                    });
+
+                    return tr;
+                }
+            });
+        })();
+    </script>
+}
+@{
+    Layout.Styles = PageStyles();
+    Layout.Scripts = PageScripts();
+    Layout.Title = "博客分类管理";
+}
+<div class="alert alert-danger alert-dismissable" style="display: none">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-ban"></i> <span>删除失败，请联系管理员!</span></h4>
+</div>
+<a href="@Url.Action("Add")" class="btn btn-primary" style="margin-bottom: 5px;width: 100px" id="btnAdd">
+    <i class="fa fa-plus"></i>
+    添加
+</a>
+<div class="box box-info">
+    <div class="box-header">
+        <h3 class="box-title">分类管理</h3>
+        <div class="box-tools">
+            <div class="input-group" style="width: 150px;">
+                <input type="text" name="table_search" id="table_search" class="form-control input-sm pull-right" placeholder="标题">
+                <div class="input-group-btn">
+                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>状态</th>
+                    <th>评论</th>
+                    <th>阅读</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div><!-- /.box-body -->
+    <div class="overlay" style="display: none">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="box-footer clearfix">
+        <ul class="pagination pagination-sm no-margin pull-right">
+            <li><a href="#"><</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">></a></li>
+        </ul>
+    </div>
+</div>

@@ -88,6 +88,10 @@
       <HintPath>..\..\..\packages\Rabbit.Components.Data.Migrators.1.0.0.7-beta\lib\net40\Rabbit.Components.Data.Migrators.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Rabbit.Components.Security, Version=0.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rabbit.Components.Security.0.0.0.2\lib\net40\Rabbit.Components.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Rabbit.Kernel, Version=1.0.1.7, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Rabbit.Kernel.1.0.1.7\lib\net40\Rabbit.Kernel.dll</HintPath>
       <Private>True</Private>
@@ -164,9 +168,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\table.js" />
     <Content Include="Views\PostAdmin\Index.cshtml" />
     <Content Include="Views\CategoryAdmin\Index.cshtml" />
+    <Content Include="Views\PostAdmin\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -190,7 +196,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\PostService.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
+    <Compile Include="ViewModels\PostViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Infrastructures\Rabbit.Infrastructures\Rabbit.Infrastructures.csproj">

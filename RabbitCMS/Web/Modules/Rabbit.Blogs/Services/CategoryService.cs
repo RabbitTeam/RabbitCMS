@@ -2,6 +2,7 @@
 using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Rabbit.Blogs.Services
@@ -9,6 +10,8 @@ namespace Rabbit.Blogs.Services
     public interface ICategoryService : IDependency
     {
         IQueryable<PostCategoryRecord> GetList(string titleKeywords = null);
+
+        IQueryable<PostCategoryRecord> GetList(IEnumerable<string> categoryIds);
 
         PostCategoryRecord Get(string id);
 
@@ -36,6 +39,13 @@ namespace Rabbit.Blogs.Services
                 table = table.Where(i => i.Title.Contains(titleKeywords));
 
             return table.OrderByDescending(i => i.CreateTime);
+        }
+
+        public IQueryable<PostCategoryRecord> GetList(IEnumerable<string> categoryIds)
+        {
+            var parameter = "," + string.Join(",", categoryIds) + ",";
+
+            return _repository.Value.Table.Where(i => parameter.Contains("," + i.Id + ","));
         }
 
         public PostCategoryRecord Get(string id)
