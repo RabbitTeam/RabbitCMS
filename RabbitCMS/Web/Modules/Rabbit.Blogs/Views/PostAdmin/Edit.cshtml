@@ -16,12 +16,15 @@
                 float: left;
                 padding: 5px 30px;
             }
+            .fastRoute a {
+                cursor: pointer;
+            }
     </style>
     <link href="~/Themes/TheAdmin/lib/iCheck/all.css" rel="stylesheet" />
 }
 @helper PageScripts()
 {
-    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform")
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform", "~/bundles/chineseHelper")
     <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
     <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.config.js"></script>
     <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.all.min.js"></script>
@@ -46,6 +49,28 @@
 
         var container = $(".box-info");
         var form = container.find("form");
+
+        var txtTitle = form.find("#Title");
+        var txtRoutePath = form.find("#Seo_RoutePath");
+
+        txtTitle.keyup(function () {
+            var value = $(this).val();
+            var result = $.chineseHelper.toPinYin(value).toLowerCase();
+            if (result.length > 50) {
+                result = $.chineseHelper.toPinYinFirst(value).toLowerCase();
+            }
+            txtRoutePath.val(result);
+        });
+        txtRoutePath.change(function() {
+            txtTitle.unbind("keyup");
+        });
+        var fastRoute = $(".fastRoute");
+        fastRoute.find("a:first").click(function () {
+            txtRoutePath.val($.chineseHelper.toPinYin(txtTitle.val()).toLowerCase());
+        });
+        fastRoute.find("a:last").click(function () {
+            txtRoutePath.val($.chineseHelper.toPinYinFirst(txtTitle.val()).toLowerCase());
+        });
 
         form.ajaxForm({
             beforeSerialize: function () {
@@ -124,7 +149,10 @@
                             <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.RoutePath)</label>
                             <div class="col-sm-10">
                                 <div class="col-sm-8">
-                                    @Html.TextBoxFor(model => model.Seo.RoutePath, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.Seo.RoutePath, new {@class = "form-control"})
+                                    <div class="fastRoute">
+                                        <a class="small">标题拼音</a> | <a class="small">标题拼音首字母</a>
+                                    </div>
                                 </div>
                                 <div class="col-sm-2">
                                     @Html.ValidationMessageFor(model => model.Seo.RoutePath)
@@ -164,8 +192,9 @@
                     </div>
                 </div>
                 <div class="box-body">
-                        @{
-                            var categoryList = Model.Categorys == null ? null : Model.Categorys.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                    @{
+                        var categoryList = WorkContext.Resolve<ICategoryService>().GetList();
+                        var selectedCategoryList = Model.Categorys == null ? new string[0] : Model.Categorys.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
                         }
                         @if (categoryList == null)
                         {
@@ -174,12 +203,12 @@
                         else
                         {
                             <ul class="categoryList">
-                                @foreach (var category in WorkContext.Resolve<ICategoryService>().GetList())
+                                @foreach (var category in categoryList)
                                 {
                                     var tagBuilder = new TagBuilder("input");
                                     tagBuilder.Attributes["type"] = "checkbox";
                                     tagBuilder.Attributes["value"] = category.Id;
-                                    if (categoryList.Contains(category.Id))
+                                    if (selectedCategoryList.Contains(category.Id))
                                     {
                                         tagBuilder.Attributes["checked"] = "checked";
                                     }

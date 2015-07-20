@@ -4,7 +4,6 @@ using Rabbit.Blogs.ViewModels;
 using Rabbit.Infrastructures.Data;
 using Rabbit.Infrastructures.Mvc;
 using Rabbit.Web.Mvc.UI.Admin;
-using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -66,12 +65,6 @@ namespace Rabbit.Blogs.Controllers
                 _categoryService.Add(record);
 
             return this.Success();
-        }
-
-        [HttpPost]
-        public JsonResult GetGuid()
-        {
-            return Json(Enumerable.Range(0, 10).Select(i => Guid.NewGuid().ToString("N")).ToArray());
         }
 
         [HttpPost]

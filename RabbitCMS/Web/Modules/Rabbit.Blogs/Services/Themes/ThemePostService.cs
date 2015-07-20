@@ -12,7 +12,7 @@ namespace Rabbit.Blogs.Services.Themes
 
         IQueryable<PostRecord> GetHomeList();
 
-        PostRecord Get(string routePath, string categoryRoutePath = null);
+        PostRecord Read(string routePath, string categoryRoutePath = null);
     }
 
     internal sealed class ThemePostService : IThemePostService
@@ -36,14 +36,17 @@ namespace Rabbit.Blogs.Services.Themes
             return Table().Where(i => i.ShowInIndex);
         }
 
-        public PostRecord Get(string routePath, string categoryRoutePath = null)
+        public PostRecord Read(string routePath, string categoryRoutePath = null)
         {
             var table = Table();
             if (!string.IsNullOrEmpty(categoryRoutePath))
                 table = table.Where(i => i.Categorys.Any(z => z.Seo.RoutePath == categoryRoutePath));
             table = table.Where(i => i.Seo.RoutePath == routePath);
 
-            return table.FirstOrDefault();
+            var record = table.FirstOrDefault();
+            if (record == null)
+                return null;
+            return record.Read();
         }
 
         #endregion Implementation of IThemePostService

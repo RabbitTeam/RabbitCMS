@@ -9,10 +9,7 @@
 {
     var category = ((IEnumerable<dynamic>)post.Categorys).FirstOrDefault();
     var routeValues = new RouteValueDictionary(new { area = "Rabbit.Blogs", post.Seo.RoutePath });
-    if (category != null)
-    {
-        routeValues.Add("CategoryRoutePath", category.Seo.RoutePath);
-    }
+    routeValues.Add("CategoryRoutePath", category != null ? category.Seo.RoutePath : "unclassified");
     var postUrl = Url.Action("Index", "Post", routeValues);
     string[] tagList = post.Tags == null ? new string[0] : post.Tags.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
     <div id="article-list">

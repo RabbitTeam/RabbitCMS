@@ -65,14 +65,12 @@ namespace Rabbit.Blogs.Controllers
 
         public ActionResult Add()
         {
-            var model = new PostEditViewModel
+            return View("Edit", new PostEditViewModel
             {
                 AllowComment = true,
                 ShowInIndex = true,
                 IsPublish = true
-            };
-            model.Id = model.Seo.RoutePath = Guid.NewGuid().ToString("N");
-            return View("Edit", model);
+            });
         }
 
         public ActionResult Edit(string id)

@@ -34,6 +34,7 @@ namespace Rabbit.Resources
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(GetScriptPath("Bootstrap/bootstrap.min.js")));
             bundles.Add(new StyleBundle("~/content/bootstrap").Include(GetContentPath("Bootstrap/bootstrap.min.css")));
             bundles.Add(new StyleBundle("~/content/font-awesome").Include(GetContentPath("font-awesome/css/font-awesome.min.css")));
+            bundles.Add(new ScriptBundle("~/bundles/chineseHelper").Include(GetScriptPath("ChineseHelper.js")));
         }
 
         private static string GetScriptPath(string path)

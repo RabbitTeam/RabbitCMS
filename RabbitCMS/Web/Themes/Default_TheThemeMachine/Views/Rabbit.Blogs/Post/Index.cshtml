@@ -51,12 +51,6 @@
     </div>
     <div class="centent-article">
         <figure class="thumbnail hidden-xs"><img width="460" height="279" src="http://wittsay.cc/wp-content/uploads/2015/06/1-130R91T233539-e1434119289395.jpg" class="attachment-full wp-post-image" alt="怎样做好的视频制作者"></figure>
-        @if (!string.IsNullOrEmpty(Model.Summary))
-        {
-            <blockquote>
-                @Html.Raw(Model.Summary)
-            </blockquote>
-        }
         @Html.Raw(Model.Content)
         <div class="zan-page bs-example">
             <ul class="pager">

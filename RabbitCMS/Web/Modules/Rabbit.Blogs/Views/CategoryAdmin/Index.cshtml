@@ -11,12 +11,15 @@
         .field-validation-error {
             color: #dd4b39;
         }
+        .fastRoute a {
+            cursor: pointer;
+        }
     </style>
     <link href="~/Themes/TheAdmin/lib/iCheck/all.css" rel="stylesheet" />
 }
 @helper PageScripts()
 {
-    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform")
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform", "~/bundles/chineseHelper")
     <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
     <script src="~/Modules/Rabbit.Blogs/Scripts/table.js"></script>
     <script type="text/javascript">
@@ -39,6 +42,31 @@
             var cKeywords = container.find("#Seo_Keywords");
             var cRoutePath = container.find("#Seo_RoutePath");
 
+            (function (txtTitle, txtRoutePath) {
+                txtTitle.keyup(function () {
+                        if (txtRoutePath.val().length > 0) {
+                            txtTitle.unbind("keyup");
+                            return;
+                        }
+                        var value = $(this).val();
+                        var result = $.chineseHelper.toPinYin(value).toLowerCase();
+                        if (result.length > 50) {
+                            result = $.chineseHelper.toPinYinFirst(value).toLowerCase();
+                        }
+                        txtRoutePath.val(result);
+                    });
+                txtRoutePath.change(function () {
+                    txtTitle.unbind("keyup");
+                });
+                var fastRoute = $(".fastRoute");
+                fastRoute.find("a:first").click(function () {
+                    txtRoutePath.val($.chineseHelper.toPinYin(txtTitle.val()).toLowerCase());
+                });
+                fastRoute.find("a:last").click(function () {
+                    txtRoutePath.val($.chineseHelper.toPinYinFirst(txtTitle.val()).toLowerCase());
+                });
+            })(cTitle,cRoutePath);
+
             var form = container.find("form");
 
             form.ajaxForm({
@@ -47,8 +75,7 @@
                 },
                 success: function (data) {
                     var id = cId.val();
-                    guidController.use(id);
-                    var isAdd = editor.isAdd;
+                    var isAdd = id == null || id.length == 0;
 
                     if (data.success) {
                         table.load();
@@ -70,7 +97,6 @@
             });
 
             return {
-                isAdd:true,
                 init: function (model) {
                     cId.val(model.Id || "");
                     cTitle.val(model.Title);
@@ -88,67 +114,8 @@
             };
         })();
 
-        var guidController = (function () {
-            var guids=@Html.Raw(JsonConvert.SerializeObject(Enumerable.Range(0, 10).Select(i => Guid.NewGuid().ToString("N"))));
-            var guidList = [];
-
-            function convertGuidList(array) {
-                var newArray = [];
-                $.each(array, function() {
-                    newArray.push({ value: this, use: false });
-                });
-                return newArray;
-            }
-
-            guidList = convertGuidList(guids);
-
-            function getGuid() {
-                $.ajax({
-                    url: '@Url.Action("GetGuid")',
-                    cache: false,
-                    async: true,
-                    success: function(data) {
-                        guidList = convertGuidList(data);
-                    }
-                });
-                return guidList;
-            }
-
-            return {
-                use:function(value) {
-                    $.each(guidList, function() {
-                        if (this.value == value) {
-                            this.use = true;
-                            return false;
-                        }
-                        return true;
-                    });
-                },
-                getGuid:function() {
-                    var get = function() {
-                        var item = null;
-                        $.each(guidList, function() {
-                            if (this.use == false) {
-                                item = this;
-                                return false;
-                            }
-                            return true;
-                        });
-                        return item;
-                    };
-                    var result = get();
-                    if (result == null) {
-                        guidList = getGuid();
-                        result = get();
-                    }
-                    return result.value;
-                }
-            };
-        })();
-
         $("#btnAdd").click(function () {
-            editor.isAdd = true;
-            editor.init({ Visible: true,Id:guidController.getGuid(),Seo:{RoutePath:guidController.getGuid()} });
+            editor.init({ Visible: true });
         });
 
         //table
@@ -168,7 +135,6 @@
                     tr.find(".btn-primary").click(function () {
                         var btn = $(this);
                         var tr = btn.parents("tr:first");
-                        editor.isAdd = false;
                         editor.init(tr.data("model"));
                     });
 
@@ -288,6 +254,9 @@
                 <div class="col-sm-10">
                     <div class="col-sm-8">
                         @Html.TextBoxFor(model => model.Seo.RoutePath, new { @class = "form-control" })
+                        <div class="fastRoute">
+                            <a class="small">标题拼音</a> | <a class="small">标题拼音首字母</a>
+                        </div>
                     </div>
                     <div class="col-sm-2">
                         @Html.ValidationMessageFor(model => model.Seo.RoutePath)
