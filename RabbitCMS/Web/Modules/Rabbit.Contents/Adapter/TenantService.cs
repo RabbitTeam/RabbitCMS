@@ -1,11 +1,11 @@
-﻿using Rabbit.Blogs.Services;
+﻿using Rabbit.Contents.Services;
 using Rabbit.Kernel.Extensions;
 using Rabbit.Kernel.Settings;
 using System;
 using System.Collections.Concurrent;
 using System.Globalization;
 
-namespace Rabbit.Blogs.Adapter
+namespace Rabbit.Contents.Adapter
 {
     internal class DefaultTenant : ITenant
     {

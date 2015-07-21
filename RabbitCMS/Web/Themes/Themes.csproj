@@ -345,11 +345,11 @@
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.eot" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.ttf" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.woff" />
-    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Home\Index.cshtml" />
-    <Content Include="Default_TheThemeMachine\Views\Layout.cshtml" />
-    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Post\Index.cshtml" />
-    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Category\Index.cshtml" />
-    <Content Include="Default_TheThemeMachine\Views\Rabbit.Blogs\Author\Index.cshtml" />
+    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Home\Index.cshtml" />
+    <Content Include="TheThemeMachine\Views\Layout.cshtml" />
+    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Post\Index.cshtml" />
+    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Category\Index.cshtml" />
+    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Author\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -359,7 +359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TheAdmin\Theme.txt" />
-    <Content Include="Default_TheThemeMachine\Theme.txt" />
+    <Content Include="TheThemeMachine\Theme.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +370,10 @@
     <ProjectReference Include="..\Modules\Rabbit.Blogs\Rabbit.Blogs.csproj">
       <Project>{895e5030-e5ee-4317-899c-1d23f06d794c}</Project>
       <Name>Rabbit.Blogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Rabbit.Contents\Rabbit.Contents.csproj">
+      <Project>{9e0ecfa6-4ce3-41ea-9b94-67e75db5ee04}</Project>
+      <Name>Rabbit.Contents</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,157 @@
+﻿@using System.Web.Optimization
+@model Rabbit.Contents.ViewModels.SiteSettingsViewModel
+@helper PageStyles()
+{
+    <style type="text/css">
+        .field-validation-error {
+            color: #dd4b39;
+        }
+    </style>
+    <link href="~/Themes/TheAdmin/lib/iCheck/all.css" rel="stylesheet" />
+}
+@helper PageScripts()
+{
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform")
+    <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+
+        var container = $(".box-info");
+        var form = container.find("form");
+
+        var dialog=$(".alert-dismissable");
+
+        form.ajaxForm({
+            beforeSerialize: function () {
+            },
+            beforeSubmit: function (array, f) {
+                return f.valid();
+            },
+            success: function (data) {
+                dialog.removeClass("alert-danger", "alert-success");
+                if (data.success) {
+                    dialog.addClass("alert-success");
+                    dialog.find("span").html("保存成功！");
+                } else {
+                    dialog.addClass("alert-danger");
+                    dialog.find("span").html("保存失败，"+data.message);
+                }
+                dialog.fadeIn(function() {
+                    setTimeout(function() {
+                        dialog.fadeOut();
+                    }, 1500);
+                });
+            },
+            error: function () {
+                dialog.removeClass("alert-danger", "alert-success").addClass("alert-danger");
+                dialog.find("span").html("保存失败，请联系管理员！");
+                dialog.fadeIn(function () {
+                    setTimeout(function () {
+                        dialog.fadeOut();
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+}
+@{
+    Layout.Styles = PageStyles();
+    Layout.Scripts = PageScripts();
+    Layout.Title = "站点设置";
+}
+<div class="alert alert-danger alert-dismissable" style="display: none">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-ban"></i> <span>删除失败，请联系管理员!</span></h4>
+</div>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">站点设置</h3>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    <form method="POST" class="form-horizontal">
+        @Html.AntiForgeryToken()
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Name)</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Copyright)</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.Copyright,3,40, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(model => model.Copyright)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.ThemeName)</label>
+                <div class="col-sm-10">
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.ThemeName, new {@class = "form-control"})
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(model => model.ThemeName)
+                    </div>
+                </div>
+            </div>
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title" data-widget="collapse" style="cursor: pointer">SEO</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse" title="折叠"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Title)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Seo.Title, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.Seo.Title)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Keywords)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Seo.Keywords, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.Seo.Keywords)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Description)</label>
+                            <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(model => model.Seo.Description,3,40, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(model => model.Seo.Description)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer" style="text-align: center">
+            <button type="submit" class="btn btn-info">保存</button>
+            <button type="submit" class="btn btn-default">取消</button>
+        </div><!-- /.box-footer -->
+    </form>
+</div>

@@ -1,4 +1,4 @@
-﻿Name: Default_TheThemeMachine
+﻿Name: TheThemeMachine
 Author: MaJian
 Description: 默认的核心主题。
 Version: 1.0.0.0

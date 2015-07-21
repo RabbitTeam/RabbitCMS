@@ -185,8 +185,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapter\TenantService.cs" />
-    <Compile Include="Adapter\ThemeSelector.cs" />
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\CategoryAdminController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
@@ -205,7 +203,6 @@
     <Compile Include="Routes.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\PostService.cs" />
-    <Compile Include="Services\SiteService.cs" />
     <Compile Include="Services\Themes\ThemeCategoryService.cs" />
     <Compile Include="Services\Themes\ThemePostService.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />

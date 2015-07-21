@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,6 +51,12 @@
       <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentMigrator">
+      <HintPath>..\..\..\packages\FluentMigrator.1.5.1.0\lib\40\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner">
+      <HintPath>..\..\..\packages\FluentMigrator.Runner.1.5.1.0\lib\40\FluentMigrator.Runner.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -62,6 +69,9 @@
     <Reference Include="Rabbit.Components.Data, Version=1.2.2.4, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Rabbit.Components.Data.1.2.2.4-beta1\lib\net40\Rabbit.Components.Data.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Rabbit.Components.Data.Migrators">
+      <HintPath>..\..\..\packages\Rabbit.Components.Data.Migrators.1.0.0.7-beta\lib\net40\Rabbit.Components.Data.Migrators.dll</HintPath>
     </Reference>
     <Reference Include="Rabbit.Components.Security">
       <HintPath>..\..\..\packages\Rabbit.Components.Security.0.0.0.2\lib\net40\Rabbit.Components.Security.dll</HintPath>
@@ -140,6 +150,7 @@
     <Content Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Index2.cshtml" />
+    <Content Include="Views\SiteAdmin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -151,10 +162,23 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapter\TenantService.cs" />
+    <Compile Include="Adapter\ThemeSelector.cs" />
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SiteAdminController.cs" />
+    <Compile Include="Migrators.cs" />
+    <Compile Include="Models\SiteSettingsRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routes.cs" />
+    <Compile Include="Services\SiteService.cs" />
+    <Compile Include="ViewModels\SiteSettingsViewModels.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructures\Rabbit.Infrastructures\Rabbit.Infrastructures.csproj">
+      <Project>{8531192e-27f0-4385-99dd-d67f58bec89c}</Project>
+      <Name>Rabbit.Infrastructures</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

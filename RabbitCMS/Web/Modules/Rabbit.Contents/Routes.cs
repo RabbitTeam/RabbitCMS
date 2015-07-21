@@ -19,6 +19,9 @@ namespace Rabbit.Contents
 
             routes.MapRabbitRoute("Rabbit.Contents_Default", "Admin/Content/{controller}/{action}/{id}",
                 area, new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+
+            routes.MapRabbitRoute("Rabbit.Contents_Home", "Admin",
+                area, new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
 
         #endregion Implementation of IRouteProvider

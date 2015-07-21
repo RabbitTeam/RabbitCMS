@@ -1,8 +1,8 @@
-﻿using Rabbit.Blogs.Services;
+﻿using Rabbit.Contents.Services;
 using Rabbit.Web.Themes;
 using System.Web.Routing;
 
-namespace Rabbit.Blogs.Adapter
+namespace Rabbit.Contents.Adapter
 {
     internal sealed class ThemeSelector : IThemeSelector
     {
