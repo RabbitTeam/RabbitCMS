@@ -345,11 +345,11 @@
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.eot" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.ttf" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.woff" />
-    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Home\Index.cshtml" />
     <Content Include="TheThemeMachine\Views\Layout.cshtml" />
     <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Post\Index.cshtml" />
     <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Category\Index.cshtml" />
     <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Author\Index.cshtml" />
+    <Content Include="TheThemeMachine\Views\Items\BlogMenu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

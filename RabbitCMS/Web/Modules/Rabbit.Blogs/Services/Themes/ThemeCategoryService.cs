@@ -9,6 +9,8 @@ namespace Rabbit.Blogs.Services.Themes
     public interface IThemeCategoryService : IDependency
     {
         IQueryable<PostCategoryRecord> GetList();
+
+        PostCategoryRecord Get(string routePath);
     }
 
     internal sealed class ThemeCategoryService : IThemeCategoryService
@@ -25,6 +27,11 @@ namespace Rabbit.Blogs.Services.Themes
         public IQueryable<PostCategoryRecord> GetList()
         {
             return _repository.Value.Table.Where(i => i.Visible).OrderByDescending(i => i.CreateTime);
+        }
+
+        public PostCategoryRecord Get(string routePath)
+        {
+            return _repository.Value.Table.FirstOrDefault(i => i.Seo.RoutePath == routePath);
         }
 
         #endregion Implementation of IThemeCategoryService

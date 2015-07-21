@@ -190,7 +190,6 @@
     <Compile Include="Controllers\PostAdminController.cs" />
     <Compile Include="Controllers\Themes\AuthorController.cs" />
     <Compile Include="Controllers\Themes\CategoryController.cs" />
-    <Compile Include="Controllers\Themes\HomeController.cs" />
     <Compile Include="Controllers\Themes\PostController.cs" />
     <Compile Include="Controllers\Themes\TagController.cs" />
     <Compile Include="Mappings.cs" />
@@ -205,6 +204,7 @@
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Services\Themes\ThemeCategoryService.cs" />
     <Compile Include="Services\Themes\ThemePostService.cs" />
+    <Compile Include="Shapes\ComponentShapes.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
     <Compile Include="ViewModels\PostViewModels.cs" />
   </ItemGroup>

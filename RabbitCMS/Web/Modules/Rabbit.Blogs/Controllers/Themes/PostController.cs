@@ -16,6 +16,9 @@ namespace Rabbit.Blogs.Controllers.Themes
 
         public ActionResult Index(string categoryRoutePath, string routePath)
         {
+            if (string.IsNullOrEmpty(routePath))
+                return HttpNotFound();
+
             var model = _postService.Read(routePath, categoryRoutePath);
             if (model == null)
                 return HttpNotFound();

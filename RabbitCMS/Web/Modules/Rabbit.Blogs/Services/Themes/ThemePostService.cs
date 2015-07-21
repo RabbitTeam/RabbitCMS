@@ -10,6 +10,8 @@ namespace Rabbit.Blogs.Services.Themes
     {
         IQueryable<PostRecord> GetList();
 
+        IQueryable<PostRecord> GetListByCategory(string categoryRoutePath);
+
         IQueryable<PostRecord> GetHomeList();
 
         PostRecord Read(string routePath, string categoryRoutePath = null);
@@ -18,10 +20,12 @@ namespace Rabbit.Blogs.Services.Themes
     internal sealed class ThemePostService : IThemePostService
     {
         private readonly Lazy<IRepository<PostRecord>> _repository;
+        private readonly IThemeCategoryService _categoryService;
 
-        public ThemePostService(Lazy<IRepository<PostRecord>> repository)
+        public ThemePostService(Lazy<IRepository<PostRecord>> repository, IThemeCategoryService categoryService)
         {
             _repository = repository;
+            _categoryService = categoryService;
         }
 
         #region Implementation of IThemePostService
@@ -29,6 +33,12 @@ namespace Rabbit.Blogs.Services.Themes
         public IQueryable<PostRecord> GetList()
         {
             return Table();
+        }
+
+        public IQueryable<PostRecord> GetListByCategory(string categoryRoutePath)
+        {
+            var category = _categoryService.Get(categoryRoutePath);
+            return category == null ? null : Table().Where(i => i.Categorys.Any(z => z.Id == category.Id));
         }
 
         public IQueryable<PostRecord> GetHomeList()

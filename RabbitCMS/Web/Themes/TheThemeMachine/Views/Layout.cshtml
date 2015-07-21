@@ -18,27 +18,7 @@
 </head>
 <body class="home blog">
 <header id="zan-header" class="navbar navbar-inverse">
-    <nav class="container">
-        <a href="~/">
-            <div class="navbar-brand"></div>
-        </a>
-        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span> <span class="fa fa-reorder fa-lg"></span> 
-        </button>
-        <div class="navbar-collapse bs-navbar-collapse collapse">
-            <ul id="menu-%e8%8f%9c%e5%8d%951" class="nav navbar-nav">
-                <li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-6">
-                    <a href="http://wittsay.cc/"><i class="fa fa-home"></i> WittSay</a>
-                </li><li id="menu-item-8" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-8">
-                    <a href="http://wittsay.cc/w3cnews/category/w3c"><i class="fa fa-file-text"></i> 互联网</a>
-                </li><li id="menu-item-9" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9">
-                    <a href="http://wittsay.cc/w3cnews/category/view"><i class="fa fa-comment"></i> 即兴评论</a>
-                </li><li id="menu-item-10" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10">
-                    <a href="http://wittsay.cc/w3cnews/category/theft"><i class="fa fa-quote-left"></i> 转载</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    @Display.BlogMenu()
     <div id="if-fixed" class="pull-right visible-lg visible-md">
         <i class="fa fa-thumb-tack"></i> <input type="checkbox">
     </div>

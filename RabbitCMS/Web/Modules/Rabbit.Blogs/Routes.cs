@@ -17,10 +17,13 @@ namespace Rabbit.Blogs
         {
             const string area = "Rabbit.Blogs";
 
-            routes.MapRabbitRoute("Rabbit.Blogs_Home", string.Empty,
-                area, new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+            routes.MapRabbitRoute("Rabbit.Blogs_Home", "page/{pageIndex}",
+                area, new { controller = "Category", action = "Index" });
 
             routes.MapRabbitRoute("Rabbit.Blogs_Categorys", "category/{RoutePath}",
+                area, new { controller = "Category", action = "Index", pageIndex = 1 });
+
+            routes.MapRabbitRoute("Rabbit.Blogs_Categorys", "category/{RoutePath}/page/{pageIndex}",
                 area, new { controller = "Category", action = "Index" });
 
             routes.MapRabbitRoute("Rabbit.Blogs_Authors", "author/{author}",
@@ -31,6 +34,9 @@ namespace Rabbit.Blogs
 
             routes.MapRabbitRoute("Rabbit.Blogs_Posts", "{CategoryRoutePath}/{RoutePath}",
                 area, new { controller = "Post", action = "Index", CategoryRoutePath = UrlParameter.Optional });
+
+            routes.MapRabbitRoute("Rabbit.Blogs_Home", string.Empty,
+                area, new { controller = "Category", action = "Index", pageIndex = 1 });
 
             routes.MapRabbitRoute("Rabbit.Blogs_Default", "Admin/Blogs/{controller}/{action}/{id}",
                 area, new { controller = "Home", action = "Index", id = UrlParameter.Optional });
