@@ -4,7 +4,7 @@
 <!--<![endif]-->
 <head>
     <link type="text/css" media="all" href="http://wittsay.cc/wp-content/cache/autoptimize/css/autoptimize_9bf3714a9c3b33b5dba6e30a4b2297ae.css" rel="stylesheet"/>
-    <title>@(Model.Seo != null ? Model.Seo.Title : string.Empty)@(Model.AppendTenantName == true ? " - " + WorkContext.CurrentTenant.TenantName : string.Empty)</title>
+    <title>@(Model.Seo != null ? Model.Seo.Title : string.Empty)@(Model.AppendTenantName is bool?(Model.AppendTenantName == true ? " - " + WorkContext.CurrentTenant.TenantName : string.Empty): WorkContext.CurrentTenant.TenantName)</title>
     <meta charset="utf-8">
     @if (Model.Seo != null)
     {
