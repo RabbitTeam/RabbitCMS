@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,12 +47,12 @@
       <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentMigrator, Version=1.5.1.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\FluentMigrator.1.5.1.0\lib\40\FluentMigrator.dll</HintPath>
+    <Reference Include="FluentMigrator, Version=1.6.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\FluentMigrator.1.6.0\lib\40\FluentMigrator.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentMigrator.Runner, Version=1.5.1.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\FluentMigrator.Runner.1.5.1.0\lib\40\FluentMigrator.Runner.dll</HintPath>
+    <Reference Include="FluentMigrator.Runner, Version=1.6.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\FluentMigrator.Runner.1.6.0\lib\40\FluentMigrator.Runner.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -64,19 +65,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Rabbit.Components.Data, Version=1.2.2.4, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Rabbit.Components.Data.1.2.2.4-beta1\lib\net40\Rabbit.Components.Data.dll</HintPath>
+      <HintPath>..\..\..\packages\Rabbit.Components.Data.1.2.2.4-beta2\lib\net45\Rabbit.Components.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Rabbit.Components.Data.Migrators, Version=1.0.0.7, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Rabbit.Components.Data.Migrators.1.0.0.7-beta\lib\net40\Rabbit.Components.Data.Migrators.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rabbit.Components.Security, Version=0.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Rabbit.Components.Security.0.0.0.2\lib\net40\Rabbit.Components.Security.dll</HintPath>
+    <Reference Include="Rabbit.Components.Security, Version=0.0.0.3, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rabbit.Components.Security.0.0.0.3\lib\net40\Rabbit.Components.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rabbit.Components.Security.Web, Version=0.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Rabbit.Components.Security.Web.0.0.0.4\lib\net40\Rabbit.Components.Security.Web.dll</HintPath>
+    <Reference Include="Rabbit.Components.Security.Web, Version=0.0.0.6, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rabbit.Components.Security.Web.0.0.0.6\lib\net40\Rabbit.Components.Security.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Rabbit.Kernel, Version=1.0.1.7, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
@@ -146,7 +147,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Account\SignIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
