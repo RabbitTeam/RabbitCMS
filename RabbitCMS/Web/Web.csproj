@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,11 +55,13 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator">
-      <HintPath>..\packages\FluentMigrator.1.5.1.0\lib\40\FluentMigrator.dll</HintPath>
+    <Reference Include="FluentMigrator, Version=1.6.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentMigrator.1.6.0\lib\40\FluentMigrator.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="FluentMigrator.Runner">
-      <HintPath>..\packages\FluentMigrator.Runner.1.5.1.0\lib\40\FluentMigrator.Runner.dll</HintPath>
+    <Reference Include="FluentMigrator.Runner, Version=1.6.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentMigrator.Runner.1.6.0\lib\40\FluentMigrator.Runner.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
@@ -84,19 +87,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="Rabbit.Components.Data, Version=1.2.2.4, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rabbit.Components.Data.1.2.2.4-beta1\lib\net40\Rabbit.Components.Data.dll</HintPath>
+      <HintPath>..\packages\Rabbit.Components.Data.1.2.2.4-beta2\lib\net45\Rabbit.Components.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rabbit.Components.Data.EntityFramework, Version=1.1.4.6, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rabbit.Components.Data.EntityFramework.1.1.4.6\lib\net45\Rabbit.Components.Data.EntityFramework.dll</HintPath>
+    <Reference Include="Rabbit.Components.Data.EntityFramework, Version=1.1.4.7, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rabbit.Components.Data.EntityFramework.1.1.4.7-beta1\lib\net45\Rabbit.Components.Data.EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Rabbit.Components.Data.Migrators, Version=1.0.0.7, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
       <HintPath>..\packages\Rabbit.Components.Data.Migrators.1.0.0.7-beta\lib\net40\Rabbit.Components.Data.Migrators.dll</HintPath>
@@ -112,11 +116,13 @@
     <Reference Include="Rabbit.Components.Logging.NLog.Web">
       <HintPath>..\packages\Rabbit.Components.Logging.NLog.Web.1.0.0.1\lib\net40\Rabbit.Components.Logging.NLog.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Rabbit.Components.Security">
-      <HintPath>..\packages\Rabbit.Components.Security.0.0.0.2\lib\net40\Rabbit.Components.Security.dll</HintPath>
+    <Reference Include="Rabbit.Components.Security, Version=0.0.0.3, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rabbit.Components.Security.0.0.0.3\lib\net40\Rabbit.Components.Security.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Rabbit.Components.Security.Web">
-      <HintPath>..\packages\Rabbit.Components.Security.Web.0.0.0.4\lib\net40\Rabbit.Components.Security.Web.dll</HintPath>
+    <Reference Include="Rabbit.Components.Security.Web, Version=0.0.0.6, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rabbit.Components.Security.Web.0.0.0.6\lib\net40\Rabbit.Components.Security.Web.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Rabbit.Components.Web.SignalR">
       <HintPath>..\packages\Rabbit.Components.Web.SignalR.1.0.0.1\lib\net45\Rabbit.Components.Web.SignalR.dll</HintPath>
