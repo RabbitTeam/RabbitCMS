@@ -29,7 +29,7 @@ namespace Rabbit.Contents
                 {
                     Id = Guid.NewGuid().ToString("N"),
                     Name = "RabbitHub",
-                    ThemeName = "Default_TheThemeMachine",
+                    ThemeName = "TheThemeMachine",
                     Copyright = "Copyright &copy; 2015 RabbitHub. All rights reserved.",
                     Seo_Title = "RabbitCMS",
                     Seo_Keywords = "RabbitCMS,RabbitHub,Rabbit博客,兔子博客",

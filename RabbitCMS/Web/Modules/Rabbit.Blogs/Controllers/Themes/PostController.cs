@@ -41,7 +41,7 @@ namespace Rabbit.Blogs.Controllers.Themes
             ViewBag.AppendTenantName = false;
 
             var siteSettings = _siteSettingsService.Get();
-            return List(pageIndex, _postService.GetHomeList(), siteSettings.Seo);
+            return List(pageIndex, _postService.GetHomeList(), siteSettings.Seo, true);
         }
 
         public ActionResult ListCategorys(string routePath, int pageIndex)
