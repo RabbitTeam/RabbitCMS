@@ -31,7 +31,7 @@ namespace Rabbit.Blogs
                     menu
                         .Position("5")
                         .LocalNavigation()
-                        .Icon("menu-icon fa fa-tachometer")
+                        .Icon("menu-icon fa fa-th-list")
                         .Add(T("分类管理"), i => i.Action("Index", "CategoryAdmin", new { Area = area }).LocalNavigation()
                             .Add(T("添加分类"), z => z.Action("Add", "CategoryAdmin", new { Area = area }))
                             .Add(T("编辑分类"), z => z.Action("Edit", "CategoryAdmin", new { Area = area })))

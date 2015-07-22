@@ -31,7 +31,7 @@ namespace Rabbit.Contents
                     menu
                         .Position("5")
                         .LocalNavigation()
-                        .Icon("menu-icon fa fa-tachometer")
+                        .Icon("menu-icon fa fa-cog")
                         .Add(T("站点设置"), i => i.Action("Index", "SiteAdmin", new { Area = area }).LocalNavigation())
                 );
         }
