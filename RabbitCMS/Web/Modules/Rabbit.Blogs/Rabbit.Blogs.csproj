@@ -173,6 +173,7 @@
     <Content Include="Views\PostAdmin\Index.cshtml" />
     <Content Include="Views\CategoryAdmin\Index.cshtml" />
     <Content Include="Views\PostAdmin\Edit.cshtml" />
+    <Content Include="Views\CommentAdmin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -188,6 +189,7 @@
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\Api\CommentController.cs" />
     <Compile Include="Controllers\CategoryAdminController.cs" />
+    <Compile Include="Controllers\CommentAdminController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
     <Compile Include="Controllers\Themes\FeedController.cs" />
     <Compile Include="Controllers\Themes\PostController.cs" />
@@ -202,11 +204,13 @@
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Services\Themes\ThemeCategoryService.cs" />
+    <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\Themes\ThemeCommentService.cs" />
     <Compile Include="Services\Themes\ThemePostService.cs" />
     <Compile Include="Services\Themes\ThemeTagService.cs" />
     <Compile Include="Shapes\ComponentShapes.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
+    <Compile Include="ViewModels\CommentViewModels.cs" />
     <Compile Include="ViewModels\PostViewModels.cs" />
     <Compile Include="ViewModels\Themes\PostDetailedViewModel.cs" />
   </ItemGroup>
@@ -224,9 +228,7 @@
       <Name>Rabbit.Users</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Feed\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

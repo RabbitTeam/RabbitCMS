@@ -1,7 +1,7 @@
 ﻿using Rabbit.Blogs.Models;
 using Rabbit.Blogs.Services;
-using Rabbit.Blogs.Services.Themes;
 using Rabbit.Infrastructures.Data;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -13,10 +13,10 @@ namespace Rabbit.Blogs.Controllers.Api
 {
     public class CommentController : ApiController
     {
-        private readonly IThemeCommentService _commentService;
+        private readonly ICommentService _commentService;
         private readonly IPostService _postService;
 
-        public CommentController(IThemeCommentService commentService, IPostService postService)
+        public CommentController(ICommentService commentService, IPostService postService)
         {
             _commentService = commentService;
             _postService = postService;
@@ -74,10 +74,13 @@ namespace Rabbit.Blogs.Controllers.Api
 
         public async Task<HttpResponseMessage> Delete(string id)
         {
-            if (!await _commentService.Exist(id))
+            var isBatch = id.Contains(",");
+            if (!isBatch && !await _commentService.Exist(id))
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "找不到评论信息！");
 
-            _commentService.Delete(id);
+            var ids = isBatch ? id.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) : new[] { id };
+
+            _commentService.Delete(ids);
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }

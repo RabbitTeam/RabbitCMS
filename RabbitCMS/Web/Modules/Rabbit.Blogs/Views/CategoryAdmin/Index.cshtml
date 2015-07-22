@@ -169,7 +169,7 @@
 @{
     Layout.Styles = PageStyles();
     Layout.Scripts = PageScripts();
-    Layout.Title = "博客分类管理";
+    Layout.Title = "分类管理";
 }
 <div class="alert alert-danger alert-dismissable" style="display: none">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -186,7 +186,7 @@
             <div class="input-group" style="width: 150px;">
                 <input type="text" name="table_search" id="table_search" class="form-control input-sm pull-right" placeholder="标题">
                 <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-sm btn-default btn-reload"><i class="fa fa-search"></i></button>
                 </div>
             </div>
         </div>
@@ -199,20 +199,7 @@
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>.NET BUG(1)</td>
-                    <td>
-                        <span class="label label-success">显示</span>
-                    </td>
-                    <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary btn-sm">编辑</button>
-                            <button type="button" class="btn btn-danger btn-sm">删除</button>
-                        </div>
-                    </td>
-                </tr>
+            </thead><tbody>
             </tbody>
         </table>
     </div><!-- /.box-body -->
@@ -220,13 +207,7 @@
         <i class="fa fa-refresh fa-spin"></i>
     </div>
     <div class="box-footer clearfix">
-        <ul class="pagination pagination-sm no-margin pull-right">
-            <li><a href="#"><</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">></a></li>
-        </ul>
+        <ul class="pagination pagination-sm no-margin pull-right"></ul>
     </div>
 </div>
 <div class="box box-success" style="display:none">

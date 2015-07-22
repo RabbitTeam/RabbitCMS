@@ -2,23 +2,13 @@
 using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Rabbit.Blogs.Services.Themes
 {
     public interface IThemeCommentService : IDependency
     {
         IQueryable<PostCommentRecord> GetNewestList(int? count = null);
-
-        void Add(PostCommentRecord record);
-
-        IQueryable<PostCommentRecord> GetListByPost(string postId);
-
-        void Delete(string id);
-
-        Task<bool> Exist(string id);
     }
 
     internal sealed class ThemeCommentService : IThemeCommentService
@@ -38,27 +28,6 @@ namespace Rabbit.Blogs.Services.Themes
             if (count.HasValue)
                 table = table.Take(count.Value);
             return table;
-        }
-
-        public void Add(PostCommentRecord record)
-        {
-            _repository.Value.Create(record);
-        }
-
-        public IQueryable<PostCommentRecord> GetListByPost(string postId)
-        {
-            return Table().OrderBy(i => i.CreateTime).Where(i => i.Post.Id == postId);
-        }
-
-        public void Delete(string id)
-        {
-            var repository = _repository.Value;
-            repository.Delete(i => i.Id == id);
-        }
-
-        public Task<bool> Exist(string id)
-        {
-            return _repository.Value.Table.AnyAsync(i => i.Id == id);
         }
 
         #endregion Implementation of IThemeCommentService

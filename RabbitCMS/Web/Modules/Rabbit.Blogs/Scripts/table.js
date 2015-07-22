@@ -55,7 +55,7 @@
                 });
             }
         };
-        $(".box-tools button").click(function () {
+        $(".box-tools .btn-reload").click(function () {
             tableController.load();
         });
 

@@ -18,7 +18,7 @@
             return $(".box").table({
                 dataSource: '@Url.Action("DataSource", new {category = ViewBag.Category})',
                 newTr: function (item, controller) {
-                    var managerTd = '<div class="btn-group"><button type="button" class="btn btn-primary btn-sm">编辑</button><button type="button" class="btn btn-danger btn-sm">删除</button></div>';
+                    var managerTd = '<div class="btn-group"><button type="button" class="btn btn-primary btn-sm">编辑</button><button type="button" class="btn btn-danger btn-sm">删除</button><button type="button" class="btn btn-sm btn-comments">评论</button></div>';
 
                     var managerUrlFormat = '@Url.Action("Edit","PostAdmin",new{Id="1id1"})';
 
@@ -38,7 +38,13 @@
                         var btn = $(this);
                         var tr = btn.parents("tr:first");
                         location.href = managerUrlFormat.replace(/1id1/, tr.data("id"));
-                        //                        tr.data("id")
+                    });
+
+                    tr.find(".btn-comments").click(function () {
+                        var commentManagerUrlFormat = '@Url.Action("Index","CommentAdmin",new {postId="1id1"})';
+                        var btn = $(this);
+                        var tr = btn.parents("tr:first");
+                        location.href = commentManagerUrlFormat.replace(/1id1/, tr.data("id"));
                     });
 
                     tr.find(".btn-danger").click(function () {
@@ -73,7 +79,7 @@
 @{
     Layout.Styles = PageStyles();
     Layout.Scripts = PageScripts();
-    Layout.Title = "博客分类管理";
+    Layout.Title = "文章管理";
 }
 <div class="alert alert-danger alert-dismissable" style="display: none">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -85,12 +91,12 @@
 </a>
 <div class="box box-info">
     <div class="box-header">
-        <h3 class="box-title">分类管理</h3>
+        <h3 class="box-title">文章管理</h3>
         <div class="box-tools">
             <div class="input-group" style="width: 150px;">
                 <input type="text" name="table_search" id="table_search" class="form-control input-sm pull-right" placeholder="标题">
                 <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-sm btn-default btn-reload"><i class="fa fa-search"></i></button>
                 </div>
             </div>
         </div>
@@ -113,12 +119,6 @@
         <i class="fa fa-refresh fa-spin"></i>
     </div>
     <div class="box-footer clearfix">
-        <ul class="pagination pagination-sm no-margin pull-right">
-            <li><a href="#"><</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">></a></li>
-        </ul>
+        <ul class="pagination pagination-sm no-margin pull-right"></ul>
     </div>
 </div>

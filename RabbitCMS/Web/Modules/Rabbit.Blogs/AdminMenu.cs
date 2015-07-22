@@ -38,6 +38,7 @@ namespace Rabbit.Blogs
                         .Add(T("文章管理"), i => i.Action("Index", "PostAdmin", new { Area = area }).LocalNavigation()
                             .Add(T("添加文章"), z => z.Action("Add", "PostAdmin", new { Area = area }))
                             .Add(T("编辑文章"), z => z.Action("Edit", "PostAdmin", new { Area = area })))
+                        .Add(T("评论管理"), i => i.Action("Index", "CommentAdmin", new { Area = area }).LocalNavigation())
                 );
         }
 
