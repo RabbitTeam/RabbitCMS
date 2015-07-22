@@ -1,5 +1,6 @@
 ﻿using Rabbit.Blogs.Services.Themes;
 using Rabbit.Kernel.Localization;
+using Rabbit.Kernel.Works;
 using Rabbit.Web.Mvc.DisplayManagement;
 using Rabbit.Web.Mvc.DisplayManagement.Descriptors;
 using System.Linq;
@@ -11,22 +12,16 @@ namespace Rabbit.Blogs.Shapes
         #region Field
 
         private readonly IShapeFactory _shapeFactory;
-        private readonly IThemeCategoryService _categoryService;
-        private readonly IThemePostService _postService;
-        private readonly IThemeCommentService _commentService;
-        private readonly IThemeTagService _tagService;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         #endregion Field
 
         #region Constructor
 
-        public ComponentShapes(IShapeFactory shapeFactory, IThemeCategoryService categoryService, IThemePostService postService, IThemeCommentService commentService, IThemeTagService tagService)
+        public ComponentShapes(IShapeFactory shapeFactory, IWorkContextAccessor workContextAccessor)
         {
             _shapeFactory = shapeFactory;
-            _categoryService = categoryService;
-            _postService = postService;
-            _commentService = commentService;
-            _tagService = tagService;
+            _workContextAccessor = workContextAccessor;
 
             T = NullLocalizer.Instance;
         }
@@ -53,7 +48,8 @@ namespace Rabbit.Blogs.Shapes
                 .OnDisplaying(displaying =>
                 {
                     var shape = displaying.Shape;
-                    shape.AddRange(_categoryService.GetList().ToArray());
+                    var categoryService = _workContextAccessor.GetContext().Resolve<IThemeCategoryService>();
+                    shape.AddRange(categoryService.GetList().ToArray());
                 });
 
             //最多阅读
@@ -62,7 +58,8 @@ namespace Rabbit.Blogs.Shapes
                 {
                     var shape = displaying.Shape;
                     int? take = shape.Take ?? 10;
-                    shape.AddRange(_postService.GetMostReadList(take));
+                    var postService = _workContextAccessor.GetContext().Resolve<IThemePostService>();
+                    shape.AddRange(postService.GetMostReadList(take));
                 });
 
             //最新回复
@@ -71,7 +68,8 @@ namespace Rabbit.Blogs.Shapes
                 {
                     var shape = displaying.Shape;
                     int? take = shape.Take ?? 10;
-                    shape.AddRange(_commentService.GetNewestList(take));
+                    var commentService = _workContextAccessor.GetContext().Resolve<IThemeCommentService>();
+                    shape.AddRange(commentService.GetNewestList(take));
                 });
 
             //Tags
@@ -80,7 +78,8 @@ namespace Rabbit.Blogs.Shapes
                 {
                     var shape = displaying.Shape;
                     int? take = shape.Take ?? 20;
-                    shape.AddRange(_tagService.GetTags(take));
+                    var tagService = _workContextAccessor.GetContext().Resolve<IThemeTagService>();
+                    shape.AddRange(tagService.GetTags(take));
                 });
         }
 

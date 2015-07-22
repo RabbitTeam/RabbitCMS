@@ -16,6 +16,7 @@ namespace Rabbit.Contents
                 .Table(TableName<SiteSettingsRecord>())
                 .WithColumn("Id").AsAnsiString(32).PrimaryKey()
                 .WithColumn("Name").AsString(100)
+                .WithColumn("Logo").AsAnsiString(500).Nullable()
                 .WithColumn("ThemeName").AsString(50)
                 .WithColumn("Copyright").AsString(500).Nullable()
                 .WithColumn("Seo_Title").AsString(255).Nullable()

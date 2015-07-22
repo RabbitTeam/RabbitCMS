@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Rabbit.Contents.Services
+@{
     var isCurrent = new Func<string, bool>(href =>
     {
         var currentRequest = Request;
@@ -14,15 +15,21 @@
         }
         return false;
     });
+    var siteSettings=WorkContext.Resolve<ISiteSettingsService>().Get();
 }
 @switch ((string) Model.Style)
 {
     case null:
-    case "Categorys":
+    case "Navigation":
         <nav class="container">
-            <a href="~/">
-                <div class="navbar-brand"></div>
-            </a>
+            @if (!string.IsNullOrEmpty(siteSettings.Logo))
+            {
+                <a href="~/">
+                    <div class="navbar-brand">
+                        <img src="@Url.Content(siteSettings.Logo)" style="height: 50px; width: 200px" alt="@WorkContext.CurrentTenant.TenantName" />
+                    </div>
+                </a>
+            }
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
                 <span class="sr-only">Toggle navigation</span> <span class="fa fa-reorder fa-lg"></span>
             </button>

@@ -9,6 +9,9 @@ namespace Rabbit.Contents.ViewModels
         [DisplayName("站点名称"), Required, StringLength(100)]
         public string Name { get; set; }
 
+        [DisplayName("Logo"), StringLength(500)]
+        public string Logo { get; set; }
+
         [DisplayName("站点主题"), Required, StringLength(50)]
         public string ThemeName { get; set; }
 
@@ -24,7 +27,8 @@ namespace Rabbit.Contents.ViewModels
                 Copyright = record.Copyright,
                 Name = record.Name,
                 Seo = record.Seo,
-                ThemeName = record.ThemeName
+                ThemeName = record.ThemeName,
+                Logo = record.Logo
             };
         }
 
@@ -34,6 +38,7 @@ namespace Rabbit.Contents.ViewModels
             record.Copyright = Copyright;
             record.Name = Name;
             record.ThemeName = ThemeName;
+            record.Logo = Logo;
 
             return record;
         }
