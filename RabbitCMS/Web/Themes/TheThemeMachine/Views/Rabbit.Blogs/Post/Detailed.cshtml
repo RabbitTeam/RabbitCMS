@@ -1,4 +1,5 @@
 ﻿@using Rabbit.Blogs.Models
+@using Rabbit.Contents.Models
 @{
     var tenant = WorkContext.CurrentTenant.TenantName;
     var post = Model.CurrentPost;
@@ -12,6 +13,8 @@
     };
     var postUrl = getPostUrl(post);
     string[] tagList = post.Tags == null ? new string[0] : post.Tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+    Layout.Seo = new SeoModelFull {Title = post.Title, Keywords = post.Seo.Keywords, Description = post.Seo.Description ?? post.Summary };
 }
 <article class="article container well">
     <div class="breadcrumb">

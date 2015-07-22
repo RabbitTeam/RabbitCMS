@@ -1,13 +1,14 @@
-﻿@using Rabbit.Contents.Services
+﻿@using System.Linq
+@using Rabbit.Contents.Models
+@using Rabbit.Contents.Services
 @{
-    var siteSettings = WorkContext.Resolve<ISiteSettingsService>().Get();
-    Layout.Seo = siteSettings.Seo;
-    Layout.AppendTenantName = false;
-}
-@if (Model != null)
-{
     dynamic postPage = Model.PostPage;
-    dynamic posts = (IEnumerable<dynamic>) postPage.Posts;
+    Layout.Seo = Model.Seo;
+    Layout.AppendTenantName = ViewBag.AppendTenantName;
+}
+@if (postPage != null)
+{
+    var posts = (IQueryable<dynamic>)postPage.Posts;
     foreach (var post in posts)
     {
         var category = ((IEnumerable<dynamic>) post.Categorys).FirstOrDefault();

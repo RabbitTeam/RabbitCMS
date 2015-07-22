@@ -1,6 +1,8 @@
 ﻿using Rabbit.Blogs.Models;
 using Rabbit.Blogs.Services.Themes;
 using Rabbit.Blogs.ViewModels.Themes;
+using Rabbit.Contents.Models;
+using Rabbit.Contents.Services;
 using Rabbit.Infrastructures.Data;
 using Rabbit.Web.Mvc.Themes;
 using System;
@@ -16,14 +18,18 @@ namespace Rabbit.Blogs.Controllers.Themes
         #region Field
 
         private readonly IThemePostService _postService;
+        private readonly ISiteSettingsService _siteSettingsService;
+        private readonly IThemeCategoryService _categoryService;
 
         #endregion Field
 
         #region Constructor
 
-        public PostController(IThemePostService postService)
+        public PostController(IThemePostService postService, ISiteSettingsService siteSettingsService, IThemeCategoryService categoryService)
         {
             _postService = postService;
+            _siteSettingsService = siteSettingsService;
+            _categoryService = categoryService;
         }
 
         #endregion Constructor
@@ -32,27 +38,55 @@ namespace Rabbit.Blogs.Controllers.Themes
 
         public ActionResult ListHome(int pageIndex)
         {
-            return List(pageIndex, _postService.GetHomeList());
+            ViewBag.AppendTenantName = false;
+
+            var siteSettings = _siteSettingsService.Get();
+            return List(pageIndex, _postService.GetHomeList(), siteSettings.Seo);
         }
 
         public ActionResult ListCategorys(string routePath, int pageIndex)
         {
-            return List(pageIndex, _postService.GetListByCategory(routePath));
+            var category = _categoryService.Get(routePath);
+            if (category == null)
+                return HttpNotFound();
+
+            return List(pageIndex, _postService.GetListByCategory(routePath),
+                new SeoModelFull
+                {
+                    Description = category.Seo.Description,
+                    Keywords = category.Seo.Keywords,
+                    Title = category.Title
+                });
         }
 
         public ActionResult ListTags(string tag, int pageIndex)
         {
-            return List(pageIndex, _postService.GetListByTag(tag));
+            return List(pageIndex, _postService.GetListByTag(tag), new SeoModelFull
+            {
+                Description = $"与标签 {tag} 相关联的文章列表",
+                Keywords = tag,
+                Title = "标签 " + tag
+            });
         }
 
         public ActionResult ListAuthor(string author, int pageIndex)
         {
-            return List(pageIndex, _postService.GetListByAuthor(author));
+            return List(pageIndex, _postService.GetListByAuthor(author), new SeoModelFull
+            {
+                Description = $"与作者 {author} 相关联的文章列表",
+                Keywords = author,
+                Title = "作者 " + author
+            });
         }
 
         public ActionResult ListSearch(string titleKeywords, int pageIndex)
         {
-            return List(pageIndex, _postService.GetListByTitleKeywords(titleKeywords), true);
+            return List(pageIndex, _postService.GetListByTitleKeywords(titleKeywords), new SeoModelFull
+            {
+                Title = $"搜索结果 {titleKeywords}",
+                Keywords = titleKeywords,
+                Description = $"搜索结果 {titleKeywords}"
+            }, true);
         }
 
         public ActionResult Detailed(string categoryRoutePath, string routePath)
@@ -80,7 +114,7 @@ namespace Rabbit.Blogs.Controllers.Themes
 
         #region Private Method
 
-        private ActionResult List(int pageIndex, IQueryable<PostRecord> queryable, bool allowNotData = false)
+        private ActionResult List(int pageIndex, IQueryable<PostRecord> queryable, SeoModelFull seo, bool allowNotData = false)
         {
             if (pageIndex <= 0)
                 return HttpNotFound();
@@ -89,10 +123,12 @@ namespace Rabbit.Blogs.Controllers.Themes
             if (posts == null)
                 return HttpNotFound();
 
-            if (!posts.Any() && allowNotData)
-                return View("List");
-
             dynamic model = new ExpandoObject();
+            model.Seo = seo;
+            model.PostPage = null;
+
+            if (!posts.Any() && allowNotData)
+                return View("List", model);
 
             var pageParameter = new PageParameter(pageIndex - 1, 10);
             posts = pageParameter.Paged(posts);

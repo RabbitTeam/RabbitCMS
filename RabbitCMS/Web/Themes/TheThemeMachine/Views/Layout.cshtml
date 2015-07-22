@@ -4,12 +4,12 @@
 <!--<![endif]-->
 <head>
     <link href="~/Themes/TheThemeMachine/Content/Styles/autoptimize.css" rel="stylesheet" />
-    <title>@(Model.Seo != null ? Model.Seo.Title : string.Empty)@(Model.AppendTenantName is bool?(Model.AppendTenantName == true ? " - " + WorkContext.CurrentTenant.TenantName : string.Empty): WorkContext.CurrentTenant.TenantName)</title>
+    <title>@((Model.AppendTenantName is bool&& Model.AppendTenantName==false) ? Model.Seo.Title: Model.Seo.Title+" - "+WorkContext.CurrentTenant.TenantName)</title>
     <meta charset="utf-8">
     @if (Model.Seo != null)
     {
-        <meta content="@Model.Seo.Keywords" name="keywords" />
-        <meta content="@Model.Seo.Description" name="description" />
+    <meta content="@Model.Seo.Keywords" name="keywords" />
+    <meta content="@Model.Seo.Description" name="description" />
     }
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
