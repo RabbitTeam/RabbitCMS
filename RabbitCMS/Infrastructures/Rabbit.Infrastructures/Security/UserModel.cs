@@ -30,5 +30,7 @@ namespace Rabbit.Infrastructures.Security
         public IList<string> Roles { get { return new List<string> { "administrator" }; } }
 
         #endregion Implementation of IUserRoles
+
+        public bool CreatePersistentCookie { get; set; }
     }
 }

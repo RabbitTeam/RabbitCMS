@@ -40,7 +40,7 @@ namespace Rabbit.Users.Controllers
 
             var user = _userService.GetUserByAccount(model.Account);
 
-            _authenticationService.SignIn(new UserModel { Identity = user.Id, UserName = user.Name }, model.Remember);
+            _authenticationService.SignIn(new UserModel { Identity = user.Id, UserName = user.Name, CreatePersistentCookie = model.Remember }, model.Remember);
 
             if (string.IsNullOrWhiteSpace(model.ReturnUrl))
                 return RedirectToAction("Index", "Admin");

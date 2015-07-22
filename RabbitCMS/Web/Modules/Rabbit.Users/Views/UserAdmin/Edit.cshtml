@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model Rabbit.Contents.ViewModels.SiteSettingsViewModel
+@model Rabbit.Users.ViewModels.UserEditViewModel
 @helper PageStyles()
 {
     <style type="text/css">
@@ -55,103 +55,76 @@
 @{
     Layout.Styles = PageStyles();
     Layout.Scripts = PageScripts();
-    Layout.Title = "站点设置";
+    var title = "编辑用户 - " + Model.UserName;
+    Layout.Title = title;
 }
+
 <div class="alert alert-danger alert-dismissable" style="display: none">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <h4><i class="icon fa fa-ban"></i> <span>删除失败，请联系管理员!</span></h4>
 </div>
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">站点设置</h3>
+        <h3 class="box-title">@title</h3>
     </div><!-- /.box-header -->
     <!-- form start -->
     <form method="POST" class="form-horizontal">
+        @Html.HiddenFor(model=>model.Id)
         @Html.AntiForgeryToken()
         <div class="box-body">
             <div class="form-group">
-                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Name)</label>
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.UserName)</label>
                 <div class="col-sm-10">
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.UserName, new {@class = "form-control"})
                     </div>
                     <div class="col-sm-2">
-                        @Html.ValidationMessageFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.UserName)
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Logo)</label>
+                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.AccountName)</label>
                 <div class="col-sm-10">
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.Logo, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.AccountName, new {@class = "form-control"})
                     </div>
                     <div class="col-sm-2">
-                        @Html.ValidationMessageFor(model => model.Logo)
+                        @Html.ValidationMessageFor(model => model.AccountName)
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Copyright)</label>
-                <div class="col-sm-10">
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.Copyright,3,40, new { @class = "form-control" })
-                    </div>
-                    <div class="col-sm-2">
-                        @Html.ValidationMessageFor(model => model.Copyright)
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.ThemeName)</label>
-                <div class="col-sm-10">
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.ThemeName, new {@class = "form-control"})
-                    </div>
-                    <div class="col-sm-2">
-                        @Html.ValidationMessageFor(model => model.ThemeName)
-                    </div>
-                </div>
-            </div>
-            <div class="box box-warning">
+            <div class="box box-warning collapsed-box">
                 <div class="box-header with-border">
-                    <h3 class="box-title" data-widget="collapse" style="cursor: pointer">SEO</h3>
+                    <h3 class="box-title" data-widget="collapse" style="cursor: pointer">
+                        修改密码
+                        <small>（留空则不修改）</small>
+                    </h3>
                     <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse" title="折叠"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="collapse" title="折叠"><i class="fa fa-plus"></i></button>
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Title)</label>
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Password)</label>
                             <div class="col-sm-10">
                                 <div class="col-sm-8">
-                                    @Html.TextBoxFor(model => model.Seo.Title, new { @class = "form-control" })
+                                    @Html.PasswordFor(model => model.Password, new {@class = "form-control"})
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.ValidationMessageFor(model => model.Seo.Title)
+                                    @Html.ValidationMessageFor(model => model.Password)
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Keywords)</label>
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.ConfirmPassword)</label>
                             <div class="col-sm-10">
                                 <div class="col-sm-8">
-                                    @Html.TextBoxFor(model => model.Seo.Keywords, new { @class = "form-control" })
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new {@class = "form-control"})
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.ValidationMessageFor(model => model.Seo.Keywords)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.Description)</label>
-                            <div class="col-sm-10">
-                                <div class="col-sm-8">
-                                    @Html.TextAreaFor(model => model.Seo.Description,3,40, new { @class = "form-control" })
-                                </div>
-                                <div class="col-sm-2">
-                                    @Html.ValidationMessageFor(model => model.Seo.Description)
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
                                 </div>
                             </div>
                         </div>
