@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
+    <Compile Include="Controllers\Api\CommentController.cs" />
     <Compile Include="Controllers\CategoryAdminController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
     <Compile Include="Controllers\Themes\FeedController.cs" />

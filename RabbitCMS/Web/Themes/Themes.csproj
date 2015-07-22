@@ -349,9 +349,11 @@
     <Content Include="TheThemeMachine\Content\Images\arrow_hover.png" />
     <Content Include="TheThemeMachine\Content\Images\bg.jpg" />
     <Content Include="TheThemeMachine\Content\Images\logo.png" />
+    <Content Include="TheThemeMachine\Content\Images\noavatar_default.png" />
     <Content Include="TheThemeMachine\Content\Images\red%402x.png" />
     <Content Include="TheThemeMachine\Content\Images\red.png" />
     <Content Include="TheThemeMachine\Content\Images\wittrss.png" />
+    <Content Include="TheThemeMachine\Content\Styles\embed.default.css" />
     <Content Include="TheThemeMachine\Scripts\autoptimize.js" />
     <Content Include="TheThemeMachine\Content\Styles\autoptimize.css" />
     <Content Include="TheThemeMachine\Scripts\html5shiv.js" />

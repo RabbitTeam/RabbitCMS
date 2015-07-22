@@ -2,7 +2,9 @@
 using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rabbit.Blogs.Services
 {
@@ -10,11 +12,13 @@ namespace Rabbit.Blogs.Services
     {
         IQueryable<PostRecord> GetList(string titleKeywords = null, string category = null);
 
-        PostRecord Get(string id);
+        Task<PostRecord> Get(string id);
 
         void Delete(string id);
 
         void Add(PostRecord record);
+
+        Task<bool> Exist(string id);
     }
 
     internal sealed class PostService : IPostService
@@ -40,9 +44,9 @@ namespace Rabbit.Blogs.Services
             return table.OrderByDescending(i => i.CreateTime);
         }
 
-        public PostRecord Get(string id)
+        public Task<PostRecord> Get(string id)
         {
-            return id == null ? null : _repository.Value.Table.FirstOrDefault(i => i.Id == id);
+            return id == null ? null : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public void Delete(string id)
@@ -53,6 +57,11 @@ namespace Rabbit.Blogs.Services
         public void Add(PostRecord record)
         {
             _repository.Value.Create(record);
+        }
+
+        public Task<bool> Exist(string id)
+        {
+            return _repository.Value.Table.AnyAsync(i => i.Id == id);
         }
 
         #endregion Implementation of ICategoryService

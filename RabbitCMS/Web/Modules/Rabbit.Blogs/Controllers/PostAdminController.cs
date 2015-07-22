@@ -8,6 +8,7 @@ using Rabbit.Users.Services;
 using Rabbit.Web.Mvc.UI.Admin;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Rabbit.Blogs.Controllers
@@ -73,28 +74,28 @@ namespace Rabbit.Blogs.Controllers
             });
         }
 
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
-            var record = _postService.Get(id);
+            var record = await _postService.Get(id);
             return View((PostEditViewModel)record);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
-        public ActionResult Add(PostEditViewModel model)
+        public Task<ActionResult> Add(PostEditViewModel model)
         {
             return AddOrEdit(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
-        public ActionResult Edit(PostEditViewModel model)
+        public Task<ActionResult> Edit(PostEditViewModel model)
         {
             return AddOrEdit(model);
         }
 
         [HttpPost]
-        private ActionResult AddOrEdit(PostEditViewModel model)
+        private async Task<ActionResult> AddOrEdit(PostEditViewModel model)
         {
-            var record = _postService.Get(model.Id);
+            var record = await _postService.Get(model.Id);
             var isAdd = record == null;
             if (record == null)
                 record = PostRecord.Create(_userService.GetUserById(_authenticationService.GetAuthenticatedUser().Identity));

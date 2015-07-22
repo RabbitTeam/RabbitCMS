@@ -7,7 +7,7 @@
     {
         var itemCategory = ((IEnumerable<dynamic>)item.Categorys).FirstOrDefault();
         var routeValues = new RouteValueDictionary(new { area = "Rabbit.Blogs", item.Seo.RoutePath });
-        routeValues.Add("CategoryRoutePath", itemCategory!=null?itemCategory.Seo.RoutePath: "unclassified");
+        routeValues.Add("CategoryRoutePath", itemCategory != null ? itemCategory.Seo.RoutePath : "unclassified");
         return Url.Action("Detailed", "Post", routeValues);
     };
     var postUrl = getPostUrl(post);
@@ -25,7 +25,8 @@
     </div>
     <div class="hidden-xs">
         <div class="title-article">
-            <h1><a href="@postUrl">@post.Title</a>
+            <h1>
+                <a href="@postUrl">@post.Title</a>
             </h1>
         </div>
         <div class="tag-article container">
@@ -92,3 +93,183 @@
         </div>
     </div>
 </article>
+<link href="~/Themes/TheThemeMachine/Content/Styles/embed.default.css" rel="stylesheet"/>
+<div id="comments">
+    <div class="ds-thread" id="ds-thread">
+        <div id="ds-reset">
+            <ul class="ds-comments">
+                <li class="ds-post" style="display: none">
+                    <div class="ds-post-self">
+                        <div class="ds-avatar">
+                            <img src="~/Themes/TheThemeMachine/Content/images/noavatar_default.png" alt="NickName">
+                        </div>
+                        <div class="ds-comment-body">
+                            <div class="ds-comment-header">
+                                <span class="ds-user-name ds-highlight">NickName</span>
+                            </div>
+                            <p>Content</p>
+                            <div class="ds-comment-footer ds-comment-actions">
+                                <span class="ds-time">Time</span>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <a class="ds-post-likes" href="javascript:void(0)"><i class="fa fa-times-circle"></i>删</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="ds-paginator">
+                <div class="ds-border"></div><a data-page="1" href="javascript:void(0);" class="ds-current">1</a>
+            </div>
+            <div class="ds-replybox">
+                <a class="ds-avatar" href="javascript:void(0);" onclick="return false"><img src="~/Themes/TheThemeMachine/Content/images/noavatar_default.png" alt=""></a>
+                <div class="ds-textarea-wrapper">
+                    <input id="NickName" name="NickName" placeholder="   昵称" style="height: 30px;width: 100%" />
+                    <pre class="ds-hidden-text"></pre>
+                </div>
+                <div class="ds-textarea-wrapper ds-rounded-top">
+                    <textarea id="Content" name="Content" placeholder="这篇文章怎么样…"></textarea>
+                    <pre class="ds-hidden-text"></pre>
+                </div>
+                <div class="ds-post-toolbar">
+                    <div class="ds-post-options ds-gradient-bg">
+                        <span class="ds-sync"></span>
+                    </div>
+                    <button class="ds-post-button" type="button">发布</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    (function() {
+        var container = $("#ds-reset");
+        var comments = container.find(".ds-comments");
+        var template = comments.find("li:hidden");
+
+        function addCommentItem(model) {
+            var newComment = template.clone().show();
+            @if (Request.IsAuthenticated)
+            {
+                <text>
+            var btnDelete = newComment.find(".ds-post-likes");
+            btnDelete.click(function () {
+                $.ajax({
+                    url: '@Url.HttpRouteUrl("Rabbit.Blogs_CommentsApi", new {id = "1id1"})'.replace(/1id1/, newComment.data("Id")),
+                    type: "DELETE",
+                    success: function () {
+                        newComment.fadeOut(function () {
+                            newComment.remove();
+                        });
+                    },
+                    error: function (data) {
+                        alert(data.responseJSON.Message);
+                    }
+                });
+            });
+                </text>
+            }
+            newComment.data("Id", model.Id);
+            newComment.find(".ds-user-name").text(model.NickName);
+            var createTime = (model.CreateTime instanceof Date) ? model.CreateTime : new Date(model.CreateTime.replace(/T/, " "));
+            newComment.find(".ds-time").text(createTime.getFullYear() + "年" + (createTime.getMonth() + 1) + "月" + createTime.getDate() + "日");
+            newComment.find("p").text(model.Content);
+            newComment.find("img").attr("alt", model.NickName);
+            comments.append(newComment);
+        }
+
+        //loadComment
+        (function() {
+            var paginator = container.find(".ds-paginator");
+            var urlFormat = '@Url.HttpRouteUrl("Rabbit.Blogs_PostCommentsApi", new {postId = post.Id, pageIndex = "1pageIndex1"})';
+
+            var commentsCache = {};
+            function loadComments(pageIndex) {
+                var initList = function (list, pageCount) {
+                    comments.find("li:visible").remove();
+                    initPaginator(pageIndex, pageCount);
+
+                    if (list == null || list.length == 0) {
+                        container.find(".ds-replybox").before('<div style = "height: 30px; line-height: 30px; text-align: center;color: gray" id="noComments">暂无评论 ！</div> ');
+                    } else {
+                        container.find("#noComments").remove();
+                        $.each(list, function () {
+                            addCommentItem(this);
+                        });  
+                    }
+                };
+                var cacheItem = commentsCache["p" + pageIndex];
+                if (cacheItem != null) {
+                    initList(cacheItem.List, cacheItem.PageCount);
+                    return;
+                }
+                $.ajax({
+                    url: urlFormat.replace(/1pageIndex1/, pageIndex == 1 ? "" : pageIndex),
+                    cache: false,
+                    success: function (data) {
+                        var list = data.Data;
+                        var pageCount = data.PageCount;
+                        initList(list, pageCount);
+                        if (list.length == 10)
+                            commentsCache["p" + pageIndex] = { List: list, PageCount: pageCount };
+                    }
+                });
+            }
+
+            function initPaginator(pageIndex, pageCount) {
+                paginator.toggle(pageCount > 1).find("a").remove();
+                for (var i = 1; i <= pageCount; i++) {
+                    var item = $("<a />").data("page", i).text(i);
+                    if (pageIndex == i) {
+                        item.css("cursor", "default");
+                        item.addClass("ds-current");
+                    }
+                    item.click(function() {
+                        loadComments($(this).data("page"));
+                    });
+                    paginator.append(item);
+                }
+            }
+
+            loadComments(1);
+        })();
+
+        //addComment
+        (function() {
+            var btnPost = container.find(".ds-post-button");
+            var txtNickName = container.find("input");
+            var txtContent = container.find("textarea");
+
+            btnPost.click(function() {
+                var nickName = txtNickName.val();
+                var content = txtContent.val();
+                if (nickName == null || nickName.length == 0) {
+                    alert("请输入昵称！");
+                    return;
+                }
+                if (content == null || content.length == 0) {
+                    alert("请输入内容！");
+                    return;
+                }
+                var data = { NickName: nickName, Content: content };
+                $.ajax({
+                    url: '@Url.HttpRouteUrl("Rabbit.Blogs_PostCommentsApi", new {postId = post.Id})',
+                    type: "POST",
+                    data: data,
+                    cache: false,
+                    success: function(id) {
+                        data.CreateTime = new Date();
+                        data.Id = id;
+                        addCommentItem(data);
+                        txtNickName.val("");
+                        txtContent.val("");
+                    },
+                    error: function(data) {
+                        alert(data.responseJSON.Message);
+                    }
+                });
+            });
+        })();
+    })();
+</script>

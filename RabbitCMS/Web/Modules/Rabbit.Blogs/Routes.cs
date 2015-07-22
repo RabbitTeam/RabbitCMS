@@ -17,6 +17,20 @@ namespace Rabbit.Blogs
         {
             const string area = "Rabbit.Blogs";
 
+            routes.Add(new HttpRouteDescriptor
+            {
+                Name = "Rabbit.Blogs_CommentsApi",
+                RouteTemplate = "blogs/api/comments/{id}",
+                Defaults = new { area, controller = "Comment", pageIndex = 1, pageSize = 10 }
+            });
+
+            routes.Add(new HttpRouteDescriptor
+            {
+                Name = "Rabbit.Blogs_PostCommentsApi",
+                RouteTemplate = "blogs/api/post/{postId}/comments/{pageIndex}/{pageSize}",
+                Defaults = new { area, controller = "Comment", pageIndex = 1, pageSize = 10 }
+            });
+
             routes.MapRabbitRoute("Rabbit.Blogs_Categorys", "category/{RoutePath}",
                 area, new { controller = "Post", action = "ListCategorys", pageIndex = 1 });
 

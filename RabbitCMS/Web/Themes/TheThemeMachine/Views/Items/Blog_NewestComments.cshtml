@@ -12,7 +12,7 @@
                     var category = ((IEnumerable<dynamic>) post.Categorys).FirstOrDefault();
                     var routeValues = new RouteValueDictionary(new {area = "Rabbit.Blogs", post.Seo.RoutePath});
                     routeValues.Add("CategoryRoutePath", category != null ? category.Seo.RoutePath : "unclassified");
-                    var postUrl = Url.Action("Detailed", "Post", routeValues) + "#" + comment.Id;
+                    var postUrl = Url.Action("Detailed", "Post", routeValues) + "#comments";
 
                     <li class="list-group-item list-group-item-new">
                         <span class="comment-log"> <a href="@postUrl">@Html.Raw(comment.Content)</a> </span>
