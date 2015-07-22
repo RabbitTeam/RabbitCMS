@@ -345,11 +345,26 @@
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.eot" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.ttf" />
     <Content Include="TheAdmin\lib\ionicons\fonts\ionicons.woff" />
+    <Content Include="TheThemeMachine\Content\Images\arrow.png" />
+    <Content Include="TheThemeMachine\Content\Images\arrow_hover.png" />
+    <Content Include="TheThemeMachine\Content\Images\bg.jpg" />
+    <Content Include="TheThemeMachine\Content\Images\logo.png" />
+    <Content Include="TheThemeMachine\Content\Images\red%402x.png" />
+    <Content Include="TheThemeMachine\Content\Images\red.png" />
+    <Content Include="TheThemeMachine\Scripts\autoptimize.js" />
+    <Content Include="TheThemeMachine\Content\Styles\autoptimize.css" />
+    <Content Include="TheThemeMachine\Scripts\html5shiv.js" />
+    <Content Include="TheThemeMachine\Scripts\modernizr.js" />
+    <Content Include="TheThemeMachine\Scripts\respond.min.js" />
+    <Content Include="TheThemeMachine\Content\Images\wittrss2.png" />
     <Content Include="TheThemeMachine\Views\Layout.cshtml" />
-    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Post\Index.cshtml" />
-    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Category\Index.cshtml" />
-    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Author\Index.cshtml" />
-    <Content Include="TheThemeMachine\Views\Items\BlogMenu.cshtml" />
+    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Post\Detailed.cshtml" />
+    <Content Include="TheThemeMachine\Views\Rabbit.Blogs\Post\List.cshtml" />
+    <Content Include="TheThemeMachine\Views\Items\Blog_Categorys.cshtml" />
+    <Content Include="TheThemeMachine\Views\Items\Blog_MostReadPosts.cshtml" />
+    <Content Include="TheThemeMachine\Views\Items\Blog_NewestComments.cshtml" />
+    <Content Include="TheThemeMachine\Views\Items\Blog_Tags.cshtml" />
+    <Content Include="TheThemeMachine\Views\Items\Blog_Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

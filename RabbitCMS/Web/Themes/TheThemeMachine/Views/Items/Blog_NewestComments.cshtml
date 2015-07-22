@@ -1,0 +1,30 @@
+﻿<aside id="zan_latest_comments-3">
+    <div class="panel panel-zan hidden-xs">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i> 最新回复 <i class="fa fa-times-circle panel-remove"></i> <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        @if (Model.Items.Count>0)
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var comment in Model)
+                {
+                    var post = comment.Post;
+                    var category = ((IEnumerable<dynamic>) post.Categorys).FirstOrDefault();
+                    var routeValues = new RouteValueDictionary(new {area = "Rabbit.Blogs", post.Seo.RoutePath});
+                    routeValues.Add("CategoryRoutePath", category != null ? category.Seo.RoutePath : "unclassified");
+                    var postUrl = Url.Action("Detailed", "Post", routeValues) + "#" + comment.Id;
+
+                    <li class="list-group-item list-group-item-new">
+                        <span class="comment-log"> <a href="@postUrl">@Html.Raw(comment.Content)</a> </span>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div style="height: 30px; line-height: 30px; text-align: center;color: gray">
+                暂无评论！
+            </div>
+        }
+    </div>
+</aside>

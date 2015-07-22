@@ -1,0 +1,8 @@
+﻿@{
+    var random=new Random();
+}
+@foreach (var item in Model)
+{
+    var href = Url.Action("ListTags", "Post", new {area = "Rabbit.Blogs", tag = item});
+    <a href="@href" style="font-size: @random.Next(10,20)pt;">@item</a>
+}

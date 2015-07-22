@@ -1,0 +1,29 @@
+﻿<aside id="zan_hotest_posts-2">
+    <div class="panel panel-zan hot hidden-xs">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>最多阅读 <i class="fa fa-times-circle panel-remove"></i> <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        @if (Model.Items.Count>0)
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var post in Model)
+                {
+                    var category = ((IEnumerable<dynamic>) post.Categorys).FirstOrDefault();
+                    var routeValues = new RouteValueDictionary(new {area = "Rabbit.Blogs", post.Seo.RoutePath});
+                    routeValues.Add("CategoryRoutePath", category != null ? category.Seo.RoutePath : "unclassified");
+                    var postUrl = Url.Action("Detailed", "Post", routeValues);
+
+                    <li class="list-group-item">
+                        <span class="post-title"> <a href="@postUrl" title="@post.Title">@post.Title</a> </span> <span class="badge">@post.ReadingCount views</span>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div style="height: 30px; line-height: 30px; text-align: center;color: gray">
+                暂无文章！
+            </div>
+        }
+    </div>
+</aside>

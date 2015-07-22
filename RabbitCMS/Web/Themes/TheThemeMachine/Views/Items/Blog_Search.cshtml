@@ -1,0 +1,21 @@
+﻿<aside id="zan_search-4">
+    <div class="search">
+        <form class="form-inline clearfix" method="GET">
+            <input class="form-control" type="text" name="titleKeywords" id="titleKeywords" placeholder="搜索..." /> <button type="submit" class="btn btn-danger btn-small">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+    <script type="text/javascript">
+        (function() {
+            var searchForm = $("#zan_search-4 form");
+            var txtTitleKeywords = searchForm.find("#titleKeywords");
+            searchForm.submit(function() {
+                var actionFormat = '@Url.Action("ListSearch", "Post", new {area = "Rabbit.Blogs", titleKeywords = "1placeholder1"})';
+                var action = actionFormat.replace(/1placeholder1/, txtTitleKeywords.val());
+                location.href = action;
+                return false;
+            });
+        })();
+    </script>
+</aside>

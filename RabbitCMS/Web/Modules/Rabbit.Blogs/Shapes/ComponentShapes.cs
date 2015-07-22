@@ -12,15 +12,21 @@ namespace Rabbit.Blogs.Shapes
 
         private readonly IShapeFactory _shapeFactory;
         private readonly IThemeCategoryService _categoryService;
+        private readonly IThemePostService _postService;
+        private readonly IThemeCommentService _commentService;
+        private readonly IThemeTagService _tagService;
 
         #endregion Field
 
         #region Constructor
 
-        public ComponentShapes(IShapeFactory shapeFactory, IThemeCategoryService categoryService)
+        public ComponentShapes(IShapeFactory shapeFactory, IThemeCategoryService categoryService, IThemePostService postService, IThemeCommentService commentService, IThemeTagService tagService)
         {
             _shapeFactory = shapeFactory;
             _categoryService = categoryService;
+            _postService = postService;
+            _commentService = commentService;
+            _tagService = tagService;
 
             T = NullLocalizer.Instance;
         }
@@ -43,23 +49,41 @@ namespace Rabbit.Blogs.Shapes
         /// <param name="builder">形状表格建造者。</param>
         public void Discover(ShapeTableBuilder builder)
         {
-            builder.Describe("BlogMenu")
-                .OnCreated(created =>
+            builder.Describe("Blog_Categorys")
+                .OnDisplaying(displaying =>
                 {
-                    var shape = created.Shape;
+                    var shape = displaying.Shape;
                     shape.AddRange(_categoryService.GetList().ToArray());
+                });
+
+            //最多阅读
+            builder.Describe("Blog_MostReadPosts")
+                .OnDisplaying(displaying =>
+                {
+                    var shape = displaying.Shape;
+                    int? take = shape.Take ?? 10;
+                    shape.AddRange(_postService.GetMostReadList(take));
+                });
+
+            //最新回复
+            builder.Describe("Blog_NewestComments")
+                .OnDisplaying(displaying =>
+                {
+                    var shape = displaying.Shape;
+                    int? take = shape.Take ?? 10;
+                    shape.AddRange(_commentService.GetNewestList(take));
+                });
+
+            //Tags
+            builder.Describe("Blog_Tags")
+                .OnDisplaying(displaying =>
+                {
+                    var shape = displaying.Shape;
+                    int? take = shape.Take ?? 20;
+                    shape.AddRange(_tagService.GetTags(take));
                 });
         }
 
         #endregion Implementation of IShapeTableProvider
-
-        #region Private Method
-
-        private static string EncodeAlternateElement(string alternateElement)
-        {
-            return alternateElement.Replace("-", "__").Replace(".", "_");
-        }
-
-        #endregion Private Method
     }
 }

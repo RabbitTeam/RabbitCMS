@@ -1,0 +1,67 @@
+﻿@{
+    var isCurrent = new Func<string, bool>(href =>
+    {
+        var currentRequest = Request;
+        var applicationPath = currentRequest.ApplicationPath;
+        if (!string.IsNullOrWhiteSpace(applicationPath))
+        {
+            var requestUrl = currentRequest.Path.Replace(applicationPath, string.Empty).TrimEnd('/').ToUpperInvariant();
+            var modelUrl = href.Replace(applicationPath, string.Empty).TrimEnd('/').ToUpperInvariant();
+            if (requestUrl == modelUrl || (!string.IsNullOrEmpty(modelUrl) && requestUrl.StartsWith(modelUrl + "/")))
+            {
+                return true;
+            }
+        }
+        return false;
+    });
+}
+@switch ((string) Model.Style)
+{
+    case null:
+    case "Categorys":
+        <nav class="container">
+            <a href="~/">
+                <div class="navbar-brand"></div>
+            </a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span class="fa fa-reorder fa-lg"></span>
+            </button>
+            <div class="navbar-collapse bs-navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @{
+                        var homeTagBuilder = new TagBuilder("li");
+                        var homeHref = Request.ApplicationPath;
+                        if (isCurrent(homeHref))
+                        {
+                            homeTagBuilder.AddCssClass("current-menu-item");
+                        }
+                        @Html.Raw(homeTagBuilder.ToString(TagRenderMode.StartTag))
+                        <a href="@homeHref"><i class="fa fa-home"></i> 首页</a>
+                        @Html.Raw(homeTagBuilder.ToString(TagRenderMode.EndTag))
+                    }
+                    @foreach (var item in Model)
+                    {
+                        var tagBuilder = new TagBuilder("li");
+                        var href = Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", item.Seo.RoutePath});
+                        if (isCurrent(href))
+                        {
+                            tagBuilder.AddCssClass("current-menu-item");
+                        }
+                        @Html.Raw(tagBuilder.ToString(TagRenderMode.StartTag))
+                        <a href="@href">@item.Title</a>
+                        @Html.Raw(tagBuilder.ToString(TagRenderMode.EndTag))
+                    }
+                </ul>
+            </div>
+        </nav>
+        break;
+    case "Component":
+        foreach (var item in Model)
+        {
+            var href = Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", item.Seo.RoutePath});
+            <li class="cat-item cat-item-2">
+                <a href="@href">@item.Title</a>
+            </li>
+        }
+        break;
+}
