@@ -188,6 +188,7 @@
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\CategoryAdminController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
+    <Compile Include="Controllers\Themes\FeedController.cs" />
     <Compile Include="Controllers\Themes\PostController.cs" />
     <Compile Include="Mappings.cs" />
     <Compile Include="Migrators.cs" />
@@ -213,12 +214,18 @@
       <Project>{8531192e-27f0-4385-99dd-d67f58bec89c}</Project>
       <Name>Rabbit.Infrastructures</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rabbit.Contents\Rabbit.Contents.csproj">
+      <Project>{9e0ecfa6-4ce3-41ea-9b94-67e75db5ee04}</Project>
+      <Name>Rabbit.Contents</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rabbit.Users\Rabbit.Users.csproj">
       <Project>{6f846382-ef2b-4f61-90b3-1304856a0114}</Project>
       <Name>Rabbit.Users</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Feed\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -351,6 +351,7 @@
     <Content Include="TheThemeMachine\Content\Images\logo.png" />
     <Content Include="TheThemeMachine\Content\Images\red%402x.png" />
     <Content Include="TheThemeMachine\Content\Images\red.png" />
+    <Content Include="TheThemeMachine\Content\Images\wittrss.png" />
     <Content Include="TheThemeMachine\Scripts\autoptimize.js" />
     <Content Include="TheThemeMachine\Content\Styles\autoptimize.css" />
     <Content Include="TheThemeMachine\Scripts\html5shiv.js" />
@@ -365,6 +366,7 @@
     <Content Include="TheThemeMachine\Views\Items\Blog_NewestComments.cshtml" />
     <Content Include="TheThemeMachine\Views\Items\Blog_Tags.cshtml" />
     <Content Include="TheThemeMachine\Views\Items\Blog_Search.cshtml" />
+    <Content Include="TheThemeMachine\Views\Items\Blog_Subscribe.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

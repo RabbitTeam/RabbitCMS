@@ -37,17 +37,7 @@
             </div>
             <aside class="col-md-4" id="sidebar">
                 @Display.Blog_Search()
-                <aside id="zan_custom-2">
-                    <div class="panel panel-zan hidden-xs">
-                        <div class="panel-heading">博客订阅</div><ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <a onclick="addFavorite(window.location, document.title)">
-                                    <img src="~/Themes/TheThemeMachine/Content/Images/wittrss2.png" width="25px" height="25px" style="margin-right: 8px; margin-left: 8px;"/>收藏@(WorkContext.CurrentTenant.TenantName)(通过浏览器书签)
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
+                @Display.Blog_Subscribe()
                 @Display.Blog_MostReadPosts()
                 @Display.Blog_NewestComments()
                 <aside id="zan_sets-2">

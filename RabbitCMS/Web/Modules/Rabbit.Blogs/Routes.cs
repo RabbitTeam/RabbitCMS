@@ -44,6 +44,9 @@ namespace Rabbit.Blogs
             routes.MapRabbitRoute("Rabbit.Blogs_Search", "search/{titleKeywords}/page/{pageIndex}",
                 area, new { controller = "Post", action = "ListSearch" });
 
+            routes.MapRabbitRoute("Rabbit.Blogs_Home", "feed",
+                area, new { controller = "Feed", action = "Index" });
+
             routes.MapRabbitRoute("Rabbit.Blogs_PostDetailed", "{CategoryRoutePath}/{RoutePath}",
                 area, new { controller = "Post", action = "Detailed" });
 

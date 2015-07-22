@@ -1,0 +1,16 @@
+﻿<aside id="zan_custom-2">
+    <div class="panel panel-zan hidden-xs">
+        <div class="panel-heading">博客订阅</div><ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a target="_blank" href="@Url.Action("Index", "Feed", new {area = "Rabbit.Blogs"})">
+                    <img src="~/Themes/TheThemeMachine/Content/Images/wittrss.png" width="25px" height="25px" style="margin-right: 8px; margin-left: 8px;">订阅@(WorkContext.CurrentTenant.TenantName)的文章(通过rss)
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a onclick="addFavorite(window.location, document.title)">
+                    <img src="~/Themes/TheThemeMachine/Content/Images/wittrss2.png" width="25px" height="25px" style="margin-right: 8px; margin-left: 8px;" />收藏@(WorkContext.CurrentTenant.TenantName)(通过浏览器书签)
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
