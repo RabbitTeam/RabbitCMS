@@ -1,7 +1,9 @@
 ﻿using Rabbit.Blogs.Models;
 using Rabbit.Blogs.Services.Themes;
+using Rabbit.Blogs.ViewModels.Themes;
 using Rabbit.Infrastructures.Data;
 using Rabbit.Web.Mvc.Themes;
+using System;
 using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
@@ -58,11 +60,20 @@ namespace Rabbit.Blogs.Controllers.Themes
             if (string.IsNullOrEmpty(routePath))
                 return HttpNotFound();
 
-            var model = _postService.Read(routePath, categoryRoutePath);
-            if (model == null)
+            if (string.Equals(categoryRoutePath, "unclassified", StringComparison.OrdinalIgnoreCase))
+                categoryRoutePath = null;
+
+            var post = _postService.Read(routePath, categoryRoutePath);
+            if (post == null)
                 return HttpNotFound();
 
-            return View(model);
+            return
+                View(new PostDetailedViewModel
+                {
+                    CurrentPost = post,
+                    AfterPost = new Lazy<PostRecord>(() => _postService.GetAfterPost(post)),
+                    BeforePost = new Lazy<PostRecord>(() => _postService.GetBeforePost(post))
+                });
         }
 
         #endregion Action

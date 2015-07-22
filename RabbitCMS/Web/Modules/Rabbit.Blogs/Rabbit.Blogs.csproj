@@ -206,6 +206,7 @@
     <Compile Include="Shapes\ComponentShapes.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
     <Compile Include="ViewModels\PostViewModels.cs" />
+    <Compile Include="ViewModels\Themes\PostDetailedViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Infrastructures\Rabbit.Infrastructures\Rabbit.Infrastructures.csproj">

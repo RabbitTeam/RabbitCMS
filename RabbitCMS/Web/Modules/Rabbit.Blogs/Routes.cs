@@ -44,14 +44,14 @@ namespace Rabbit.Blogs
             routes.MapRabbitRoute("Rabbit.Blogs_Search", "search/{titleKeywords}/page/{pageIndex}",
                 area, new { controller = "Post", action = "ListSearch" });
 
-            routes.MapRabbitRoute("Rabbit.Blogs_Posts", "{CategoryRoutePath}/{RoutePath}",
-                area, new { controller = "Post", action = "Detailed", CategoryRoutePath = UrlParameter.Optional });
+            routes.MapRabbitRoute("Rabbit.Blogs_PostDetailed", "{CategoryRoutePath}/{RoutePath}",
+                area, new { controller = "Post", action = "Detailed" });
 
             routes.MapRabbitRoute("Rabbit.Blogs_Home", string.Empty,
                 area, new { controller = "Post", action = "ListHome", pageIndex = 1 });
 
             routes.MapRabbitRoute("Rabbit.Blogs_Default", "Admin/Blogs/{controller}/{action}/{id}",
-                area, new { controller = "Post", action = "ListHome", id = UrlParameter.Optional });
+                area, new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
 
         #endregion Implementation of IRouteProvider

@@ -23,6 +23,10 @@ namespace Rabbit.Blogs.Services.Themes
         IQueryable<PostRecord> GetListByAuthor(string author);
 
         IQueryable<PostRecord> GetListByTitleKeywords(string titleKeywords);
+
+        PostRecord GetBeforePost(PostRecord post);
+
+        PostRecord GetAfterPost(PostRecord post);
     }
 
     internal sealed class ThemePostService : IThemePostService
@@ -90,6 +94,16 @@ namespace Rabbit.Blogs.Services.Themes
         public IQueryable<PostRecord> GetListByTitleKeywords(string titleKeywords)
         {
             return DefaultTable().Where(i => i.Title.Contains(titleKeywords));
+        }
+
+        public PostRecord GetBeforePost(PostRecord post)
+        {
+            return Table().OrderByDescending(i => i.CreateTime).FirstOrDefault(i => i.CreateTime < post.CreateTime);
+        }
+
+        public PostRecord GetAfterPost(PostRecord post)
+        {
+            return Table().OrderBy(i => i.CreateTime).FirstOrDefault(i => i.CreateTime > post.CreateTime);
         }
 
         #endregion Implementation of IThemePostService
