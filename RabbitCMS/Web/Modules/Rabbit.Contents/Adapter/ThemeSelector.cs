@@ -26,7 +26,7 @@ namespace Rabbit.Contents.Adapter
         {
             return new ThemeSelectorResult
             {
-                ThemeName = _siteSettingsService.Get().ThemeName
+                ThemeName = _siteSettingsService.Get().Result.ThemeName
             };
         }
 

@@ -5,6 +5,7 @@ using Rabbit.Infrastructures.Data;
 using Rabbit.Infrastructures.Mvc;
 using Rabbit.Web.Mvc.UI.Admin;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Rabbit.Blogs.Controllers
@@ -44,12 +45,12 @@ namespace Rabbit.Blogs.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddOrEdit(CategoryEditViewModel model)
+        public async Task<ActionResult> AddOrEdit(CategoryEditViewModel model)
         {
             if (!ModelState.IsValid)
                 return this.Error("数据非法！");
 
-            var record = _categoryService.Get(model.Id);
+            var record = await _categoryService.Get(model.Id);
 
             var isAdd = record == null;
 

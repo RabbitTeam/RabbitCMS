@@ -40,7 +40,7 @@ namespace Rabbit.Users.Adapter
         /// </returns>
         protected override IUser GetUserByIdentity(string identity)
         {
-            var user = _userService.GetUserById(identity);
+            var user = _userService.GetUserById(identity).Result;
             return user == null ? null : new UserModel
             {
                 Identity = user.Id,

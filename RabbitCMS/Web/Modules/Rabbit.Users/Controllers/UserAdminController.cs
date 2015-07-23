@@ -4,6 +4,7 @@ using Rabbit.Infrastructures.Security;
 using Rabbit.Users.Services;
 using Rabbit.Users.ViewModels;
 using Rabbit.Web.Mvc.UI.Admin;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Rabbit.Users.Controllers
@@ -20,23 +21,23 @@ namespace Rabbit.Users.Controllers
             _userService = userService;
         }
 
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             var user = _userService.GetUserById(id ?? _authenticationService.GetAuthenticatedUser().Identity);
             if (user == null)
                 return HttpNotFound();
 
-            var model = (UserEditViewModel)user;
+            var model = (UserEditViewModel)await user;
             return View(model);
         }
 
         [ValidateAntiForgeryToken, HttpPost]
-        public ActionResult Edit(UserEditViewModel model)
+        public async Task<ActionResult> Edit(UserEditViewModel model)
         {
             if (!ModelState.IsValid)
                 return this.Error("数据非法！");
 
-            var user = _userService.GetUserById(model.Id);
+            var user = await _userService.GetUserById(model.Id);
             if (user == null)
                 return this.Error("数据非法！");
 

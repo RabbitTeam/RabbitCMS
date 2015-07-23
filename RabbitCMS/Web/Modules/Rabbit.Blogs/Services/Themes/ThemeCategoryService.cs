@@ -2,7 +2,9 @@
 using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rabbit.Blogs.Services.Themes
 {
@@ -10,7 +12,7 @@ namespace Rabbit.Blogs.Services.Themes
     {
         IQueryable<PostCategoryRecord> GetList();
 
-        PostCategoryRecord Get(string routePath);
+        Task<PostCategoryRecord> Get(string routePath);
     }
 
     internal sealed class ThemeCategoryService : IThemeCategoryService
@@ -29,9 +31,9 @@ namespace Rabbit.Blogs.Services.Themes
             return _repository.Value.Table.Where(i => i.Visible).OrderByDescending(i => i.CreateTime);
         }
 
-        public PostCategoryRecord Get(string routePath)
+        public Task<PostCategoryRecord> Get(string routePath)
         {
-            return _repository.Value.Table.FirstOrDefault(i => i.Seo.RoutePath == routePath);
+            return _repository.Value.Table.FirstOrDefaultAsync(i => i.Seo.RoutePath == routePath);
         }
 
         #endregion Implementation of IThemeCategoryService

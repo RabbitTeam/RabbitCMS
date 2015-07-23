@@ -2,6 +2,7 @@
 using Rabbit.Infrastructures.Security;
 using Rabbit.Users.Services;
 using Rabbit.Users.ViewModels;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Rabbit.Users.Controllers
@@ -26,19 +27,19 @@ namespace Rabbit.Users.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult SignIn(SignInViewModel model)
+        public async Task<ActionResult> SignIn(SignInViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             //验证失败。
-            if (!_accountService.Exist(model.Account, model.Password))
+            if (!await _accountService.Exist(model.Account, model.Password))
             {
                 ModelState.AddModelError(string.Empty, "用户名或密码错误。");
                 return View(model);
             }
 
-            var user = _userService.GetUserByAccount(model.Account);
+            var user = await _userService.GetUserByAccount(model.Account);
 
             _authenticationService.SignIn(new UserModel { Identity = user.Id, UserName = user.Name, CreatePersistentCookie = model.Remember }, model.Remember);
 

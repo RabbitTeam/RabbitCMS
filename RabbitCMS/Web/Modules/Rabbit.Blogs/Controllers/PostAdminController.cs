@@ -98,7 +98,7 @@ namespace Rabbit.Blogs.Controllers
             var record = await _postService.Get(model.Id);
             var isAdd = record == null;
             if (record == null)
-                record = PostRecord.Create(_userService.GetUserById(_authenticationService.GetAuthenticatedUser().Identity));
+                record = PostRecord.Create(await _userService.GetUserById(_authenticationService.GetAuthenticatedUser().Identity));
 
             record.Status = model.IsPublish ? PostStatus.Publish : PostStatus.UnPublished;
             record.Content = model.Content;

@@ -3,7 +3,9 @@ using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rabbit.Blogs.Services
 {
@@ -13,7 +15,7 @@ namespace Rabbit.Blogs.Services
 
         IQueryable<PostCategoryRecord> GetList(IEnumerable<string> categoryIds);
 
-        PostCategoryRecord Get(string id);
+        Task<PostCategoryRecord> Get(string id);
 
         void Delete(string id);
 
@@ -48,9 +50,9 @@ namespace Rabbit.Blogs.Services
             return _repository.Value.Table.Where(i => parameter.Contains("," + i.Id + ","));
         }
 
-        public PostCategoryRecord Get(string id)
+        public Task<PostCategoryRecord> Get(string id)
         {
-            return id == null ? null : _repository.Value.Table.FirstOrDefault(i => i.Id == id);
+            return id == null ? null : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public void Delete(string id)

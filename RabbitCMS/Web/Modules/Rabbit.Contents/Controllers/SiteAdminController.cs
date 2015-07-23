@@ -2,6 +2,7 @@
 using Rabbit.Contents.ViewModels;
 using Rabbit.Infrastructures.Mvc;
 using Rabbit.Web.Mvc.UI.Admin;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Rabbit.Contents.Controllers
@@ -16,16 +17,16 @@ namespace Rabbit.Contents.Controllers
             _siteSettingsService = siteSettingsService;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = (SiteSettingsViewModel)_siteSettingsService.Get();
+            var model = (SiteSettingsViewModel)await _siteSettingsService.Get();
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ActionName("Index")]
-        public ActionResult IndexPost(SiteSettingsViewModel model)
+        public async Task<ActionResult> IndexPost(SiteSettingsViewModel model)
         {
-            var record = model.Set(_siteSettingsService.Get());
+            var record = model.Set(await _siteSettingsService.Get());
             _siteSettingsService.Update(record);
             return this.Success();
         }

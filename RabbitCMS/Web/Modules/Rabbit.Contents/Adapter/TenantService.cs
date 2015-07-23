@@ -86,7 +86,7 @@ namespace Rabbit.Contents.Adapter
         /// </returns>
         public ITenant GetTenantSettings()
         {
-            return new DefaultTenant(_siteSettingsService.Get().Name);
+            return new DefaultTenant(_siteSettingsService.Get().Result.Name);
         }
 
         #endregion Implementation of ITenantService

@@ -2,15 +2,16 @@
 using Rabbit.Kernel;
 using Rabbit.Users.Models;
 using System;
-using System.Linq;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Rabbit.Users.Services
 {
     public interface IUserService : IDependency
     {
-        UserRecord GetUserByAccount(string account);
+        Task<UserRecord> GetUserByAccount(string account);
 
-        UserRecord GetUserById(string id);
+        Task<UserRecord> GetUserById(string id);
     }
 
     internal sealed class UserService : IUserService
@@ -24,15 +25,15 @@ namespace Rabbit.Users.Services
 
         #region Implementation of IUserService
 
-        public UserRecord GetUserByAccount(string account)
+        public Task<UserRecord> GetUserByAccount(string account)
         {
             account = account.ToLower();
-            return _repository.Value.Table.FirstOrDefault(i => i.Account.Account == account);
+            return _repository.Value.Table.FirstOrDefaultAsync(i => i.Account.Account == account);
         }
 
-        public UserRecord GetUserById(string id)
+        public Task<UserRecord> GetUserById(string id)
         {
-            return _repository.Value.Table.FirstOrDefault(i => i.Id == id);
+            return _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         #endregion Implementation of IUserService

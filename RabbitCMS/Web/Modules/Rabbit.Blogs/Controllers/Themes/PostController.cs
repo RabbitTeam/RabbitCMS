@@ -8,6 +8,7 @@ using Rabbit.Web.Mvc.Themes;
 using System;
 using System.Dynamic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Rabbit.Blogs.Controllers.Themes
@@ -36,17 +37,17 @@ namespace Rabbit.Blogs.Controllers.Themes
 
         #region Action
 
-        public ActionResult ListHome(int pageIndex)
+        public async Task<ActionResult> ListHome(int pageIndex)
         {
             ViewBag.AppendTenantName = false;
 
-            var siteSettings = _siteSettingsService.Get();
+            var siteSettings = await _siteSettingsService.Get();
             return List(pageIndex, _postService.GetHomeList(), siteSettings.Seo, true);
         }
 
-        public ActionResult ListCategorys(string routePath, int pageIndex)
+        public async Task<ActionResult> ListCategorys(string routePath, int pageIndex)
         {
-            var category = _categoryService.Get(routePath);
+            var category = await _categoryService.Get(routePath);
             if (category == null)
                 return HttpNotFound();
 
@@ -89,7 +90,7 @@ namespace Rabbit.Blogs.Controllers.Themes
             }, true);
         }
 
-        public ActionResult Detailed(string categoryRoutePath, string routePath)
+        public async Task<ActionResult> Detailed(string categoryRoutePath, string routePath)
         {
             if (string.IsNullOrEmpty(routePath))
                 return HttpNotFound();
@@ -97,7 +98,7 @@ namespace Rabbit.Blogs.Controllers.Themes
             if (string.Equals(categoryRoutePath, "unclassified", StringComparison.OrdinalIgnoreCase))
                 categoryRoutePath = null;
 
-            var post = _postService.Read(routePath, categoryRoutePath);
+            var post = await _postService.Read(routePath, categoryRoutePath);
             if (post == null)
                 return HttpNotFound();
 
@@ -105,8 +106,8 @@ namespace Rabbit.Blogs.Controllers.Themes
                 View(new PostDetailedViewModel
                 {
                     CurrentPost = post,
-                    AfterPost = new Lazy<PostRecord>(() => _postService.GetAfterPost(post)),
-                    BeforePost = new Lazy<PostRecord>(() => _postService.GetBeforePost(post))
+                    AfterPost = new Lazy<PostRecord>(() => _postService.GetAfterPost(post).Result),
+                    BeforePost = new Lazy<PostRecord>(() => _postService.GetBeforePost(post).Result)
                 });
         }
 

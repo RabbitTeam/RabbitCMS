@@ -20,7 +20,7 @@ namespace Rabbit.Blogs.Controllers.Themes
         public FeedController(IThemePostService postService, ISiteSettingsService siteSettingsService)
         {
             _postService = postService;
-            _siteSettings = siteSettingsService.Get();
+            _siteSettings = siteSettingsService.Get().Result;
         }
 
         public void Index()

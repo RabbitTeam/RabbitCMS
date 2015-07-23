@@ -2,7 +2,9 @@
 using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rabbit.Blogs.Services.Themes
 {
@@ -16,7 +18,7 @@ namespace Rabbit.Blogs.Services.Themes
 
         IQueryable<PostRecord> GetMostReadList(int? count = null);
 
-        PostRecord Read(string routePath, string categoryRoutePath = null);
+        Task<PostRecord> Read(string routePath, string categoryRoutePath = null);
 
         IQueryable<PostRecord> GetListByTag(string tag);
 
@@ -24,9 +26,9 @@ namespace Rabbit.Blogs.Services.Themes
 
         IQueryable<PostRecord> GetListByTitleKeywords(string titleKeywords);
 
-        PostRecord GetBeforePost(PostRecord post);
+        Task<PostRecord> GetBeforePost(PostRecord post);
 
-        PostRecord GetAfterPost(PostRecord post);
+        Task<PostRecord> GetAfterPost(PostRecord post);
     }
 
     internal sealed class ThemePostService : IThemePostService
@@ -49,7 +51,7 @@ namespace Rabbit.Blogs.Services.Themes
 
         public IQueryable<PostRecord> GetListByCategory(string categoryRoutePath)
         {
-            var category = _categoryService.Get(categoryRoutePath);
+            var category = _categoryService.Get(categoryRoutePath).Result;
             return category == null ? null : DefaultTable().Where(i => i.Categorys.Any(z => z.Id == category.Id));
         }
 
@@ -66,17 +68,15 @@ namespace Rabbit.Blogs.Services.Themes
             return table;
         }
 
-        public PostRecord Read(string routePath, string categoryRoutePath = null)
+        public async Task<PostRecord> Read(string routePath, string categoryRoutePath = null)
         {
             var table = DefaultTable();
             if (!string.IsNullOrEmpty(categoryRoutePath))
                 table = table.Where(i => i.Categorys.Any(z => z.Seo.RoutePath == categoryRoutePath));
             table = table.Where(i => i.Seo.RoutePath == routePath);
 
-            var record = table.FirstOrDefault();
-            if (record == null)
-                return null;
-            return record.Read();
+            var record = await table.FirstOrDefaultAsync();
+            return record?.Read();
         }
 
         public IQueryable<PostRecord> GetListByTag(string tag)
@@ -96,14 +96,14 @@ namespace Rabbit.Blogs.Services.Themes
             return DefaultTable().Where(i => i.Title.Contains(titleKeywords));
         }
 
-        public PostRecord GetBeforePost(PostRecord post)
+        public Task<PostRecord> GetBeforePost(PostRecord post)
         {
-            return Table().OrderByDescending(i => i.CreateTime).FirstOrDefault(i => i.CreateTime < post.CreateTime);
+            return Table().OrderByDescending(i => i.CreateTime).FirstOrDefaultAsync(i => i.CreateTime < post.CreateTime);
         }
 
-        public PostRecord GetAfterPost(PostRecord post)
+        public Task<PostRecord> GetAfterPost(PostRecord post)
         {
-            return Table().OrderBy(i => i.CreateTime).FirstOrDefault(i => i.CreateTime > post.CreateTime);
+            return Table().OrderBy(i => i.CreateTime).FirstOrDefaultAsync(i => i.CreateTime > post.CreateTime);
         }
 
         #endregion Implementation of IThemePostService

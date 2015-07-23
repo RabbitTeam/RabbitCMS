@@ -65,7 +65,7 @@
 </div>
 <footer id="zan-footer">
     <div class="container">
-        @Html.Raw(WorkContext.Resolve<ISiteSettingsService>().Get().Copyright)
+        @Html.Raw(WorkContext.Resolve<ISiteSettingsService>().Get().Result.Copyright)
     </div>
 </footer>
 <div id="zan-gotop">

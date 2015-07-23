@@ -15,7 +15,7 @@
         }
         return false;
     });
-    var siteSettings=WorkContext.Resolve<ISiteSettingsService>().Get();
+    var siteSettings=WorkContext.Resolve<ISiteSettingsService>().Get().Result;
 }
 @switch ((string) Model.Style)
 {

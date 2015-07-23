@@ -3,13 +3,14 @@ using Rabbit.Contents.Models;
 using Rabbit.Kernel;
 using Rabbit.Kernel.Caching;
 using System;
-using System.Linq;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Rabbit.Contents.Services
 {
     public interface ISiteSettingsService : IDependency
     {
-        SiteSettingsRecord Get();
+        Task<SiteSettingsRecord> Get();
 
         void Update(SiteSettingsRecord settings);
     }
@@ -29,14 +30,13 @@ namespace Rabbit.Contents.Services
 
         #region Implementation of ISiteSettingsService
 
-        public SiteSettingsRecord Get()
+        public Task<SiteSettingsRecord> Get()
         {
             return _cacheManager.Get("SiteSettings", ctx =>
             {
                 ctx.Monitor(_signals.When("SiteSettings.Change"));
                 var repository = _repository.Value;
-                var record = repository.Table.Single();
-                return record;
+                return repository.Table.SingleAsync();
             });
         }
 
