@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6F846382-EF2B-4F61-90B3-1304856A0114}</ProjectGuid>
+    <ProjectGuid>{6B68FC20-8C34-4D5A-9C21-5D0C67A0DF6B}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rabbit.Users</RootNamespace>
-    <AssemblyName>Rabbit.Users</AssemblyName>
+    <RootNamespace>Rabbit.Media</RootNamespace>
+    <AssemblyName>Rabbit.Media</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -20,6 +20,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,14 +86,6 @@
       <HintPath>..\..\..\packages\Rabbit.Components.Data.Migrators.1.2.0.0\lib\net40\Rabbit.Components.Data.Migrators.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rabbit.Components.Security, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Rabbit.Components.Security.1.2.0.0\lib\net40\Rabbit.Components.Security.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Rabbit.Components.Security.Web, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Rabbit.Components.Security.Web.1.2.0.0\lib\net40\Rabbit.Components.Security.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Rabbit.Kernel, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31a868cd2ac9f841, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Rabbit.Kernel.1.2.0.0\lib\net40\Rabbit.Kernel.dll</HintPath>
       <Private>True</Private>
@@ -109,6 +103,7 @@
       <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -167,11 +162,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Views\Account\SignIn.cshtml" />
-    <Content Include="Views\UserAdmin\Edit.cshtml" />
+    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -184,27 +175,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapter\FormsAuthenticationService.cs" />
-    <Compile Include="Adapter\RoleService.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\UserAdminController.cs" />
-    <Compile Include="Migrators.cs" />
-    <Compile Include="Models\AccountRecord.cs" />
-    <Compile Include="Models\UserRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Routes.cs" />
-    <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Services\UserService.cs" />
-    <Compile Include="ViewModels\AccountModels.cs" />
-    <Compile Include="ViewModels\UserViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructures\Rabbit.Infrastructures\Rabbit.Infrastructures.csproj">
-      <Project>{8531192E-27F0-4385-99DD-D67F58BEC89C}</Project>
-      <Name>Rabbit.Infrastructures</Name>
-    </ProjectReference>
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -218,9 +198,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>7202</DevelopmentServerPort>
+          <DevelopmentServerPort>17306</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:7202/</IISUrl>
+          <IISUrl>http://localhost:17306/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
