@@ -72,8 +72,8 @@ namespace Rabbit.Blogs.Services.Themes
         {
             var table = DefaultTable();
             if (!string.IsNullOrEmpty(categoryRoutePath))
-                table = table.Where(i => i.Categorys.Any(z => z.Seo.RoutePath == categoryRoutePath));
-            table = table.Where(i => i.Seo.RoutePath == routePath);
+                table = table.Where(i => i.Categorys.Any(z => z.Route.Path == categoryRoutePath));
+            table = table.Where(i => i.Route.Path == routePath);
 
             var record = await table.FirstOrDefaultAsync();
             return record?.Read();

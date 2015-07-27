@@ -7,8 +7,8 @@
     Func<dynamic, string> getPostUrl = item =>
     {
         var itemCategory = ((IEnumerable<dynamic>)item.Categorys).FirstOrDefault();
-        var routeValues = new RouteValueDictionary(new { area = "Rabbit.Blogs", item.Seo.RoutePath });
-        routeValues.Add("CategoryRoutePath", itemCategory != null ? itemCategory.Seo.RoutePath : "unclassified");
+        var routeValues = new RouteValueDictionary(new { area = "Rabbit.Blogs", item.Route.Path });
+        routeValues.Add("CategoryRoutePath", itemCategory != null ? itemCategory.Route.Path : "unclassified");
         return Url.Action("Detailed", "Post", routeValues);
     };
     var postUrl = getPostUrl(post);
@@ -22,7 +22,7 @@
         @if (category != null)
         {
             @Html.Raw("&gt;")
-            <a title="Go to the @category.Title category archives." href="@Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", category.Seo.RoutePath})" class="category">@category.Title</a>
+            <a title="Go to the @category.Title category archives." href="@Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", category.Route.Path})" class="category">@category.Title</a>
         }
         &gt; @post.Title
     </div>

@@ -1,4 +1,5 @@
-﻿using Rabbit.Blogs.Models;
+﻿using Rabbit.Autoroute.Models;
+using Rabbit.Blogs.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,6 +16,8 @@ namespace Rabbit.Blogs.ViewModels
         public int PostCount { get; set; }
 
         public SeoModel Seo { get; set; }
+
+        public string RoutePath { get; set; }
     }
 
     public sealed class CategoryEditViewModel
@@ -52,5 +55,21 @@ namespace Rabbit.Blogs.ViewModels
         public bool Visible { get; set; }
 
         public SeoModel Seo { get; set; }
+
+        [DisplayName("路由路径"), Required, StringLength(50)]
+        public string RoutePath { get; set; }
+
+        public PostCategoryRecord UpdateRecord(PostCategoryRecord record)
+        {
+            record.Title = Title;
+            record.Visible = Visible;
+            record.Description = Description;
+            record.Seo = Seo;
+            if (record.Route == null)
+                record.Route = RouteRecord.Create();
+            record.Route.Path = RoutePath;
+
+            return record;
+        }
     }
 }

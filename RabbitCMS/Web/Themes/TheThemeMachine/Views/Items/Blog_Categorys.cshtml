@@ -49,7 +49,7 @@
                     @foreach (var item in Model)
                     {
                         var tagBuilder = new TagBuilder("li");
-                        var href = Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", item.Seo.RoutePath});
+                        var href = Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", item.Route.Path});
                         if (isCurrent(href))
                         {
                             tagBuilder.AddCssClass("current-menu-item");
@@ -65,7 +65,7 @@
     case "Component":
         foreach (var item in Model)
         {
-            var href = Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", item.Seo.RoutePath});
+            var href = Url.Action("ListCategorys", "Post", new {area = "Rabbit.Blogs", item.Route.Path});
             <li class="cat-item cat-item-2">
                 <a href="@href">@item.Title</a>
             </li>

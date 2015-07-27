@@ -6,7 +6,7 @@ using Rabbit.Infrastructures.Data;
 using Rabbit.Infrastructures.Mvc;
 using Rabbit.Users.Services;
 using Rabbit.Web.Mvc.UI.Admin;
-using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -57,9 +57,9 @@ namespace Rabbit.Blogs.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
-            _postService.Delete(id);
+            await _postService.Delete(id);
 
             return this.Success();
         }
@@ -95,36 +95,24 @@ namespace Rabbit.Blogs.Controllers
         [HttpPost]
         private async Task<ActionResult> AddOrEdit(PostEditViewModel model)
         {
-            var record = await _postService.Get(model.Id);
-            var isAdd = record == null;
-            if (record == null)
-                record = PostRecord.Create(await _userService.GetUserById(_authenticationService.GetAuthenticatedUser().Identity));
+            try
+            {
+                var record = await _postService.Get(model.Id);
+                var isAdd = record == null;
+                if (record == null)
+                    record = PostRecord.Create(await _userService.GetUserById(_authenticationService.GetAuthenticatedUser().Identity));
 
-            record.Status = model.IsPublish ? PostStatus.Publish : PostStatus.UnPublished;
-            record.Content = model.Content;
-            record.OppositionCount = model.OppositionCount;
-            record.ReadingCount = model.ReadingCount;
-            record.RecommendationCount = model.RecommendationCount;
-            record.ShowInIndex = model.ShowInIndex;
-            record.Summary = model.Summary;
-            record.Tags = model.Tags;
-            record.Title = model.Title;
-            record.AllowComment = model.AllowComment;
-            record.Seo = model.Seo;
-            var newCategorys = model.Categorys == null ? null :
-                _categoryService.GetList(model.Categorys.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                model.UpdateRecord(record, _categoryService);
 
-            if (record.Categorys.Any())
-                record.Categorys.Clear();
+                if (isAdd)
+                    await _postService.Add(record);
 
-            if (newCategorys != null)
-                foreach (var category in newCategorys)
-                    record.Categorys.Add(category);
-
-            if (isAdd)
-                _postService.Add(record);
-
-            return this.Success();
+                return this.Success();
+            }
+            catch (ValidationException validationException)
+            {
+                return this.Error(validationException.Message);
+            }
         }
     }
 }

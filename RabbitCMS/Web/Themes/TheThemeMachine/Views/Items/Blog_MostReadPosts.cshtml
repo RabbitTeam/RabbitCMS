@@ -9,7 +9,7 @@
                 @foreach (var post in Model)
                 {
                     var category = ((IEnumerable<dynamic>) post.Categorys).FirstOrDefault();
-                    var routeValues = new RouteValueDictionary(new {area = "Rabbit.Blogs", post.Seo.RoutePath});
+                    var routeValues = new RouteValueDictionary(new {area = "Rabbit.Blogs", post.Route.Path });
                     routeValues.Add("CategoryRoutePath", category != null ? category.Seo.RoutePath : "unclassified");
                     var postUrl = Url.Action("Detailed", "Post", routeValues);
                     <li class="list-group-item">

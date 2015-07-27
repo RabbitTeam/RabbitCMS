@@ -63,25 +63,4 @@
 
         return tableController = $.extend(container, tableController);
     };
-
-    $.fn.dialog = function (options) {
-        options = $.extend({ autoClose: true, delay: 2000 }, options);
-        var container = $(this);
-
-        return $.extend(container, {
-            show: function () {
-                container.fadeIn();
-                if (options.autoClose) {
-                    (function (c) {
-                        setTimeout(function () {
-                            c.hide();
-                        }, options.delay);
-                    })(this);
-                }
-            },
-            hide: function () {
-                container.fadeOut();
-            }
-        });
-    }
 })(jQuery);

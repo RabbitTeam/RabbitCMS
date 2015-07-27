@@ -29,18 +29,19 @@
     <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.config.js"></script>
     <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.all.min.js"></script>
     <script type="text/javascript">
+        var isAdd = @(Model.Id == null ? "true":"false");
         var contentVal = $("[data-valmsg-for=Content]");
         var editor = UE.getEditor("content", { initialFrameHeight: 480, initialFrameWidth: "100%", initialContent: '@Html.Raw(Model.Content)' });
         editor.addListener("contentChange", function() {
             var content = editor.getContent();
-            if (content == null || content.length == 0) {
+            if (content == null || content.length === 0) {
                 contentVal.show();
             } else {
                 contentVal.hide();
             }
         });
         $(function() {
-            $('input').iCheck({
+            $('.categoryList:last input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
@@ -51,25 +52,42 @@
         var form = container.find("form");
 
         var txtTitle = form.find("#Title");
-        var txtRoutePath = form.find("#Seo_RoutePath");
+        var txtRoutePath = form.find("#RoutePath");
+        
+        var boxs=$(".categoryList:first input[type=checkbox]");
+        function setValue(result) {
+            var cBoxs = boxs.filter(":checked");
+            var prefix = cBoxs.length === 0 ? "unclassified" : cBoxs.eq(0).data("path");
+            txtRoutePath.data("path", result).val(prefix + "/" + result);
+        }
+        
+        boxs.iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        }).on("ifChanged",function() {
+            setValue(txtRoutePath.data("path"));
+        });
 
         txtTitle.keyup(function() {
-            var value = $(this).val();
-            var result = $.chineseHelper.toPinYin(value).toLowerCase();
-            if (result.length > 50) {
-                result = $.chineseHelper.toPinYinFirst(value).toLowerCase();
+            if (isAdd) {
+                var value = $(this).val();
+                var result = $.chineseHelper.toPinYin(value).toLowerCase();
+                if (result.length > 50) {
+                    result = $.chineseHelper.toPinYinFirst(value).toLowerCase();
+                }
+                setValue(result);  
             }
-            txtRoutePath.val(result);
         });
         txtRoutePath.change(function() {
             txtTitle.unbind("keyup");
         });
         var fastRoute = $(".fastRoute");
         fastRoute.find("a:first").click(function() {
-            txtRoutePath.val($.chineseHelper.toPinYin(txtTitle.val()).toLowerCase());
+            setValue($.chineseHelper.toPinYin(txtTitle.val()).toLowerCase());
         });
         fastRoute.find("a:last").click(function() {
-            txtRoutePath.val($.chineseHelper.toPinYinFirst(txtTitle.val()).toLowerCase());
+            setValue($.chineseHelper.toPinYinFirst(txtTitle.val()).toLowerCase());
         });
 
         form.ajaxForm({
@@ -96,21 +114,20 @@
                     $.rabbit().modalSuccess({
                         title: "提示",
                         body: "保存成功！",
-                        showClose:false,
-                        onOk: function() {
-                            if (id != null && id.length > 0)
+                        onOk: function () {
+                            if (id == null || id.length === 0)
                                 location.href = '@Url.Action("Index")';
                         }
                     });
                 } else {
-                    $.rabbit().modalSuccess({
-                        title: "提示", body: "保存失败，" + data.message, showClose: false
+                    $.rabbit().modalDanger({
+                        title: "提示", body: "保存失败，" + data.message
                     });
                 }
             },
             error: function () {
-                $.rabbit().modalSuccess({
-                    title: "提示", body: "保存失败，请联系管理员！", showClose: false
+                $.rabbit().modalDanger({
+                    title: "提示", body: "保存失败，请联系管理员！"
                 });
             }
         });
@@ -153,16 +170,16 @@
                 <div class="box-body">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Seo.RoutePath)</label>
+                            <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.RoutePath)</label>
                             <div class="col-sm-10">
                                 <div class="col-sm-8">
-                                    @Html.TextBoxFor(model => model.Seo.RoutePath, new {@class = "form-control"})
+                                    @Html.TextBoxFor(model => model.RoutePath, new {@class = "form-control"})
                                     <div class="fastRoute">
                                         <a class="small">标题拼音</a> | <a class="small">标题拼音首字母</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.ValidationMessageFor(model => model.Seo.RoutePath)
+                                    @Html.ValidationMessageFor(model => model.RoutePath)
                                 </div>
                             </div>
                         </div>
@@ -215,6 +232,7 @@
                                     var tagBuilder = new TagBuilder("input");
                                     tagBuilder.Attributes["type"] = "checkbox";
                                     tagBuilder.Attributes["value"] = category.Id;
+                                    tagBuilder.Attributes["data-path"] = category.Route.Path;
                                     if (selectedCategoryList.Contains(category.Id))
                                     {
                                         tagBuilder.Attributes["checked"] = "checked";

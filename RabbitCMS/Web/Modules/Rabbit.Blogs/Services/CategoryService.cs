@@ -1,8 +1,10 @@
-﻿using Rabbit.Blogs.Models;
+﻿using Rabbit.Autoroute.Services;
+using Rabbit.Blogs.Models;
 using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,18 +19,20 @@ namespace Rabbit.Blogs.Services
 
         Task<PostCategoryRecord> Get(string id);
 
-        void Delete(string id);
+        Task Delete(string id);
 
-        void Add(PostCategoryRecord record);
+        Task Add(PostCategoryRecord record);
     }
 
     internal sealed class CategoryService : ICategoryService
     {
         private readonly Lazy<IRepository<PostCategoryRecord>> _repository;
+        private readonly IRouteService _routeService;
 
-        public CategoryService(Lazy<IRepository<PostCategoryRecord>> repository)
+        public CategoryService(Lazy<IRepository<PostCategoryRecord>> repository, IRouteService routeService)
         {
             _repository = repository;
+            _routeService = routeService;
         }
 
         #region Implementation of ICategoryService
@@ -55,13 +59,21 @@ namespace Rabbit.Blogs.Services
             return id == null ? Task.FromResult<PostCategoryRecord>(null) : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
-            _repository.Value.Delete(i => i.Id == id);
+            var repository = _repository.Value;
+            var record = await repository.Table.FirstOrDefaultAsync(i => i.Id == id);
+            if (record == null)
+                return;
+            _routeService.DeleteByPath(record.Route.Path);
+            repository.Delete(record);
         }
 
-        public void Add(PostCategoryRecord record)
+        public async Task Add(PostCategoryRecord record)
         {
+            if (await _routeService.ExistByPath(record.Route.Path))
+                throw new ValidationException($"路由路径 '{record.Route.Path}' 已经存在！");
+
             _repository.Value.Create(record);
         }
 

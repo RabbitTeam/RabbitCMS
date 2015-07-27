@@ -1,4 +1,6 @@
-﻿using Rabbit.Blogs.Models;
+﻿using Rabbit.Autoroute.Models;
+using Rabbit.Blogs.Models;
+using Rabbit.Blogs.Services;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -88,6 +90,39 @@ namespace Rabbit.Blogs.ViewModels
 
         public SeoModel Seo { get; set; }
 
+        [DisplayName("路由路径"), Required, StringLength(50)]
+        public string RoutePath { get; set; }
+
+        public PostRecord UpdateRecord(PostRecord record, ICategoryService categoryService)
+        {
+            record.Status = IsPublish ? PostStatus.Publish : PostStatus.UnPublished;
+            record.Content = Content;
+            record.OppositionCount = OppositionCount;
+            record.ReadingCount = ReadingCount;
+            record.RecommendationCount = RecommendationCount;
+            record.ShowInIndex = ShowInIndex;
+            record.Summary = Summary;
+            record.Tags = Tags;
+            record.Title = Title;
+            record.AllowComment = AllowComment;
+            record.Seo = Seo;
+            if (record.Route == null)
+                record.Route = RouteRecord.Create();
+            record.Route.Path = RoutePath;
+
+            var newCategorys = Categorys == null ? null :
+                categoryService.GetList(Categorys.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+            if (record.Categorys.Any())
+                record.Categorys.Clear();
+
+            if (newCategorys != null)
+                foreach (var category in newCategorys)
+                    record.Categorys.Add(category);
+
+            return record;
+        }
+
         public static explicit operator PostEditViewModel(PostRecord record)
         {
             return new PostEditViewModel
@@ -104,7 +139,8 @@ namespace Rabbit.Blogs.ViewModels
                 Summary = record.Summary,
                 Tags = record.Tags,
                 Title = record.Title,
-                Seo = record.Seo
+                Seo = record.Seo,
+                RoutePath = record.Route.Path
             };
         }
     }

@@ -1,7 +1,9 @@
-﻿using Rabbit.Blogs.Models;
+﻿using Rabbit.Autoroute.Services;
+using Rabbit.Blogs.Models;
 using Rabbit.Components.Data;
 using Rabbit.Kernel;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +16,9 @@ namespace Rabbit.Blogs.Services
 
         Task<PostRecord> Get(string id);
 
-        void Delete(string id);
+        Task Delete(string id);
 
-        void Add(PostRecord record);
+        Task Add(PostRecord record);
 
         Task<bool> Exist(string id);
     }
@@ -25,11 +27,13 @@ namespace Rabbit.Blogs.Services
     {
         private readonly Lazy<IRepository<PostRecord>> _repository;
         private readonly ICommentService _commentService;
+        private readonly IRouteService _routeService;
 
-        public PostService(Lazy<IRepository<PostRecord>> repository, ICommentService commentService)
+        public PostService(Lazy<IRepository<PostRecord>> repository, ICommentService commentService, IRouteService routeService)
         {
             _repository = repository;
             _commentService = commentService;
+            _routeService = routeService;
         }
 
         #region Implementation of ICategoryService
@@ -51,16 +55,24 @@ namespace Rabbit.Blogs.Services
             return id == null ? Task.FromResult<PostRecord>(null) : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
+            var repository = _repository.Value;
+            var record = await repository.Table.FirstOrDefaultAsync(i => i.Id == id);
+            if (record == null)
+                return;
             //删除评论。
-            _commentService.DeleteByPost(id);
-
-            _repository.Value.Delete(i => i.Id == id);
+            _commentService.DeleteByPost(record.Id);
+            //删除路由。
+            _routeService.DeleteByPath(record.Route.Path);
+            repository.Delete(record);
         }
 
-        public void Add(PostRecord record)
+        public async Task Add(PostRecord record)
         {
+            if (await _routeService.ExistByPath(record.Route.Path))
+                throw new ValidationException($"路由路径 '{record.Route.Path}' 已经存在！");
+
             _repository.Value.Create(record);
         }
 

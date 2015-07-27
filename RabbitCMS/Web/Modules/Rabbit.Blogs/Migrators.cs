@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using Rabbit.Autoroute.Models;
 using Rabbit.Blogs.Models;
 using Rabbit.Users.Models;
 using System.Data;
@@ -22,7 +23,7 @@ namespace Rabbit.Blogs
                 .WithColumn("CreateTime").AsDateTime()
                 .WithColumn("Seo_Keywords").AsString(255).Nullable()
                 .WithColumn("Seo_Description").AsString(255).Nullable()
-                .WithColumn("Seo_RoutePath").AsString(50);
+                .WithColumn("Route_Id").AsAnsiString(32).ForeignKey(TableName<RouteRecord>(), "Id");
 
             Create
                 .Table(TableName<PostRecord>())
@@ -41,7 +42,7 @@ namespace Rabbit.Blogs
                 .WithColumn("CreateTime").AsDateTime()
                 .WithColumn("Seo_Keywords").AsString(255).Nullable()
                 .WithColumn("Seo_Description").AsString(255).Nullable()
-                .WithColumn("Seo_RoutePath").AsString(50);
+                .WithColumn("Route_Id").AsAnsiString(32).ForeignKey(TableName<RouteRecord>(), "Id");
 
             Create.Table("PostCategoryRecordPostRecords")
                 .WithColumn("PostCategoryRecord_Id").AsAnsiString(32).PrimaryKey().ForeignKey(TableName<PostCategoryRecord>(), "Id").OnDelete(Rule.Cascade)

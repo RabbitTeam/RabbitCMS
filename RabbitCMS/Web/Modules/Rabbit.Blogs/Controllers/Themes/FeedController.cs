@@ -64,8 +64,8 @@ namespace Rabbit.Blogs.Controllers.Themes
                     itemElement.Add(categoryElement);
                 }
 
-                var routeValues = new RouteValueDictionary(new { area = "Rabbit.Blogs", post.Seo.RoutePath });
-                routeValues.Add("CategoryRoutePath", category != null ? category.Seo.RoutePath : "unclassified");
+                var routeValues = new RouteValueDictionary(new { area = "Rabbit.Blogs", post.Route.Path });
+                routeValues.Add("CategoryRoutePath", category != null ? post.Route.Path : "unclassified");
                 var postUrl = link + Url.Action("Detailed", "Post", routeValues);
 
                 itemElement.Add(new XElement("link", postUrl));

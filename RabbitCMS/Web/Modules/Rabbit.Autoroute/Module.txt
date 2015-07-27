@@ -1,0 +1,12 @@
+Name: Rabbit.Autoroute
+Category: Default
+Description: 自动路由模块。
+FeatureDescription: 
+Version: 1.0.0.0
+KernelVersion: 1.0.0.0
+WebSite: 
+Company: 
+Author: majian
+Tags: 
+Dependencies: 
+Features: 

@@ -33,7 +33,8 @@ namespace Rabbit.Blogs.Services.Themes
 
         public Task<PostCategoryRecord> Get(string routePath)
         {
-            return _repository.Value.Table.FirstOrDefaultAsync(i => i.Seo.RoutePath == routePath);
+            routePath = routePath.ToLower();
+            return _repository.Value.Table.FirstOrDefaultAsync(i => i.Route.Path == routePath);
         }
 
         #endregion Implementation of IThemeCategoryService

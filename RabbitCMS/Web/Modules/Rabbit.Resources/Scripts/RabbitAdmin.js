@@ -13,13 +13,28 @@
                 type: "",
                 title: "标题",
                 body: "内容",
-                cancelText: "取消",
-                okText: "确定",
                 showClose: true,
                 autoShow: true,
                 onOk: null,
-                okCancel:null
+                onCancel: null,
+                buttons: { cancel: { show: true, text: "取消" }, ok: { show: true, text: "确定" } }
             }, options);
+
+            //button status
+            (function() {
+                function initButton(op, text) {
+                    if (op == null) {
+                        return { show: true, text: text };
+                    }
+                    else if (op instanceof Boolean) {
+                        return { show: op, text: text };
+                    }
+                    return op;
+                }
+
+                options.buttons.ok = initButton(options.buttons.ok, "确定");
+                options.buttons.cancel = initButton(options.buttons.cancel, "取消");
+            })();
 
             var events = { cancelEvents: [], okEvents: [] };
 
@@ -73,11 +88,15 @@
                 var btnOk = modal.find(".modal-footer button:last");
                 var btnCancel = modal.find(".modal-footer button:first");
 
-                btnOk.click(function () {
+                function initButtonStatus(button,op) {
+                    return button.text(op.text||"").toggle(op.show);
+                }
+
+                initButtonStatus(btnOk, options.buttons.ok).click(function () {
                     if (triggerOkEvents())
                         controller.hide();
-                }).text(options.okText);
-                btnCancel.text(options.cancelText);
+                });
+                initButtonStatus(btnCancel, options.buttons.cancel);
             })();
 
             //modal base
@@ -120,19 +139,19 @@
         }
 
         rabbit.modalPrimary = function (options) {
-            return modalStatus($.extend(options, { type: "primary" }));
+            return modalStatus($.extend(options, { type: "primary", buttons: { cancel: false } }));
         };
         rabbit.modalInfo = function (options) {
-            return modalStatus($.extend(options, { type: "info" }));
+            return modalStatus($.extend(options, { type: "info", buttons: { cancel: false } }));
         };
         rabbit.modalWarning = function (options) {
             return modalStatus($.extend(options, { type: "warning" }));
         };
         rabbit.modalSuccess = function (options) {
-            return modalStatus($.extend(options, { type: "success" }));
+            return modalStatus($.extend(options, { type: "success", buttons: { cancel: false } }));
         };
         rabbit.modalDanger = function (options) {
-            return modalStatus($.extend(options, { type: "danger" }));
+            return modalStatus($.extend(options, { type: "danger", buttons: { cancel: false } }));
         };
 
     })();

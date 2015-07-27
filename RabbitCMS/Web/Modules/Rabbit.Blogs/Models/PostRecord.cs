@@ -1,4 +1,5 @@
-﻿using Rabbit.Components.Data;
+﻿using Rabbit.Autoroute.Models;
+using Rabbit.Components.Data;
 using Rabbit.Users.Models;
 using System;
 using System.Collections.Generic;
@@ -104,6 +105,11 @@ namespace Rabbit.Blogs.Models
         /// Seo信息。
         /// </summary>
         public SeoModel Seo { get; set; }
+
+        /// <summary>
+        /// 路由信息。
+        /// </summary>
+        public virtual RouteRecord Route { get; set; }
 
         #region Public Method
 
