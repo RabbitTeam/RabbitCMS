@@ -29,7 +29,7 @@ namespace Rabbit.Blogs
             builder.Add(T("博客"),
                 menu =>
                     menu
-                        .Position("5")
+                        .Position("3.1")
                         .LocalNavigation()
                         .Icon("menu-icon fa fa-th-list")
                         .Add(T("分类管理"), i => i.Action("Index", "CategoryAdmin", new { Area = area }).LocalNavigation()
