@@ -10,7 +10,7 @@
                 {
                     var category = ((IEnumerable<dynamic>) post.Categorys).FirstOrDefault();
                     var routeValues = new RouteValueDictionary(new {area = "Rabbit.Blogs", post.Route.Path });
-                    routeValues.Add("CategoryRoutePath", category != null ? category.Seo.RoutePath : "unclassified");
+                    routeValues.Add("CategoryRoutePath", category != null ? category.Route.Path : "unclassified");
                     var postUrl = Url.Action("Detailed", "Post", routeValues);
                     <li class="list-group-item">
                         <span class="post-title"> <a href="@postUrl" title="@post.Title">@post.Title</a> </span> <span class="badge">@post.ReadingCount views</span>
