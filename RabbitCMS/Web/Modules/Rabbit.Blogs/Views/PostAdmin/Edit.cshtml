@@ -24,14 +24,14 @@
 }
 @helper PageScripts()
 {
-    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform", "~/bundles/chineseHelper")
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform", "~/bundles/chineseHelper", "~/bundles/rabbitAdmin")
     <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
     <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.config.js"></script>
     <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.all.min.js"></script>
     <script type="text/javascript">
         var contentVal = $("[data-valmsg-for=Content]");
-        var editor = UE.getEditor("container", { initialFrameHeight: 480, initialFrameWidth: "100%", initialContent: '@Html.Raw(Model.Content)' });
-        editor.addListener("contentChange", function () {
+        var editor = UE.getEditor("content", { initialFrameHeight: 480, initialFrameWidth: "100%", initialContent: '@Html.Raw(Model.Content)' });
+        editor.addListener("contentChange", function() {
             var content = editor.getContent();
             if (content == null || content.length == 0) {
                 contentVal.show();
@@ -39,7 +39,7 @@
                 contentVal.hide();
             }
         });
-        $(function () {
+        $(function() {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
@@ -53,7 +53,7 @@
         var txtTitle = form.find("#Title");
         var txtRoutePath = form.find("#Seo_RoutePath");
 
-        txtTitle.keyup(function () {
+        txtTitle.keyup(function() {
             var value = $(this).val();
             var result = $.chineseHelper.toPinYin(value).toLowerCase();
             if (result.length > 50) {
@@ -65,46 +65,53 @@
             txtTitle.unbind("keyup");
         });
         var fastRoute = $(".fastRoute");
-        fastRoute.find("a:first").click(function () {
+        fastRoute.find("a:first").click(function() {
             txtRoutePath.val($.chineseHelper.toPinYin(txtTitle.val()).toLowerCase());
         });
-        fastRoute.find("a:last").click(function () {
+        fastRoute.find("a:last").click(function() {
             txtRoutePath.val($.chineseHelper.toPinYinFirst(txtTitle.val()).toLowerCase());
         });
 
         form.ajaxForm({
-            beforeSerialize: function () {
+            beforeSerialize: function() {
                 var ids = '';
-                $(".categoryList input:checked").each(function () {
+                $(".categoryList input:checked").each(function() {
                     ids += $(this).val() + ",";
                 });
                 ids = ids.substring(0, ids.length - 1);
                 $("#Categorys").val(ids);
             },
-            beforeSubmit: function (array, f) {
+            beforeSubmit: function(array, f) {
                 var content = editor.getContent();
-                if (content == null || content.length == 0) {
+                if (content == null || content.length === 0) {
                     contentVal.show();
                     return false;
                 }
                 return f.valid();
             },
-            success: function (data) {
-                if (data.success)
-                    location.href = '@Url.Action("Index")';
-                /*var id = cId.val();
+            success: function(data) {
+                var cId = form.find("#Id");
+                var id = cId.val();
                 if (data.success) {
-                    table.load();
-                    if (id == null || id.length == 0)
-                        container.fadeOut();
+                    $.rabbit().modalSuccess({
+                        title: "提示",
+                        body: "保存成功！",
+                        showClose:false,
+                        onOk: function() {
+                            if (id != null && id.length > 0)
+                                location.href = '@Url.Action("Index")';
+                        }
+                    });
                 } else {
-                    dialog.find("span").text("保存失败，" + data.message);
-                    dialog.show();
-                }*/
+                    $.rabbit().modalSuccess({
+                        title: "提示", body: "保存失败，" + data.message, showClose: false
+                    });
+                }
             },
             error: function () {
-                /*dialog.find("span").text("保存失败，请联系管理员！");
-                dialog.show();*/
+                $.rabbit().modalSuccess({
+                    title: "提示", body: "保存失败，请联系管理员！", showClose: false
+                });
             }
         });
     </script>
@@ -132,7 +139,7 @@
             </div>
             <div class="form-group">
                 <label>@Html.DisplayNameFor(model => model.Content)</label>
-                <script id="container" name="content" type="text/plain">
+                <script id="content" name="content" type="text/plain">
                 </script>
                 <span class="field-validation-error" data-valmsg-for="Content" data-valmsg-replace="true" style="display: none"><span for="Content" generated="true" class="">内容 字段是必需的。</span></span>
             </div>

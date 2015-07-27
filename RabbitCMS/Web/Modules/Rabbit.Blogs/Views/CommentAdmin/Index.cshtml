@@ -9,24 +9,25 @@
 }
 @helper PageScripts()
 {
-    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform")
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform", "~/bundles/rabbitAdmin")
     <script src="~/Modules/Rabbit.Blogs/Scripts/table.js"></script>
     <script src="~/Modules/Rabbit.Blogs/Scripts/common.js"></script>
     <script type="text/javascript">
-        var dialog = $(".alert-danger").dialog();
         function deleteComments(id, successFn) {
-            modalController.show();
-            modalController.okFn = function () {
-                $.ajax({
-                    url: '@Url.HttpRouteUrl("Rabbit.Blogs_CommentsApi", new {id = "1id1"})'.replace(/1id1/, id),
-                    type: 'DELETE',
-                    success: successFn,
-                    error: function () {
-                        dialog.find("span").text("删除失败，请联系管理员！");
-                        dialog.show();
-                    }
-                });
-            };
+            $.rabbit().modalWarning({
+                title: "提示",
+                body: "此操作无法还原，确定继续吗？",
+                onOk: function() {
+                    $.ajax({
+                        url: '@Url.HttpRouteUrl("Rabbit.Blogs_CommentsApi", new {id = "1id1"})'.replace(/1id1/, id),
+                        type: 'DELETE',
+                        success: successFn,
+                        error: function () {
+                            $.rabbit().modalDanger({ title: "提示", body: "删除失败，请联系管理员！", showClose: false });
+                        }
+                    });
+                }
+            });
         }
         //table
         var table = (function() {
@@ -50,7 +51,7 @@
                         deleteComments(id, function () {
                             btn.parents("tr:first").fadeOut(function () {
                                 $(this).remove();
-                                if (controller.find("tbody tr").length == 0) {
+                                if (controller.find("tbody tr").length === 0) {
                                     controller.load();
                                 }
                             });
@@ -75,29 +76,6 @@
             });
         });
 
-        var modal = $(".modal");
-        var modalController= {
-            show: function () {
-                modal.fadeIn();
-            },
-            hide: function () {
-                modal.fadeOut();
-
-            },
-            okFn:function() {
-
-            }
-        }
-        var modalFooter = modal.find(".modal-footer");
-        modalFooter.find("button:first").click(function () {
-            modalController.hide();
-            if (modalController.okFn != null)
-                modalController.okFn();
-        });
-        modalFooter.find("button:last").click(function () {
-            modalController.hide();
-        });
-
         $(".box-tools button").click(function () {
             var ids = '';
             table.find("tbody input:checked").each(function() {
@@ -116,27 +94,6 @@
     Layout.Scripts = PageScripts();
     Layout.Title = "评论管理";
 }
-<div class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">提示</h4>
-            </div>
-            <div class="modal-body">
-                <p>删除之后无法恢复，确定删除吗？</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">确定</button>
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-<div class="alert alert-danger alert-dismissable" style="display: none">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4><i class="icon fa fa-ban"></i> <span>删除失败，请联系管理员!</span></h4>
-</div>
 <div class="box box-info">
     <div class="box-header">
         <h3 class="box-title">评论管理</h3>

@@ -52,7 +52,7 @@ namespace Rabbit.Blogs.Services
 
         public Task<PostCategoryRecord> Get(string id)
         {
-            return id == null ? null : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
+            return id == null ? Task.FromResult<PostCategoryRecord>(null) : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public void Delete(string id)

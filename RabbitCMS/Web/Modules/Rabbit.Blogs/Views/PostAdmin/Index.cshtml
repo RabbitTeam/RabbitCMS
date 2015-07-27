@@ -1,4 +1,5 @@
-﻿@helper PageStyles()
+﻿@using System.Web.Optimization
+@helper PageStyles()
 {
     <style type="text/css">
         .table th, td {
@@ -10,8 +11,8 @@
 {
     <script src="~/Modules/Rabbit.Blogs/Scripts/table.js"></script>
     <script src="~/Modules/Rabbit.Blogs/Scripts/common.js"></script>
+    @Scripts.Render("~/bundles/rabbitAdmin")
     <script type="text/javascript">
-        var dialog = $(".alert-danger").dialog();
 
         //table
         var table = (function() {
@@ -29,7 +30,7 @@
                     var tr = $("<tr />")
                         .data({ id: item.Id, model: item })
                         .append(titleTd)
-                        .append($("<td />").append(item.Status == 1 ? '<span class="label label-success">已发布</span>' : '<span class="label label-warning">未发布</span>'))
+                        .append($("<td />").append(item.Status === 1 ? '<span class="label label-success">已发布</span>' : '<span class="label label-warning">未发布</span>'))
                         .append($("<td />").append(item.CommentCount))
                         .append($("<td />").append(item.ReadingCount))
                         .append($("<td />").append(managerTd));
@@ -49,23 +50,28 @@
 
                     tr.find(".btn-danger").click(function () {
                         var btn = $(this);
-                        var tr = btn.parents("tr:first");
-                        var id = tr.data("id");
-                        $.ajax({
-                            url: '@Url.Action("Delete")',
-                            type: 'post',
-                            data: { id: id },
-                            success: function () {
-                                btn.parents("tr:first").fadeOut(function () {
-                                    $(this).remove();
-                                    if (controller.find("tbody tr").length == 0) {
-                                        controller.load();
+                        $.rabbit().modalWarning({
+                            title: "提示",
+                            body: "此操作无法还原，确定继续吗？",
+                            onOk: function () {
+                                var tr = btn.parents("tr:first");
+                                var id = tr.data("id");
+                                $.ajax({
+                                    url: '@Url.Action("Delete")',
+                                    type: 'post',
+                                    data: { id: id },
+                                    success: function () {
+                                        btn.parents("tr:first").fadeOut(function () {
+                                            $(this).remove();
+                                            if (controller.find("tbody tr").length === 0) {
+                                                controller.load();
+                                            }
+                                        });
+                                    },
+                                    error: function () {
+                                        $.rabbit().modalDanger({ title: "提示", body: "删除失败，请联系管理员！", showClose: false });
                                     }
                                 });
-                            },
-                            error: function () {
-                                dialog.find("span").text("删除失败，请联系管理员！");
-                                dialog.show();
                             }
                         });
                     });

@@ -18,6 +18,8 @@ namespace Rabbit.Blogs.Services
 
         void Delete(string[] ids);
 
+        void DeleteByPost(string postId);
+
         Task<bool> Exist(string id);
     }
 
@@ -60,6 +62,11 @@ namespace Rabbit.Blogs.Services
             {
                 repository.Delete(i => i.Id == id);
             }
+        }
+
+        public void DeleteByPost(string postId)
+        {
+            _repository.Value.Delete(i => i.Post.Id == postId);
         }
 
         public Task<bool> Exist(string id)

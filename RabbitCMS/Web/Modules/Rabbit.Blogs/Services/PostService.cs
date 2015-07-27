@@ -24,10 +24,12 @@ namespace Rabbit.Blogs.Services
     internal sealed class PostService : IPostService
     {
         private readonly Lazy<IRepository<PostRecord>> _repository;
+        private readonly ICommentService _commentService;
 
-        public PostService(Lazy<IRepository<PostRecord>> repository)
+        public PostService(Lazy<IRepository<PostRecord>> repository, ICommentService commentService)
         {
             _repository = repository;
+            _commentService = commentService;
         }
 
         #region Implementation of ICategoryService
@@ -46,11 +48,14 @@ namespace Rabbit.Blogs.Services
 
         public Task<PostRecord> Get(string id)
         {
-            return id == null ? null : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
+            return id == null ? Task.FromResult<PostRecord>(null) : _repository.Value.Table.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public void Delete(string id)
         {
+            //删除评论。
+            _commentService.DeleteByPost(id);
+
             _repository.Value.Delete(i => i.Id == id);
         }
 

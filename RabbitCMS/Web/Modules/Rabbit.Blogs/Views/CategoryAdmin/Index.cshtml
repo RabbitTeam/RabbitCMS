@@ -29,7 +29,6 @@
                 increaseArea: '20%' // optional
             });
         });
-        var dialog = $(".alert-danger").dialog();
 
         var editor = (function () {
             var container = $(".box-success");
@@ -74,20 +73,20 @@
                 },
                 success: function (data) {
                     var id = cId.val();
-                    var isAdd = id == null || id.length == 0;
+                    var isAdd = id == null || id.length === 0;
 
                     if (data.success) {
                         table.load();
                         if (isAdd)
                             container.fadeOut();
                     } else {
-                        dialog.find("span").text("保存失败，" + data.message);
-                        dialog.show();
+                        $.rabbit().modalDanger({
+                            title: "提示", body: "保存失败，" + data.message, showClose: false
+                        });
                     }
                 },
                 error: function () {
-                    dialog.find("span").text("保存失败，请联系管理员！");
-                    dialog.show();
+                    $.rabbit().modalDanger({ title: "提示", body: "保存失败，请联系管理员！", showClose: false });
                 }
             });
 
@@ -105,7 +104,7 @@
                         cDescription.val(model.Seo.Description);
                         cRoutePath.val(model.Seo.RoutePath);
                     }
-                    var isAdd = model.Id == null || model.Id.length == 0;
+                    var isAdd = model.Id == null || model.Id.length === 0;
                     container.find(".box-title").html((isAdd ? "添加" : "编辑") + "分类");
 
                     container.fadeIn();
@@ -139,23 +138,28 @@
 
                     tr.find(".btn-danger").click(function () {
                         var btn = $(this);
-                        var tr = btn.parents("tr:first");
-                        var id = tr.data("id");
-                        $.ajax({
-                            url: '@Url.Action("Delete")',
-                            type: 'post',
-                            data: { id: id },
-                            success: function () {
-                                btn.parents("tr:first").fadeOut(function () {
-                                    $(this).remove();
-                                    if (controller.find("tbody tr").length == 0) {
-                                        controller.load();
+                        $.rabbit().modalWarning({
+                            title: "提示",
+                            body: "此操作无法还原，确定继续吗？",
+                            onOk:function() {
+                                var tr = btn.parents("tr:first");
+                                var id = tr.data("id");
+                                $.ajax({
+                                    url: '@Url.Action("Delete")',
+                                    type: 'post',
+                                    data: { id: id },
+                                    success: function () {
+                                        btn.parents("tr:first").fadeOut(function () {
+                                            $(this).remove();
+                                            if (controller.find("tbody tr").length === 0) {
+                                                controller.load();
+                                            }
+                                        });
+                                    },
+                                    error: function () {
+                                        $.rabbit().modalDanger({ title: "提示", body: "删除失败，请联系管理员！", showClose: false });
                                     }
                                 });
-                            },
-                            error: function () {
-                                dialog.find("span").text("删除失败，请联系管理员！");
-                                dialog.show();
                             }
                         });
                     });
