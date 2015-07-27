@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{C297ABD5-1931-44E6-B567-277188ADE6B5}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit.Blogs", "Web\Modules\Rabbit.Blogs\Rabbit.Blogs.csproj", "{895E5030-E5EE-4317-899C-1D23F06D794C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit.Users", "Web\Modules\Rabbit.Users\Rabbit.Users.csproj", "{6F846382-EF2B-4F61-90B3-1304856A0114}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit.Media", "Web\Modules\Rabbit.Media\Rabbit.Media.csproj", "{6B68FC20-8C34-4D5A-9C21-5D0C67A0DF6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{6F846382-EF2B-4F61-90B3-1304856A0114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F846382-EF2B-4F61-90B3-1304856A0114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F846382-EF2B-4F61-90B3-1304856A0114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B68FC20-8C34-4D5A-9C21-5D0C67A0DF6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B68FC20-8C34-4D5A-9C21-5D0C67A0DF6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B68FC20-8C34-4D5A-9C21-5D0C67A0DF6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B68FC20-8C34-4D5A-9C21-5D0C67A0DF6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,5 +80,6 @@ Global
 		{4ACBF0F2-34E2-4CE8-8601-E7FA9E5AD93C} = {6393D88E-71E6-494D-8876-6603B80A14A5}
 		{895E5030-E5EE-4317-899C-1D23F06D794C} = {C297ABD5-1931-44E6-B567-277188ADE6B5}
 		{6F846382-EF2B-4F61-90B3-1304856A0114} = {C297ABD5-1931-44E6-B567-277188ADE6B5}
+		{6B68FC20-8C34-4D5A-9C21-5D0C67A0DF6B} = {C297ABD5-1931-44E6-B567-277188ADE6B5}
 	EndGlobalSection
 EndGlobal
