@@ -1,0 +1,113 @@
+﻿@using System.Web.Optimization
+@model Jkzl.Activitys.ViewModels.ActivitySettingsViewModel
+
+@helper PageStyles()
+{
+    <style type="text/css">
+        .field-validation-error {
+            color: #dd4b39;
+        }
+
+        .categoryList {
+            list-style: none;
+        }
+
+            .categoryList li {
+                float: left;
+                padding: 5px 30px;
+            }
+
+        .fastRoute a {
+            cursor: pointer;
+        }
+    </style>
+    <link href="~/Themes/TheAdmin/lib/iCheck/all.css" rel="stylesheet" />
+}
+@helper PageScripts()
+{
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform", "~/bundles/chineseHelper", "~/bundles/rabbitAdmin")
+    <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
+    <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.config.js"></script>
+    <script src="~/Modules/Rabbit.Resources/Content/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript">
+        var contentVal = $("[data-valmsg-for=Description]");
+        var editor = UE.getEditor("description", { initialFrameHeight: 300, initialFrameWidth: "100%", initialContent: '@Html.Raw(Model.Description)' });
+        editor.addListener("contentChange", function () {
+            var content = editor.getContent();
+            if (content == null || content.length === 0) {
+                contentVal.show();
+            } else {
+                contentVal.hide();
+            }
+        });
+
+        var container = $(".box-info");
+        var form = container.find("form");
+
+        form.ajaxForm({
+            beforeSubmit: function (array, f) {
+                var content = editor.getContent();
+                if (content == null || content.length === 0) {
+                    contentVal.show();
+                    return false;
+                }
+                return f.valid();
+            },
+            success: function (data) {
+                if (data.success) {
+                    $.rabbit().modalSuccess({
+                        title: "提示",
+                        body: "保存成功！"
+                    });
+                } else {
+                    $.rabbit().modalDanger({
+                        title: "提示", body: "保存失败，" + data.message
+                    });
+                }
+            }
+        });
+    </script>
+}
+@{
+    Layout.Styles = PageStyles();
+    Layout.Scripts = PageScripts();
+    Layout.Title = "活动设置";
+}
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">活动设置</h3>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    <form method="POST">
+        @Html.AntiForgeryToken()
+
+        <div class="box-body">
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(model => model.StartTime)</label>
+                @Html.TextBoxFor(model => model.StartTime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StartTime)
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(model => model.EndTime)</label>
+                @Html.TextBoxFor(model => model.EndTime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EndTime)
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(model => model.Description)</label>
+                <script id="description" name="description" type="text/plain">
+                </script>
+                <span class="field-validation-error" data-valmsg-for="Description" data-valmsg-replace="true" style="display: none"><span for="Content" generated="true" class="">描述 字段是必需的。</span></span>
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(model => model.MaxLotteryCount)</label>
+                @Html.TextBoxFor(model => model.MaxLotteryCount, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaxLotteryCount)
+            </div>
+        </div>
+        <div class="box-footer" style="text-align: center">
+            <button type="submit" class="btn btn-info">保存</button>
+            <button type="submit" class="btn btn-default">取消</button>
+        </div><!-- /.box-footer -->
+    </form>
+</div>

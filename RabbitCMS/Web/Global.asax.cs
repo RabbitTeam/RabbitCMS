@@ -1,8 +1,11 @@
 ﻿using Autofac;
 using Rabbit.Components.Data;
 using Rabbit.Components.Data.EntityFramework;
+using Rabbit.Components.Data.EntityFramework.MySql;
 using Rabbit.Components.Data.Migrators;
+using Rabbit.Components.Data.Migrators.MySql;
 using Rabbit.Components.Data.Mvc;
+using Rabbit.Components.Data.MySql;
 using Rabbit.Components.Logging.NLog;
 using Rabbit.Components.Security.Web;
 using Rabbit.Kernel;
@@ -15,7 +18,6 @@ using Rabbit.Web.Environment;
 using Rabbit.Web.Mvc;
 using Rabbit.Web.WarmupStarter;
 using System;
-using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -79,13 +81,10 @@ namespace Web
             kernelBuilder.UseWeb(c => c.EnableMvc().EnableSecurity());
             kernelBuilder.UseData(c =>
             {
-                c.UseEntityFramework();
+                c.AddMySqlProvider();
+                c.UseEntityFramework().AddMySql();
                 c.EnableMvcFilterTransaction();
-
-                //如果开启了EntityFramework的自动迁移则不启动数据迁移。
-                var automaticMigrationsEnabled = ConfigurationManager.AppSettings["Data.EntityFramework.AutomaticMigrationsEnabled"];
-                if (!string.Equals(automaticMigrationsEnabled, "true", StringComparison.OrdinalIgnoreCase))
-                    c.EnableDataMigrators();
+                c.AddMySqlMigratorProvider().EnableDataMigrators();
             });
 
             kernelBuilder.UseResources();

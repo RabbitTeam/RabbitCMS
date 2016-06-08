@@ -388,10 +388,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Modules\Rabbit.Blogs\Rabbit.Blogs.csproj">
-      <Project>{895e5030-e5ee-4317-899c-1d23f06d794c}</Project>
-      <Name>Rabbit.Blogs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modules\Rabbit.Contents\Rabbit.Contents.csproj">
       <Project>{9e0ecfa6-4ce3-41ea-9b94-67e75db5ee04}</Project>
       <Name>Rabbit.Contents</Name>

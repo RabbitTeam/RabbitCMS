@@ -187,3 +187,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/RabbitCMS/packages
+/RabbitCMS/Web/App_Data/hrestart.txt
+/RabbitCMS/Web/App_Data/descriptors.dat
+/RabbitCMS/Web/App_Data/Dependencies
+/RabbitCMS/Web/App_Data/cache.dat

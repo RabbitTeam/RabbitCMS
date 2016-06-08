@@ -22,7 +22,8 @@ namespace Rabbit.Users
                 .Table(TableName<UserRecord>())
                 .WithColumn("Id").AsAnsiString(32).PrimaryKey()
                 .WithColumn("Name").AsString(20)
-                .WithColumn("Account_Id").AsAnsiString(32).ForeignKey(TableName<AccountRecord>(), "Id").OnDelete(Rule.Cascade);
+                .WithColumn("Account_Id").AsAnsiString(32)
+                .ForeignKey("FK_UserRecord_Account_Id_AccountRecord_Id", TableName<AccountRecord>(), "Id").OnDelete(Rule.Cascade);
 
             var account = AccountRecord.Create("admin", "admin");
             var user = UserRecord.Create("admin", account);

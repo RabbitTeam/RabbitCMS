@@ -1,0 +1,127 @@
+﻿@using System.Web.Optimization
+@using Jkzl.Activitys.ViewModels
+@model Jkzl.Activitys.ViewModels.PrizeViewModel[]
+
+@helper PageStyles()
+{
+    <style type="text/css">
+        .field-validation-error {
+            color: #dd4b39;
+        }
+
+        .categoryList {
+            list-style: none;
+        }
+
+            .categoryList li {
+                float: left;
+                padding: 5px 30px;
+            }
+
+        .fastRoute a {
+            cursor: pointer;
+        }
+    </style>
+    <link href="~/Themes/TheAdmin/lib/iCheck/all.css" rel="stylesheet" />
+}
+@helper PageScripts()
+{
+    @Scripts.Render("~/bundles/jqueryvalidate", "~/bundles/jqueryform", "~/bundles/chineseHelper", "~/bundles/rabbitAdmin")
+    <script src="~/Modules/Jkzl.Activitys/Scripts/jquery.json.min.js"></script>
+    <script src="~/Themes/TheAdmin/lib/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        var container = $(".box-info");
+        var form = container.find("form");
+
+        /*            form.ajaxForm({
+                        beforeSubmit: function (array, f) {
+                            return f.valid();
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                $.rabbit().modalSuccess({
+                                    title: "提示",
+                                    body: "保存成功！"
+                                });
+                            } else {
+                                $.rabbit().modalDanger({
+                                    title: "提示", body: "保存失败，" + data.message
+                                });
+                            }
+                        }
+                    });*/
+        $("#btnSave").click(function () {
+            var array = [];
+            form.each(function () {
+                var f = $(this);
+                if (!f.valid()) {
+                    $.rabbit().modalDanger({
+                        title: "提示", body: "数据非法，请检查！"
+                    });
+                    return false;
+                }
+                array.push({
+                    Id: f.find("#Id").val(),
+                    Name: f.find("#Name").val(),
+                    ImagePath: f.find("#ImagePath").val(),
+                    Probability: f.find("#Probability").val(),
+                    Total: f.find("#Total").val(),
+                    Remain: f.find("#Remain").val()
+                });
+                return true;
+            });
+            $.ajax({
+                url: '@Url.Action("Update")',
+                method: "POST",
+                cache: false,
+                data: { json: $.toJSON(array) },
+                success: function (data) {
+                    if (data.success) {
+                        $.rabbit().modalSuccess({
+                            title: "提示",
+                            body: "保存成功！"
+                        });
+                    } else {
+                        $.rabbit().modalDanger({
+                            title: "提示", body: "保存失败，" + data.message
+                        });
+                    }
+                },
+                error: function () {
+                    $.rabbit().modalDanger({
+                        title: "提示", body: "更新失败，请联系管理员！"
+                    });
+                }
+            });
+        });
+    </script>
+}
+@{
+    Layout.Styles = PageStyles();
+    Layout.Scripts = PageScripts();
+    Layout.Title = "奖品设置";
+}
+
+<button class="btn btn-primary" style="margin-bottom: 5px;width: 100px" id="btnSave">
+    <i class="fa fa-plus"></i>
+    保存
+</button>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">奖品设置</h3>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    @Html.AntiForgeryToken()
+    <div class="box-body">
+        <ul style="list-style: none;padding: 0">
+            <li>
+                <div class="box box-primary">
+                    @foreach (var item in Model)
+                    {
+                        @Html.Partial("PrizeItemSettings", item)
+                    }
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

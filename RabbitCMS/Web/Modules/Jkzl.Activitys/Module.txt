@@ -1,0 +1,12 @@
+Name: Jkzl.Activitys
+Category: Default
+Description: App活动模块。
+FeatureDescription: 
+Version: 1.0.0.0
+KernelVersion: 1.0.0.0
+WebSite: 
+Company: 
+Author: majian
+Tags: 
+Dependencies: 
+Features: 

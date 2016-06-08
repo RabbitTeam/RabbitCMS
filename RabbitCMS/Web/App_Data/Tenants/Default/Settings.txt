@@ -1,7 +1,9 @@
 ﻿Name: Default
 State: Running
-DataProvider: SqlServer
-DataConnectionString: Data Source=.;Initial Catalog=RabbitCMS;Persist Security Info=True;User ID=RabbitCMS;Password=123456;MultipleActiveResultSets=true
+DataProvider: MySql
+DataConnectionString: Data Source=172.18.20.174;Database=KxAppHub;uid=KxAppHub;pwd=jkzl123456;
 DataTablePrefix: null
 RequestUrlPrefix: null
 RequestUrlHost: null
+MobileNumberRegex: ^0?(1[3456789][0123456789])[0-9]{8}$
+BossUrl: http://172.18.20.123:8085/WSGW/rest

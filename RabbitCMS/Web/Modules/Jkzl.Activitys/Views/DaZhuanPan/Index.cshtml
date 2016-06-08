@@ -1,0 +1,271 @@
+﻿@using System.Web.Optimization
+@using Newtonsoft.Json
+@model Jkzl.Activitys.ViewModels.ActivityViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>大转盘</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    @Scripts.Render("~/bundles/jquery2")
+    <script src="~/Modules/Jkzl.Activitys/Content/js/all.js"></script>
+    <script src="~/Modules/Jkzl.Activitys/Content/layer/layer.m.js"></script>
+    <script src="~/Modules/Jkzl.Activitys/Scripts/jquery.json.min.js"></script>
+    <script src="~/Modules/Jkzl.Activitys/Scripts/dazhuanpan.js"></script>
+    <link href="~/Modules/Jkzl.Activitys/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Modules/Jkzl.Activitys/Content/css/reset.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function() {
+            $(window).on("beforeunload", function() {
+                $(document.body).append('<div style="position: absolute; top: 20%; width: 60%; left: 20%; text-align: center; border: 1px solid #e1ac3d; line-height: 30px; border-radius: 10px; background: rgba(0, 0, 0, 0.8); color: #ffffff; z-index: 10000;">加载中……请稍候</div>');
+            });
+        });
+    </script>
+    <style type="text/css">
+        body {
+            font-family: "微软雅黑";
+        }
+    </style>
+</head>
+<body class="index-body">
+    <div class="response_viewport">
+        <!--游戏开始-->
+        <!--效果html开始-->
+        <div class="pic-item">
+            <img src="~/Modules/Jkzl.Activitys/Content/images/item_1.png">
+        </div>
+        <div class="lottery-content-container">
+            <div class="lottery-content-box">
+                <ul class="lottery-prize-list" id="J_lottery-prize-list" style="-webkit-transform: rotateZ(0deg);"></ul>
+                <script type="text/javascript">
+                    var initPrizeItem =
+                        @Html.Raw(JsonConvert.SerializeObject(new {list = Model.Prizes.Select(model => new {id = model.Id, name = model.Name, imgsrc = string.IsNullOrWhiteSpace(model.ImagePath) ? "" : Url.Content(model.ImagePath)})}));
+                </script>
+                <script type="text/html" id="prizeitem-tpl">
+                    {{each list as obj i}}
+                    <li class="item" style="background-image:url('{{obj.imgsrc}}');-webkit-transform:rotateZ({{obj.degree}}deg);">{{obj.name}}</li>
+                    {{/each}}
+                </script>
+                <div class="lottery-arrow" id="J_lottery-arrow"></div>
+            </div>
+        </div>
+        <!--活动内容-->
+        <div class="pic-item">
+            <img src="~/Modules/Jkzl.Activitys/Content/images/item_hdgz.png">
+        </div>
+        <div class="hdgz-box">
+            <div class="game-intro-tit">
+                <i></i>
+                <p>活动时间</p>
+            </div>
+            <div class="game-intro-detail">
+                @if (Model.EndTime.HasValue && Model.StartTime.Date == Model.EndTime.Value)
+            {
+                    @("仅限今天")
+                }
+                else
+                {
+                    <text>
+                        @Model.StartTime.ToString("yyyy-MM-dd") 至 @(Model.EndTime.HasValue ? Model.EndTime.Value.ToString("yyyy-MM-dd") : "不限期结束")
+                    </text>
+                }
+            </div>
+            <p>@Html.Raw(Model.Description)</p>
+        </div>
+        <div class="pic-item">
+            <img src="~/Modules/Jkzl.Activitys/Content/images/item_2.png" />
+        </div>
+    </div>
+    <!--温馨提示-->
+    <div class="lj-noAward" style="display: none;">
+        <div class="kindlyTips">
+            <div class="title"></div>
+            <div class="desc" id="spNoAwardDesc">
+            </div>
+            <div class="btnBox">
+                <a class="prize-wxts-btn close-btn"></a>
+            </div>
+        </div>
+    </div>
+    <!--中奖提示-->
+    <div class="lj-Award" style="display: none;">
+        <div class="zj-layer-con">
+            <p class="desc" id="spAwardDesc">
+            </p>
+        </div>
+    </div>
+    <!--设置用户手机号码-->
+    <div class="lj-layer" style="display: none;">
+        <div class="lj-layer-con">
+            <div class="bd">
+                <p>
+                    <span style="text-align:center">请输入手机号参与抽奖</span>
+                </p>
+                <p>
+                    <input type="text" placeholder="手机号码" />
+                </p>
+                <p>
+                    <a class="prize-btn" href="javascript:void(0)"></a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var dialogController = {
+            showInfo:function(message) {
+                var content ='<div class="lj-noAward"><div class="kindlyTips"><div class="title"></div><div class="desc">'+message+'</div><div class="btnBox"><a class="prize-wxts-btn close-btn"></a></div></div></div>';
+                var index = layer.open({
+                    type: 1,
+                    content: content,
+                    shadeClose: false,
+                    success:function(element) {
+                        $(element)
+                            .find("a")
+                            .click(function() {
+                                layer.close(index);
+                            });
+                    }
+                });
+            }
+        };
+        var lj;
+        var desc;
+        function setUserId(fn) {
+            var inputMobileNumberIndex=layer.open({
+                type: 1,
+                shadeClose: false,
+                content: $(".lj-layer").html(),
+                success :function(layero) {
+                    var element = $(layero);
+                    var txtMobileNumber = element.find("input");
+                    txtMobileNumber.keyup(function() {
+                        var infoElement = element.find("p:first span");
+                        var mobileNumber = txtMobileNumber.val();
+                        if (mobileNumber.length != 11) {
+                            infoElement.text("请输入手机号参与抽奖");
+                            return;
+                        }
+                        $.post('@Url.Action("GetHitPrize")',
+                            {
+                                mobileNumber:mobileNumber
+                            },
+                            function(data) {
+                                if (data.success) {
+                                    element.find(".prize-btn").remove();
+                                    txtMobileNumber.attr("readonly", "readonly");
+                                    infoElement.text(data.success == true ? "您已经中过奖不能重复参加" : "请输入手机号参与抽奖");
+                                }
+                            });
+                    });
+
+                    $(layero)
+                        .find(".prize-btn")
+                        .click(function() {
+                            var mobileNumber = $(layero).find("input").val();
+                            $.ajax({
+                                url: '@Url.Action("SetUser")',
+                                data: { mobileNumber: mobileNumber },
+                                method: "POST",
+                                cache: false,
+                                success: function(data) {
+                                    if (!data.success) {
+                                        dialogController.showInfo(data.message);
+                                    } else {
+                                        layer.close(inputMobileNumberIndex);
+                                        fn(data.result.id);
+                                    }
+                                },
+                                error: function() {
+                                    dialogController.showInfo("程序错误，请联系管理员！");
+                                }
+                            });
+                        });
+                }
+            });
+        }
+
+        setUserId(function(userId) {
+                var rotateData = 0;
+                var isRotate = false;
+                var prize=null;
+
+                var isLottery = false;
+                $("#J_lottery-arrow").on("click", function () {
+                    if (isLottery == true) {
+                        return;
+                    }
+                    isLottery = true;
+                    var dict ={};
+                    $.each(initPrizeItem.list,function(index) {
+                        dict[this.id] = index;
+                    });
+                    $.ajax({
+                        url:'@Url.Action("Lottery")',
+                        data:{userId:userId,mappings:$.toJSON(dict)},
+                        cache:false,
+                        method:"POST",
+                        success:function(data) {
+                            if (data.success) {
+                                var emptyIndex=null;
+                                $.each(initPrizeItem.list,function(index) {
+                                    if (this.name == "谢谢参与") {
+                                        emptyIndex = index;
+                                        return false;
+                                    }
+                                    return true;
+                                });
+                                var NowIndex = data.result.index;
+                                if (NowIndex == -1)
+                                    NowIndex = emptyIndex;
+                                rotateData = (NowIndex) * (360 / 8);
+
+                                var TrueRotate = -(360 * 10 + rotateData);
+                                var Box = $("#J_lottery-prize-list");
+                                Box.addClass("transition").css({
+                                    "-webkit-transform": "rotateZ(" + TrueRotate + "deg)",
+                                    "transform": "rotateZ(" + TrueRotate + "deg)"
+                                });
+                                if (data.result.isHit) {
+                                    prize = initPrizeItem.list[data.result.index];
+                                }
+                            } else {
+                                dialogController.showInfo(data.message);
+                            }
+                            isLottery = false;
+                        },
+                        error:function() {
+                            isLottery = false;
+                        }
+                    });
+                });
+
+                $("#J_lottery-prize-list")
+                    .on("webkitTransitionEnd",
+                        function () {
+                            isRotate = !isRotate;
+                            $(this)
+                                .removeClass('transition')
+                                .css({
+                                    "-webkit-transform": "rotateZ(" + (-rotateData) + "deg)",
+                                    "transform": "rotateZ(" + (-rotateData) + "deg)"
+                                });
+                            if (prize == null) {
+                                dialogController.showInfo("很遗憾，您没有中奖，别灰心再试一次吧！");
+                            } else {
+                                openAward("恭喜你抽中 " + prize.name +" ！");
+                                prize = null;
+                            }
+                        });
+        });
+        function openAward(memo) {
+            $("#spAwardDesc").html(memo);
+            desc = layer.open({
+                type: 1,
+                content: $(".lj-Award").html(),
+                shadeClose: false
+            });
+            layer.close(lj);
+        }
+    </script>
+</body>
+</html>

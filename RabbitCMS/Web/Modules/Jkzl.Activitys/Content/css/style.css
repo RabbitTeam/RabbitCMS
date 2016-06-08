@@ -1,0 +1,624 @@
+body {
+    width: 100%;
+    max-width: 640px;
+    height: 100%;
+    margin: 0px auto;
+}
+
+.descBox {
+    padding: 15px 0;
+    background: #fbdf33;
+    text-align: center;
+}
+
+    .descBox p {
+        font-size: 16px;
+        line-height: 16px;
+        color: #000;
+        padding-bottom: 15px;
+    }
+
+        .descBox p span {
+            color: #ff563f;
+            padding: 0 2px;
+        }
+
+    .descBox .btn {
+        display: inline-block;
+        line-height: 40px;
+        width: 40%;
+        color: #fff;
+        background: #23b97a;
+        border-radius: 3px;
+    }
+
+        .descBox .btn.share {
+            margin-left: 10px;
+            background: #443329;
+        }
+
+.prize-hd {
+    width: 100%;
+    height: 200px;
+    background: url("../images/hd-bg.jpg") no-repeat 50% 50%;
+    background-size: 100% 100%;
+}
+
+.prize-body {
+    padding: 0 5%;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #f9ce27;
+}
+
+.prize-body-con {
+    /*height: 128px;*/
+    overflow: hidden;
+}
+
+.prize-ul {
+    display: block;
+    width: 100%;
+}
+
+    .prize-ul li {
+        padding: 0 4px 10px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #deb30f;
+    }
+
+    .prize-ul .pic {
+        width: 17%;
+    }
+
+        .prize-ul .pic div {
+            width: 100%;
+            position: relative;
+            height: 0;
+            padding-bottom: 100%;
+        }
+
+        .prize-ul .pic span {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .prize-ul .pic img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+    .prize-ul .txt {
+        width: 80%;
+        padding-top: 4%;
+        box-sizing: border-box;
+    }
+
+@media (max-width: 320px) {
+    .prize-ul .txt {
+        padding-top: 3%;
+    }
+}
+
+.prize-ul .txt span {
+    color: #ff553b;
+    width: 50%;
+    line-height: 16px;
+    height: 32px;
+    overflow: hidden;
+}
+
+.prize-ul .txt a {
+    border: 1px solid #dc5223;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #dc5223;
+    height: 32px;
+    line-height: 32px;
+    width: 30%;
+    text-align: center;
+}
+
+.prize-ft {
+    width: 100%;
+    height: 354px;
+    background: url("../images/f-bg.jpg") no-repeat 50% 50%;
+    background-size: 100% 100%;
+    text-align: center;
+    padding-top: 15px;
+    box-sizing: border-box;
+}
+
+    .prize-ft a {
+        height: 40px;
+        line-height: 40px;
+        width: 40%;
+        display: block;
+        text-align: center;
+        background-color: #352a25;
+        color: #fff;
+        margin: 0px auto;
+        border-radius: 3px;
+        box-shadow: 0 3px 0px #28211e;
+        font-size: 18px;
+    }
+
+    .prize-ft p {
+        display: block;
+        margin-top: 100px;
+        font-size: 16px;
+    }
+
+.lj-layer {
+}
+
+.layermchild {
+    background-color: transparent;
+    width: 100%;
+    padding: 0 5%;
+    box-sizing: border-box;
+    font-family: "microsoft yahei";
+}
+
+.lj-layer-con {
+    width: 100%;
+    margin: 0px auto;
+    position: relative;
+    background-color: #da1f1f;
+    border-radius: 15px;
+}
+
+    .lj-layer-con .hd {
+        position: absolute;
+        right: -12px;
+        top: -12px;
+    }
+
+        .lj-layer-con .hd a {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+            height: 35px;
+            line-height: 35px;
+            width: 35px;
+            text-align: center;
+            border-radius: 100%;
+            display: inline-block;
+            float: right;
+        }
+
+    .lj-layer-con .bd {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+        .lj-layer-con .bd p {
+            text-align: center;
+            margin-top: 20px;
+            display: block;
+        }
+
+            .lj-layer-con .bd p:first-child {
+                margin-top: 0;
+            }
+
+            .lj-layer-con .bd p span {
+                display: block;
+                text-align: left;
+                font-size: 14px;
+                color: #fff;
+            }
+
+            .lj-layer-con .bd p label {
+                display: block;
+                font-size: 14px;
+                color: #fbdf33;
+                height: 31px;
+                line-height: 31px;
+            }
+
+            .lj-layer-con .bd p input {
+                width: 62.5%;
+                height: 35px;
+                line-height: 35px;
+                box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.27);
+                border: 0;
+                border-radius: 3px;
+                padding: 0px 8px;
+                box-sizing: border-box;
+                color: #333;
+            }
+
+            .lj-layer-con .bd p a {
+                background: url("../images/tj-btn.png") no-repeat 50% 50%;
+                width: 52%;
+                height: 40px;
+                background-size: 100% 100%;
+                display: inline-block;
+            }
+
+            .lj-layer-con .bd p input[type="submit"] {
+                background: url("../images/tj-btn.png") no-repeat 50% 50%;
+                width: 52%;
+                height: 40px;
+                background-size: 100% 100%;
+                display: inline-block;
+            }
+
+.gbl-ipt {
+    -webkit-appearance: none;
+    width: 62.5%;
+    height: 35px;
+    line-height: 35px;
+    color: #333;
+    padding-left: 5px;
+    outline:none;
+}
+
+.lj-desc-con {
+    width: 100%;
+    margin: 0px auto;
+    position: relative;
+    background-color: #da1f1f;
+    border-radius: 15px;
+    padding: 15px 15px 50px;
+    box-sizing: border-box;
+}
+
+    .lj-desc-con .hd {
+        position: absolute;
+        right: -12px;
+        top: -12px;
+    }
+
+        .lj-desc-con .hd a {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+            height: 35px;
+            line-height: 35px;
+            width: 35px;
+            text-align: center;
+            border-radius: 100%;
+            display: inline-block;
+            float: right;
+        }
+
+    .lj-desc-con .bd p {
+    }
+
+    .lj-desc-con .bd span {
+        display: block;
+        font-size: 15px;
+        color: #fff;
+        line-height: 30px;
+    }
+
+.zj-layer-con {
+    position: relative;
+    background: url(../images/zj_bg.png) center no-repeat;
+    background-size: cover;
+    padding-top: 92%;
+}
+
+    .zj-layer-con .hd {
+        position: absolute;
+        right: -12px;
+        top: 22%;
+    }
+
+        .zj-layer-con .hd a {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+            height: 35px;
+            line-height: 35px;
+            width: 35px;
+            text-align: center;
+            border-radius: 100%;
+            display: inline-block;
+        }
+
+    .zj-layer-con .desc {
+        position: absolute;
+        font-size: 18px;
+        bottom: 40%;
+        width: 100%;
+        text-align: center;
+        color: #fff;
+    }
+
+        .zj-layer-con .desc span {
+            padding: 0 5px;
+            color: #e1c420;
+        }
+
+    .zj-layer-con .btnBox {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .zj-layer-con .prize-zj-btn {
+        background: url("../images/djck-btn.png") center no-repeat;
+        width: 52%;
+        height: 40px;
+        background-size: 100% 100%;
+        display: inline-block;
+    }
+
+.kindlyTips {
+    background: #da1f1f;
+    border-radius: 15px;
+    padding: 15px 15px;
+}
+
+    .kindlyTips .title {
+        height: 35px;
+        background: url("../images/tips.png") center no-repeat;
+        background-size: contain;
+    }
+
+    .kindlyTips .desc {
+        width: 80%;
+        padding: 15px 0;
+        margin: 0 auto;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .kindlyTips .btnBox {
+        text-align: center;
+    }
+
+    .kindlyTips .prize-wxts-btn {
+        background: url("../images/wzdl-btn.png") center no-repeat;
+        width: 52%;
+        height: 40px;
+        background-size: 100% 100%;
+        display: inline-block;
+    }
+
+
+/*首页*/
+
+.header {
+    height: 45px;
+    background: url("../images/header_1.png") no-repeat left top;
+    background-size: cover;
+    padding: 0 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+    .header .icon-lw {
+        position: absolute;
+        left: 10px;
+        top: 5px;
+        height: 30px;
+        width: 30px;
+        background: url("../images/index_hz.png") no-repeat left top;
+        background-size: cover;
+    }
+
+.zj-listbox {
+    color: #fff;
+    padding-left: 45px;
+}
+
+    .zj-listbox ul {
+        -webkit-transition: webkit-transform .5s;
+        transition: transform .5s;
+    }
+
+        .zj-listbox ul li {
+            height: 41px;
+            line-height: 41px;
+            overflow: hidden;
+        }
+
+.pic-item {
+    position: relative;
+}
+
+    .pic-item img {
+        max-width: 100%;
+        vertical-align: top;
+    }
+
+.index-body {
+    background: #f9ce27;
+}
+
+.zj-list {
+    padding: 0 20px;
+    transition: transform .5s;
+}
+
+    .zj-list li {
+        border-bottom: 1px solid #ddb40e;
+        height: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        font-size: 14px;
+        position: relative;
+    }
+
+        .zj-list li .prize {
+            color: #ff4f52;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            overflow: hidden;
+        }
+
+        .zj-list li .name {
+            padding: 0 90px;
+        }
+
+        .zj-list li .time {
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #3c311f;
+        }
+
+.iscroll-box {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.iscroll-scroller {
+    position: relative;
+    width: 100%;
+}
+
+.iscroll-wdlw {
+    height: 205px;
+    overflow: hidden;
+}
+
+.hdjp-list {
+    padding: 0 10px;
+}
+
+    .hdjp-list .response_imgscale {
+        background: #fff;
+    }
+
+    .hdjp-list li {
+        float: left;
+        overflow: hidden;
+        width: 33.33%;
+        box-sizing: border-box;
+        padding: 0 10px;
+        margin-bottom: 15px;
+    }
+
+        .hdjp-list li .jx {
+            padding-top: 7px;
+        }
+
+        .hdjp-list li .jx, .hdjp-list li .jp {
+            font-size: 14px;
+            line-height: 20px;
+            height: 20px;
+            text-align: center;
+        }
+
+.iscroll-hdjp {
+    /*max-height: 337px*/
+}
+
+.game-intro-tit {
+    position: relative;
+    font-size: 15px;
+    line-height: 15px;
+    padding: 0 0 0 10px;
+    color: #e33618;
+    margin-bottom: 10px;
+}
+
+    .game-intro-tit i {
+        width: 3px;
+        height: 3px;
+        font-size: 12px;
+        line-height: 15px;
+        font-style: normal;
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+        display: inline-block;
+        background: #ff4747;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -1px;
+    }
+
+.game-intro-detail {
+    color: #3c311f;
+    line-height: 1.8;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+
+.hdgz-box {
+    padding: 0 20px;
+}
+
+.footer-name {
+    position: absolute;
+    width: 100%;
+    bottom: 25px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.lottery-content-container {
+    background: #fbdf33;
+}
+
+.lottery-content-box {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.lottery-prize-list {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    background: url("../images/zp_01.png") no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+}
+
+    .lottery-prize-list.transition {
+        -webkit-transition: transform 5.5s cubic-bezier(0.190, 1.465, 0.595, 0.895);
+        transition: transform 5.5s cubic-bezier(0.190, 1.465, 0.595, 0.895);
+    }
+
+    .lottery-prize-list li {
+        padding-top: 20px;
+        width: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        text-align: center;
+        background-repeat: no-repeat;
+        background-position: center 40%;
+        background-size: 50%;
+        -webkit-transform-origin: center bottom;
+        height: 150px;
+        left: 50%;
+        margin-left: -50px;
+        box-sizing: border-box;
+        -webkit-backface-visibility: hidden;
+    }
+
+.lottery-arrow {
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+    background: url("../images/cj_zz.png") no-repeat;
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    margin-top: -55px;
+    margin-left: -55px;
+    position: absolute;
+}
