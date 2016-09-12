@@ -1,7 +1,7 @@
 ﻿Name: Default
 State: Running
 DataProvider: MySql
-DataConnectionString: Data Source=172.18.20.174;Database=KxAppHub;uid=KxAppHub;pwd=jkzl123456;
+DataConnectionString: Data Source=127.0.0.1;Database=activitys;uid=root;pwd=123456;
 DataTablePrefix: null
 RequestUrlPrefix: null
 RequestUrlHost: null
